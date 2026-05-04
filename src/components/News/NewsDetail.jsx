@@ -1,22 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft, Calendar, Tag, Share2 } from "lucide-react";
+import DOMPurify from 'dompurify';
+import { fetchExternalArticle } from "../../utils/newsParser";
 
-const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
+const API_BASE_URL = import.meta.env.DEV 
+  ? '/proxy-backend' 
+  : (import.meta.env.VITE_API_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com/api');
+const MEDIA_BASE_URL = import.meta.env.DEV
+  ? ''
+  : (import.meta.env.VITE_MEDIA_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com');
 
 const NewsDetail = () => {
   const { id } = useParams();
+  const location = useLocation();
   const { t, i18n } = useTranslation();
-  const [article, setArticle] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [article, setArticle] = useState(location.state?.article || null);
+  const [loading, setLoading] = useState(!location.state?.article);
   const [error, setError] = useState(null);
 
   const fetchArticle = async () => {
     try {
       setLoading(true);
-      const currentLanguage = i18n.language === "kg" ? "ky" : i18n.language;
+      
+      if (id.startsWith('ext-')) {
+        const slug = id.replace('ext-', '');
+        const data = await fetchExternalArticle(slug);
+        if (!data) {
+          throw new Error(t("news.detail.notFound", "Новость не найдена"));
+        }
+        setArticle(data);
+        return;
+      }
 
+      const currentLanguage = i18n.language === "kg" ? "ky" : i18n.language;
       const apiUrl = `${API_BASE_URL}/news/${id}/`;
 
       const response = await fetch(apiUrl, {
@@ -26,13 +44,11 @@ const NewsDetail = () => {
         },
       });
 
-
       if (!response.ok) {
         throw new Error(t("news.detail.notFound", "Новость не найдена"));
       }
 
       const data = await response.json();
-
 
       if (!data || typeof data !== "object" || Array.isArray(data)) {
         throw new Error(t("news.detail.notFound", "Новость не найдена"));
@@ -48,9 +64,14 @@ const NewsDetail = () => {
   };
 
   useEffect(() => {
-    fetchArticle();
+    if (location.state?.article) {
+      setArticle(location.state.article);
+      setLoading(false);
+    } else {
+      fetchArticle();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, i18n.language]);
+  }, [id, i18n.language, location.state]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -96,17 +117,15 @@ const NewsDetail = () => {
   };
 
   const getImageUrl = (article) => {
-    if (
-      article.image_url &&
-      article.image_url !== "null" &&
-      article.image_url !== null
-    ) {
-      if (article.image_url.startsWith("http")) {
-        return article.image_url;
-      }
-      return `${MEDIA_BASE_URL}${article.image_url}`;
+    if (!article) return null;
+    const path = article.image_url || article.image;
+    if (!path) return '/placeholder-news.jpg';
+    
+    if (path.startsWith('http')) {
+      return `https://images.weserv.nl/?url=${encodeURIComponent(path)}&w=1200`;
     }
-    return null;
+    
+    return `${MEDIA_BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
   };
 
   const getCategoryName = (category) => {
@@ -286,8 +305,8 @@ const NewsDetail = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-xl shadow-sm p-8">
-            {/* Summary if exists */}
-            {getLocalizedSummary(article) && (
+            {/* Summary if exists (skipped for external news to avoid duplication) */}
+            {getLocalizedSummary(article) && !article.is_external && (
               <div className="mb-6 p-4 bg-gray-50 rounded-lg">
                 <p className="text-lg text-gray-700 font-medium">
                   {getLocalizedSummary(article)}
@@ -296,11 +315,11 @@ const NewsDetail = () => {
             )}
 
             {/* Main Content */}
-            <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+            <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed news-content">
               {getLocalizedContent(article) ? (
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: getLocalizedContent(article),
+                    __html: DOMPurify.sanitize(getLocalizedContent(article)),
                   }}
                 />
               ) : (

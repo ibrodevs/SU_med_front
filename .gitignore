@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.vercel
+
+# Temporary/Debug files
+feed.xml
+item.json
+check_feed.cjs

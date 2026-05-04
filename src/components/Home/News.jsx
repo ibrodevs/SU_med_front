@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { localizeItems } from '../../utils/i18nHelpers';
 
-const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
+const API_BASE_URL = import.meta.env.DEV 
+  ? '/proxy-backend' 
+  : (import.meta.env.VITE_API_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com/api');
 
 const NewsPreview = ({ maxItems = 3 }) => {
   const { t, i18n } = useTranslation();
@@ -18,7 +20,7 @@ const NewsPreview = ({ maxItems = 3 }) => {
   const fetchNews = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/news/?limit=${maxItems}`, {
+      const response = await fetch(`${API_BASE_URL}/news?limit=${maxItems}`, {
         headers: {
           'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
           'Content-Type': 'application/json'
@@ -63,9 +65,13 @@ const NewsPreview = ({ maxItems = 3 }) => {
 
   // Формируем полный URL картинки
   const getImageUrl = (imagePath) => {
-    if (!imagePath) return null;
-    if (imagePath.startsWith('http')) return imagePath; // уже полный URL
-    return `https://su-med-backend-35d3d951c74b.herokuapp.com${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
+    if (!imagePath) return '/placeholder-news.jpg';
+    
+    if (imagePath.startsWith('http')) {
+      return `https://images.weserv.nl/?url=${encodeURIComponent(imagePath)}&w=600`;
+    }
+    
+    return `/media${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
   };
 
   const formatDate = (dateString) => {
@@ -132,6 +138,7 @@ const NewsPreview = ({ maxItems = 3 }) => {
             <Link 
               key={item.id} 
               to={`/news/detail/${item.slug || item.id}`}
+              state={{ article: item }}
               className="group block"
             >
               <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">

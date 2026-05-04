@@ -1,5 +1,12 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/proxy-backend/(.*)",
+      "destination": "https://su-med-backend-35d3d951c74b.herokuapp.com/api/$1"
+    },
+    {
+      "source": "/api/news",
+      "destination": "/api/news.js"
+    }
   ]
 }

@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { fetchExternalNews } from '../../utils/newsParser';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
-const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com';
+const API_BASE_URL = import.meta.env.DEV 
+  ? '/proxy-backend' 
+  : (import.meta.env.VITE_API_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com/api');
+const MEDIA_BASE_URL = import.meta.env.DEV
+  ? ''
+  : (import.meta.env.VITE_MEDIA_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com');
 
 const News = () => {
   const { t, i18n } = useTranslation();
@@ -22,22 +27,42 @@ const News = () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`${API_BASE_URL}/news/`, {
+      
+      // Fetch local news
+      const response = await fetch(`${API_BASE_URL}/news`, {
         headers: {
           'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
           'Content-Type': 'application/json'
         }
       });
-      if (!response.ok) {
-        throw new Error(t('news.loadingError'));
+      
+      let localNews = [];
+      if (response.ok) {
+        const data = await response.json();
+        localNews = data.results || data;
       }
-      const data = await response.json();
-      // Получаем данные с сервера (без fallback)
-      const newsResults = data.results || data;
-      setNewsData(newsResults);
+
+      // Fetch external news
+      const externalNews = await fetchExternalNews();
+
+      // Merge and sort
+      const allNews = [...localNews, ...externalNews].sort((a, b) => {
+        const dateA = new Date(a.published_at || a.date);
+        const dateB = new Date(b.published_at || b.date);
+        return dateB - dateA;
+      });
+
+      setNewsData(allNews);
     } catch (err) {
-      setError(err.message);
-      setNewsData([]); // Показываем пустой массив вместо fallback данных
+      console.error("Local news fetch failed:", err);
+      // Try to at least show external news if local fails
+      const externalNews = await fetchExternalNews();
+      setNewsData(externalNews);
+      if (externalNews.length > 0) {
+        setError(null);
+      } else {
+        setError(err.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -45,7 +70,7 @@ const News = () => {
 
   const fetchFeaturedNews = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/news/featured/`, {
+      const response = await fetch(`${API_BASE_URL}/news/featured`, {
         headers: {
           'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
           'Content-Type': 'application/json'
@@ -78,15 +103,16 @@ const News = () => {
   };
 
   const getImageUrl = (item) => {
-    if (item.image_url && item.image_url !== 'null' && item.image_url !== null) {
-      // Если URL уже полный, возвращаем как есть
-      if (item.image_url.startsWith('http')) {
-        return item.image_url;
-      }
-      // Если URL относительный, добавляем базовый URL
-      return `${MEDIA_BASE_URL}${item.image_url}`;
+    if (!item) return null;
+    const path = item.image_url || item.image;
+    if (!path) return '/placeholder-news.jpg';
+    
+    if (path.startsWith('http')) {
+      // Используем прокси для обхода защиты от хотлинкинга
+      return `https://images.weserv.nl/?url=${encodeURIComponent(path)}&w=800`;
     }
-    return null; // Возвращаем null если изображения нет
+    
+    return `${MEDIA_BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
   };
 
   const formatDate = (dateString) => {
@@ -204,6 +230,7 @@ const News = () => {
                 <Link 
                   key={item.id} 
                   to={`/news/detail/${item.slug || item.id}`}
+                  state={{ article: item }}
                   className="group block"
                 >
                   <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -261,6 +288,7 @@ const News = () => {
               <Link 
                 key={item.id} 
                 to={`/news/detail/${item.slug || item.id}`}
+                state={{ article: item }}
                 className="group block"
               >
                 <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">

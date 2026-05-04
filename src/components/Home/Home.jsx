@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/';
+const API_BASE_URL = import.meta.env.DEV 
+  ? '/proxy-backend/' 
+  : (import.meta.env.VITE_API_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/');
 
 const HeroSlider = () => {
   const { i18n } = useTranslation();
@@ -18,7 +20,7 @@ const HeroSlider = () => {
         setLoading(true);
         setError(null);
 
-        const res = await fetch(`${API_BASE_URL}banners/`, {
+        const res = await fetch(`${API_BASE_URL}banners`, {
           headers: {
             'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
           },
@@ -44,8 +46,8 @@ const HeroSlider = () => {
 
         // fallback
         setSlides([
-          { id: 1, photo: 'https://img2.rtve.es/i/?w=1600&i=01712310257437.jpg' },
-          { id: 2, photo: 'https://www.fundacionhergar.org/sites/fundacionhergar.org/files/GettyImages-1961399015.jpg' },
+          { id: 1, photo: 'https://images.weserv.nl/?url=https://salymbekov.com/wp-content/uploads/2021/10/IMG_9747-scaled.jpg&w=1920' },
+          { id: 2, photo: 'https://images.weserv.nl/?url=https://salymbekov.com/wp-content/uploads/2023/10/DSC01602-scaled.jpg&w=1920' },
         ]);
       } finally {
         setLoading(false);
