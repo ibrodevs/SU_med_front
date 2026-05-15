@@ -1,266 +1,75 @@
-// API сервис для работы с данными ВШМ (Высшая школа медицины)
+import { apiRequest, buildApiUrl } from '../config/api';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com';
-
+const fallbackData = {
+  info: {
+    title_ru: "Высшая школа медицины",
+    title_en: "Higher School of Medicine",
+    description_ru: "Ведущий образовательный центр",
+    description_en: "Leading educational center"
+  },
+  programs: [],
+  faculty: [],
+  accreditations: [],
+  learningGoals: []
+};
 
 class HSMService {
-  /**
-   * Получить информацию о ВШМ (Высшая школа медицины)
-   */
-  async getHSMInfo() {
+  async getHSMInfo(lang = 'ru') {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/hsm/info/`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data.results || data;
+      const response = await apiRequest(buildApiUrl('/hsm/info/', { lang }));
+      return response.results || response || fallbackData.info;
     } catch (error) {
-      console.error('Error fetching HSM info:', error);
-      throw error;
+      console.warn('HSM Info API failed, using fallback');
+      return fallbackData.info;
     }
   }
 
-  /**
-   * Получить все программы обучения
-   */
-  async getPrograms(params = {}) {
+  async getPrograms(lang = 'ru', params = {}) {
     try {
-      const queryParams = new URLSearchParams(params);
-      const response = await fetch(`${API_BASE_URL}/api/hsm/programs/?${queryParams}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data.results || data;
+      const response = await apiRequest(buildApiUrl('/hsm/programs/', { ...params, lang }));
+      return response.results || response || fallbackData.programs;
     } catch (error) {
-      console.error('Error fetching programs:', error);
-      throw error;
+      console.warn('HSM Programs API failed, using fallback');
+      return fallbackData.programs;
     }
   }
 
-  /**
-   * Получить программы бакалавриата медицинских специальностей
-   */
-  async getBachelorPrograms() {
+  async getFaculty(lang = 'ru', params = {}) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/hsm/programs/bachelor/`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
+      const response = await apiRequest(buildApiUrl('/hsm/faculty/', { ...params, lang }));
+      return response.results || response || fallbackData.faculty;
     } catch (error) {
-      console.error('Error fetching bachelor programs:', error);
-      throw error;
+      console.warn('HSM Faculty API failed, using fallback');
+      return fallbackData.faculty;
     }
   }
 
-  /**
-   * Получить программы магистратуры по медицинским специальностям
-   */
-  async getMasterPrograms() {
+  async getAccreditations(lang = 'ru', params = {}) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/hsm/programs/master/`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
+      const response = await apiRequest(buildApiUrl('/hsm/accreditations/', { ...params, lang }));
+      return response.results || response || fallbackData.accreditations;
     } catch (error) {
-      console.error('Error fetching master programs:', error);
-      throw error;
+      console.warn('HSM Accreditations API failed, using fallback');
+      return fallbackData.accreditations;
     }
   }
 
-  /**
-   * Получить программу по ID
-   */
-  async getProgram(id) {
+  async getLearningGoals(lang = 'ru', params = {}) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/hsm/programs/${id}/`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
+      const response = await apiRequest(buildApiUrl('/hsm/learning-goals/', { ...params, lang }));
+      return response.results || response || fallbackData.learningGoals;
     } catch (error) {
-      console.error('Error fetching program:', error);
-      throw error;
+      console.warn('HSM Learning Goals API failed, using fallback');
+      return fallbackData.learningGoals;
     }
   }
 
-  /**
-   * Получить весь профессорско-преподавательский состав
-   */
-  async getFaculty(params = {}) {
-    try {
-      const queryParams = new URLSearchParams(params);
-      const url = `${API_BASE_URL}/api/hsm/faculty/?${queryParams}`;
-      console.log('HSM Service: Fetching faculty from URL:', url);
-      const response = await fetch(url);
-      console.log('HSM Service: Response status:', response.status);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      console.log('HSM Service: Faculty data received:', data);
-      return data.results || data;
-    } catch (error) {
-      console.error('Error fetching faculty:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Получить преподавателей по должностям
-   */
-  async getFacultyByPosition() {
-    try {
-      const url = `${API_BASE_URL}/api/hsm/faculty/by_position/`;
-      console.log('HSM Service: Fetching faculty by position from URL:', url);
-      const response = await fetch(url);
-      console.log('HSM Service: Response status for by_position:', response.status);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      console.log('HSM Service: Faculty by position data received:', data);
-      return data;
-    } catch (error) {
-      console.error('Error fetching faculty by position:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Получить преподавателя по ID
-   */
-  async getFacultyMember(id) {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/hsm/faculty/${id}/`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching faculty member:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Поиск преподавателей
-   */
-  async searchFaculty(searchQuery) {
-    try {
-      const params = new URLSearchParams({ search: searchQuery });
-      const response = await fetch(`${API_BASE_URL}/api/hsm/faculty/?${params}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data.results || data;
-    } catch (error) {
-      console.error('Error searching faculty:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Получить все аккредитации
-   */
-  async getAccreditations(params = {}) {
-    try {
-      const queryParams = new URLSearchParams(params);
-      const response = await fetch(`${API_BASE_URL}/api/hsm/accreditations/?${queryParams}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data.results || data;
-    } catch (error) {
-      console.error('Error fetching accreditations:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Получить аккредитации по типам
-   */
-  async getAccreditationsByType() {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/hsm/accreditations/by_type/`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching accreditations by type:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Получить только действующие аккредитации
-   */
-  async getValidAccreditations() {
-    try {
-      const params = new URLSearchParams({ valid_only: 'true' });
-      const response = await fetch(`${API_BASE_URL}/api/hsm/accreditations/?${params}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data.results || data;
-    } catch (error) {
-      console.error('Error fetching valid accreditations:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Получить цели и результаты обучения
-   */
-  async getLearningGoals(params = {}) {
-    try {
-      const queryParams = new URLSearchParams(params);
-      const response = await fetch(`${API_BASE_URL}/api/hsm/learning-goals/?${queryParams}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data.results || data;
-    } catch (error) {
-      console.error('Error fetching learning goals:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Получить цели обучения для конкретной программы
-   */
-  async getLearningGoalsForProgram(programId) {
-    try {
-      const params = new URLSearchParams({ program: programId });
-      const response = await fetch(`${API_BASE_URL}/api/hsm/learning-goals/?${params}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data.results || data;
-    } catch (error) {
-      console.error('Error fetching learning goals for program:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Получить статистику ВШМ (Высшая школа медицины)
-   */
-  async getHSMStats() {
+  async getHSMStats(lang = 'ru') {
     try {
       const [programs, faculty, accreditations] = await Promise.all([
-        this.getPrograms(),
-        this.getFaculty(),
-        this.getAccreditations()
+        this.getPrograms(lang),
+        this.getFaculty(lang),
+        this.getAccreditations(lang)
       ]);
 
       return {
@@ -274,12 +83,18 @@ class HSMService {
       };
     } catch (error) {
       console.error('Error fetching HSM stats:', error);
-      throw error;
+      return {
+        totalPrograms: 0,
+        bachelorPrograms: 0,
+        masterPrograms: 0,
+        totalFaculty: 0,
+        professors: 0,
+        totalAccreditations: 0,
+        validAccreditations: 0
+      };
     }
   }
 }
 
-// Создаем единственный экземпляр сервиса
 const hsmService = new HSMService();
-
 export default hsmService;

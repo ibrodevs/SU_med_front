@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { infrastructureAPI } from '../../services/infrastructureApi';
+import infrastructureService from '../../services/infrastructureService';
+import { hospitalsFallbackData } from '../../data/infrastructureFallbackData';
 
 
 const Hospitals = () => {
@@ -22,13 +23,16 @@ const fetchHospitals = async () => {
     setLoading(true);
     setError(null);
 
-    // Use the axios instance directly
-    const response = await infrastructureAPI.get('/hospitals/');
-    setHospitals(response.data.results || response.data);
+    const apiData = await infrastructureService.getHospitals();
+    
+    if (apiData && apiData.length > 0) {
+      setHospitals(apiData);
+    } else {
+      setHospitals(hospitalsFallbackData);
+    }
   } catch (err) {
-    console.error('Error fetching hospitals:', err);
-    setError(err.message || 'Failed to load hospitals');
-    setHospitals([]);
+    console.warn('Hospitals fetch failed, using fallback:', err);
+    setHospitals(hospitalsFallbackData);
   } finally {
     setLoading(false);
   }

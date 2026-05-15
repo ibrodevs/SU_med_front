@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { councilsAPI } from "../services/aboutSectionAPI";
+import aboutService from "../services/aboutService";
 
 /**
  * Custom hook for managing councils data
@@ -19,7 +19,7 @@ export const useCouncils = () => {
       setLoading(true);
       setError(null);
 
-      const data = await councilsAPI.getCouncils();
+      const data = await aboutService.getCouncils(i18n.language);
       
       // Validate and sanitize the data
       const sanitizedSectionsData = {};
@@ -152,7 +152,7 @@ export const useCouncilDetail = (slug) => {
       setLoading(true);
       setError(null);
 
-      const data = await councilsAPI.getCouncilDetail(councilSlug);
+      const data = await aboutService.getCouncilDetail(councilSlug, i18n.language);
       
       // Sanitize the data
       const sanitizedData = data ? {

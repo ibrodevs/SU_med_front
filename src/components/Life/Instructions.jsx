@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { studentLifeAPI } from '../../services/studentLifeService';
+import studentLifeService from '../../services/studentLifeService';
 import {
   DocumentTextIcon,
   ClipboardDocumentListIcon,
@@ -50,17 +50,7 @@ const Instructions = () => {
         setLoading(true);
         console.log('Fetching instructions data...');
 
-        const response = await studentLifeAPI.getInstructions();
-        console.log('Instructions response:', response.data);
-
-        // Handle response structure
-        let data = [];
-        if (response.data && response.data.student_guides) {
-          data = response.data.student_guides;
-        } else if (Array.isArray(response.data)) {
-          data = response.data;
-        }
-
+        const data = await studentLifeService.getInstructions(i18n.language);
         console.log('Processed instructions data:', data);
         setInstructionsData(data);
         setError(null);
@@ -74,7 +64,7 @@ const Instructions = () => {
     };
 
     fetchInstructions();
-  }, []);
+  }, [i18n.language]);
 
   // Загрузка сохраненных инструкций из localStorage
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { researchAPI } from '../../services/researchService';
+import researchService from '../../services/researchService';
 
 const Conferences = () => {
   const { t, i18n } = useTranslation();
@@ -50,34 +50,16 @@ const Conferences = () => {
   const fetchConferences = async (status = 'upcoming') => {
     try {
       setLoading(true);
-      let response;
-
-      if (status === 'upcoming') {
-        response = await researchAPI.getUpcomingConferences();
-      } else if (status === 'archive') {
-        // For archive, get all conferences and filter past ones
-        response = await researchAPI.getConferences();
-      } else if (status === 'international') {
-        response = await researchAPI.getConferences();
-      } else if (status === 'national') {
-        response = await researchAPI.getConferences();
-      } else {
-        response = await researchAPI.getConferences();
-      }
-
-      // Extract the conferences array from the response
-      const allConferences = extractConferencesArray(response);
+      const allConferences = await researchService.getConferences(i18n.language);
       
       let filteredConferences = [];
+      const now = new Date();
 
-      // Apply filters based on section
       if (status === 'upcoming') {
-        const now = new Date();
         filteredConferences = allConferences.filter(conf => 
           conf.start_date && new Date(conf.start_date) >= now
         );
       } else if (status === 'archive') {
-        const now = new Date();
         filteredConferences = allConferences.filter(conf => 
           conf.end_date && new Date(conf.end_date) < now
         );

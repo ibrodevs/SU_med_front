@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { researchAPI } from '../../services/researchService';
+import researchService from '../../services/researchService';
 
 // Константы для переиспользования
 const SECTION_CONFIG = {
@@ -43,27 +43,20 @@ const Grants = () => {
     fetchGrants();
   }, []);
 
-  const fetchGrants = async (endpoint = 'grants') => {
+  const fetchGrants = async (status = 'all') => {
     try {
       setLoading(true);
       let data;
 
-      const endpoints = {
-        'grants/active': () => researchAPI.getActiveGrants(),
-        'grants/upcoming': () => researchAPI.getUpcomingGrants(),
-        'grants': () => researchAPI.getGrants()
-      };
-
-      data = await endpoints[endpoint]();
-
-      if (data?.results) {
-        setGrants(data.results);
-      } else if (Array.isArray(data)) {
-        setGrants(data);
+      if (status === 'active') {
+        data = await researchService.getActiveGrants(i18n.language);
+      } else if (status === 'upcoming') {
+        data = await researchService.getUpcomingGrants(i18n.language);
       } else {
-        setGrants([]);
+        data = await researchService.getGrants(i18n.language);
       }
 
+      setGrants(data);
       setError(null);
     } catch (err) {
       setError(t('research.grants.errorLoading') || 'Ошибка загрузки');

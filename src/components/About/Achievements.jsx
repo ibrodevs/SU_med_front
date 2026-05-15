@@ -1,7 +1,7 @@
 // components/AchievementsPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { newAboutAPI } from '../../services/newAboutAPI';
+import aboutService from '../../services/aboutService';
 
 // Компонент карточки достижения (вынесен из основного компонента для исправления Hook ordering)
 const AchievementCard = ({ achievement, index, getBorderColor, t }) => {
@@ -105,26 +105,13 @@ const AchievementsPage = () => {
         const apiLang = langMapping[i18n.language] || 'ru';
 
         // Fetch achievements and statistics in parallel
-        const [achievementsResponse, statisticsResponse] = await Promise.all([
-          newAboutAPI.getAchievements(apiLang),
-          newAboutAPI.getStatistics(apiLang)
+        const [achievementsData, statisticsData] = await Promise.all([
+          aboutService.getAchievements(i18n.language),
+          aboutService.getStatistics(i18n.language)
         ]);
 
-        if (achievementsResponse.data && achievementsResponse.data.success && achievementsResponse.data.data && achievementsResponse.data.data.length > 0) {
-          // Data is already in the correct format from backend
-          setAchievements(achievementsResponse.data.data);
-        } else {
-          // Set empty achievements if no API data
-          setAchievements([]);
-        }
-
-        if (statisticsResponse.data && statisticsResponse.data.success && statisticsResponse.data.data && statisticsResponse.data.data.length > 0) {
-          // Data is already in the correct format from backend
-          setStatistics(statisticsResponse.data.data);
-        } else {
-          // Set empty statistics if no API data
-          setStatistics([]);
-        }
+        setAchievements(achievementsData);
+        setStatistics(statisticsData);
 
       } catch (err) {
         console.error('Error fetching achievements data:', err);

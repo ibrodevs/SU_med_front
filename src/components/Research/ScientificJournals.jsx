@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { researchAPI } from '../../services/researchService';
+import researchService from '../../services/researchService';
 
 const ScientificJournals = () => {
   const { t, i18n } = useTranslation();
@@ -23,21 +23,10 @@ const ScientificJournals = () => {
     try {
       console.log('🔍 Journals: Starting to fetch journals...');
       setLoading(true);
-      const data = await researchAPI.getScientificJournals();
+      const data = await researchService.getScientificJournals(i18n.language);
       console.log('✅ Journals: Received data:', data);
-      console.log('📚 Journals: Data type:', typeof data, 'Array?', Array.isArray(data));
 
-      if (data && data.results) {
-        console.log('📚 Journals: Using data.results:', data.results.length, 'items');
-        setJournalsData(data.results);
-      } else if (Array.isArray(data)) {
-        console.log('📚 Journals: Using data directly:', data.length, 'items');
-        setJournalsData(data);
-      } else {
-        console.log('📚 Journals: Data format unexpected, setting empty array');
-        setJournalsData([]);
-      }
-
+      setJournalsData(data);
       setError(null);
     } catch (err) {
       console.error('❌ Journals: Error fetching journals:', err);

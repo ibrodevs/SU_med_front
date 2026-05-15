@@ -17,6 +17,7 @@ import {
   ChevronUpIcon,
   ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
+import { getDormitories } from '../../services/infrastructureService';
 
 // Error Boundary Component
 const ErrorBoundary = ({ children, fallback }) => {
@@ -74,17 +75,13 @@ const Dormitories = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const fetchDormitories = async () => {
+    const fetchDorms = async () => {
       try {
         setLoading(true);
-        // Имитация загрузки с красивой анимацией
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Add a small delay for animation feel if needed, but the service handles fetching
+        const dormitoriesData = await getDormitories(i18n.language);
         
-        const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/infrastructure/dormitories/');
-        if (response.ok) {
-          const data = await response.json();
-          const dormitoriesData = Array.isArray(data.results) ? data.results : Array.isArray(data) ? data : [];
-          
+        if (dormitoriesData && dormitoriesData.length > 0) {
           // Ensure each dormitory has required properties
           const processedData = dormitoriesData.map(dorm => ({
             ...dorm,
@@ -134,18 +131,18 @@ const Dormitories = () => {
           
           setDormitories(processedData);
         } else {
-          throw new Error('Failed to fetch dormitories');
+          setDormitories(getMockDormitories());
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error fetching dormitories:', error);
         setDormitories(getMockDormitories());
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDormitories();
-  }, []);
+    fetchDorms();
+  }, [i18n.language]);
 
   const getMockDormitories = () => {
     return [

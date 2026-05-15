@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getAcademicBuildings } from '../../services/infrastructureService';
 
 const AcademicBuildings = () => {
   const { t, i18n } = useTranslation();
@@ -11,21 +12,17 @@ const AcademicBuildings = () => {
   const [activeTab, setActiveTab] = useState('overview'); // Для деталей здания
 
   useEffect(() => {
-    // Fetch academic buildings from Django API
     const fetchBuildings = async () => {
       try {
-        const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/infrastructure/academic-buildings/');
-        if (response.ok) {
-          const data = await response.json();
-          const buildingsData = data.results || data;
-          setBuildings(buildingsData);
+        setLoading(true);
+        const data = await getAcademicBuildings(i18n.language);
+        if (data && data.length > 0) {
+          setBuildings(data);
         } else {
-          // Fallback to mock data if API fails
           setBuildings(getMockBuildings());
         }
       } catch (error) {
         console.error('Error fetching academic buildings:', error);
-        // Fallback to mock data if API fails
         setBuildings(getMockBuildings());
       } finally {
         setLoading(false);
@@ -33,7 +30,7 @@ const AcademicBuildings = () => {
     };
 
     fetchBuildings();
-  }, []);
+  }, [i18n.language]);
 
   const getMockBuildings = () => {
     return [

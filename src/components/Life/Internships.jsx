@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapPinIcon, DocumentArrowDownIcon, ClockIcon, CheckCircleIcon, ArrowRightIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { getMultilingualText, adaptMultilingualArray } from '../../utils/multilingualUtils';
+import { getInternships } from '../../services/studentLifeService';
 
 const Internships = () => {
   const { t, i18n } = useTranslation();
@@ -24,7 +25,7 @@ const Internships = () => {
   // Загрузка данных с API
   useEffect(() => {
     fetchInternshipsData();
-  }, []);
+  }, [i18n.language]);
 
   // Обновление данных при смене языка
   useEffect(() => {
@@ -60,13 +61,7 @@ const Internships = () => {
       setLoading(true);
       setError(null);
 
-      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/student-life/api/data/internships_data/');
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
+      const result = await getInternships(i18n.language);
 
       // Сохраняем оригинальные данные
       setRawData(result);

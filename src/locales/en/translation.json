@@ -5941,8 +5941,7 @@
       "joinProject": "Join project"
     },
     "noResults": {
-            "clearFilters": "Clear filters"
-,
+      "clearFilters": "Clear filters",
       "title": "No opportunities found",
       "description": "Try changing your search parameters or select another category"
     }

@@ -9,6 +9,7 @@ import {
   MapPinIcon
 } from '@heroicons/react/24/outline';
 import { getMultilingualText } from '../../utils/multilingualUtils';
+import { getMobility } from '../../services/studentLifeService';
 
 const AcademicMobility = () => {
   const { t, i18n } = useTranslation();
@@ -26,7 +27,7 @@ const AcademicMobility = () => {
 
   useEffect(() => {
     fetchAcademicMobilityData();
-  }, []);
+  }, [i18n.language]);
 
   // Обновление данных при смене языка
   useEffect(() => {
@@ -69,13 +70,7 @@ const AcademicMobility = () => {
   const fetchAcademicMobilityData = async () => {
     try {
       setLoading(true);
-      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/student-life/api/data/academic_mobility_data/');
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const result = await response.json();
+      const result = await getMobility(i18n.language);
       
       // Сохраняем оригинальные данные
       setRawData(result);
@@ -83,8 +78,7 @@ const AcademicMobility = () => {
       setError(null);
     } catch (err) {
       console.error('Error fetching academic mobility data:', err);
-      setError('Ошибка загрузки данных с сервера. Проверьте подключение к API.');
-      // Устанавливаем пустые данные в случае ошибки
+      setError('Ошибка загрузки данных с сервера.');
       setData({
         partner_universities: [],
         exchange_opportunities: []

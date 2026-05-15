@@ -121,6 +121,10 @@ const NewsDetail = () => {
     const path = article.image_url || article.image;
     if (!path) return '/placeholder-news.jpg';
     
+    if (article.is_external && path.startsWith('http')) {
+      return path;
+    }
+
     if (path.startsWith('http')) {
       return `https://images.weserv.nl/?url=${encodeURIComponent(path)}&w=1200`;
     }
@@ -267,7 +271,7 @@ const NewsDetail = () => {
             <div className="flex flex-wrap items-center gap-6 text-gray-600 mb-8">
               <div className="flex items-center">
                 <Calendar className="w-5 h-5 mr-2" />
-                {formatDate(article.published_at || article.created_at)}
+                {formatDate(article.published_at || article.created_at || article.date)}
               </div>
               {article.author && (
                 <div className="flex items-center">

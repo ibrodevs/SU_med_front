@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import careersAPI from '../../services/careersAPI';
+import careersService from '../../services/careersService';
 
 const VacancyDetail = () => {
   const { t, i18n } = useTranslation();
@@ -27,7 +27,7 @@ const VacancyDetail = () => {
   const loadVacancy = async () => {
     try {
       setLoading(true);
-      const data = await careersAPI.getVacancy(id);
+      const data = await careersService.getVacancy(id, i18n.language);
       setVacancy(data);
     } catch (err) {
       console.error('Error loading vacancy:', err);
@@ -83,7 +83,7 @@ const VacancyDetail = () => {
       });
       formData.append('vacancy', vacancy.id);
 
-      await careersAPI.submitApplication(formData);
+      await careersService.submitApplication(formData);
       alert(t('careers.application.success'));
       setShowApplication(false);
       setApplicationData({

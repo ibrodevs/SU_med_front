@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import socialOpportunitiesService from '../../services/socialOpportunitiesService';
 
 const SocOp = () => {
   const { t, i18n } = useTranslation();
@@ -27,18 +27,15 @@ const SocOp = () => {
         setLoading(true);
         setError(null);
 
-        const baseURL = 'http://localhost:8000/api/social-opportunities';
-
-        const [eventsResponse, clubsResponse, projectsResponse] = await Promise.all([
-          axios.get(`${baseURL}/events/`),
-          axios.get(`${baseURL}/clubs/`),
-          axios.get(`${baseURL}/projects/`)
+        const [eventsData, clubsData, projectsData] = await Promise.all([
+          socialOpportunitiesService.getEvents(i18n.language),
+          socialOpportunitiesService.getClubs(i18n.language),
+          socialOpportunitiesService.getProjects(i18n.language)
         ]);
 
-        // Обрабатываем пагинированные ответы
-        setEvents(eventsResponse.data.results || eventsResponse.data);
-        setClubs(clubsResponse.data.results || clubsResponse.data);
-        setProjects(projectsResponse.data.results || projectsResponse.data);
+        setEvents(eventsData);
+        setClubs(clubsData);
+        setProjects(projectsData);
       } catch (err) {
         console.error('Error fetching data:', err);
         setError('Ошибка загрузки данных');

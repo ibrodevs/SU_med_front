@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { newAboutAPI } from '../../services/newAboutAPI';
+import aboutService from '../../services/aboutService';
 import { getManagement } from '../../services/teachers';
 
 const StructurePage = () => {
@@ -9,6 +9,8 @@ const StructurePage = () => {
   const [activeSection, setActiveSection] = useState('leadership');
   const [expandedFaculties, setExpandedFaculties] = useState([]);
   const [managementData, setManagementData] = useState(null);
+  const [facultiesData, setFacultiesData] = useState([]);
+  const [administrativeData, setAdministrativeData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Animation on mount
@@ -16,23 +18,27 @@ const StructurePage = () => {
     setIsVisible(true);
   }, []);
 
-  // Загружаем данные руководства с API
+  // Загружаем данные с API
   useEffect(() => {
-    const fetchManagementData = async () => {
+    const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getManagement();
-        if (data && data.length > 0) {
-          setManagementData(data[0]);
-        }
+        const [mgmt, facs, admin] = await Promise.all([
+          getManagement(i18n.language),
+          aboutService.getStructure(i18n.language, 'faculty'),
+          aboutService.getStructure(i18n.language, 'administrative')
+        ]);
+        setManagementData(mgmt);
+        setFacultiesData(facs);
+        setAdministrativeData(admin);
       } catch (error) {
-        console.error('Ошибка загрузки данных руководства:', error);
+        console.error('Ошибка загрузки данных структуры:', error);
       } finally {
         setLoading(false);
       }
     };
-    fetchManagementData();
-  }, []);
+    fetchData();
+  }, [i18n.language]);
 
   const sections = [
     { id: 'leadership', name: t('structure.leadership.title'), icon: '👑' },
@@ -171,18 +177,22 @@ const StructurePage = () => {
       );
     }
 
-    // Собираем всех сотрудников в плоский список (без иерархии)
-    const collectAllMembers = (node) => {
-      const members = [node];
-      if (node.children && node.children.length > 0) {
-        node.children.forEach(child => {
-          members.push(...collectAllMembers(child));
-        });
-      }
-      return members;
-    };
-
-    const allMembers = collectAllMembers(managementData);
+    // Собираем всех сотрудников в плоский список
+    let allMembers = [];
+    if (Array.isArray(managementData)) {
+      allMembers = managementData;
+    } else if (managementData) {
+      const collectAllMembers = (node) => {
+        const members = [node];
+        if (node.children && node.children.length > 0) {
+          node.children.forEach(child => {
+            members.push(...collectAllMembers(child));
+          });
+        }
+        return members;
+      };
+      allMembers = collectAllMembers(managementData);
+    }
 
     return (
       <div className="space-y-6">
@@ -226,8 +236,6 @@ const StructurePage = () => {
   };
 
   const renderFacultiesContent = () => {
-    const currentData = structureData.faculties;
-
     return (
       <div className="space-y-6">
         <div className="flex items-center mb-6">
@@ -235,12 +243,12 @@ const StructurePage = () => {
             <span className="text-2xl">🎓</span>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
-            {currentData.title}
+            {t('structure.faculties.title')}
           </h2>
         </div>
 
         <div className="space-y-6">
-          {currentData.items.map((faculty, index) => {
+          {facultiesData.length > 0 ? facultiesData.map((faculty, index) => {
             const isExpanded = expandedFaculties.includes(faculty.name);
 
             return (
@@ -256,10 +264,10 @@ const StructurePage = () => {
                       </div>
                       <div className="flex-1">
                         <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                          {faculty.name}
+                          {getLocalizedText(faculty, 'name')}
                         </h3>
                         <p className="text-gray-600">
-                          <span className="font-medium">{t('structure.labels.dean')}:</span> {faculty.head}
+                          <span className="font-medium">{t('structure.labels.dean')}:</span> {getLocalizedText(faculty, 'head')}
                         </p>
                       </div>
                     </div>
@@ -279,7 +287,7 @@ const StructurePage = () => {
                     </button>
                   </div>
 
-                  {isExpanded && (
+                  {isExpanded && faculty.departments && (
                     <div className="mt-6 pl-16">
                       <h4 className="font-semibold text-gray-800 mb-4">{t('structure.labels.departments')}:</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -292,7 +300,7 @@ const StructurePage = () => {
                               <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold mr-3">
                                 {deptIndex + 1}
                               </div>
-                              <span className="text-blue-800">{department}</span>
+                              <span className="text-blue-800">{getLocalizedText(department, 'name')}</span>
                             </div>
                           </div>
                         ))}
@@ -302,15 +310,17 @@ const StructurePage = () => {
                 </div>
               </div>
             );
-          })}
+          }) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500">{t('structure.faculties.notFound')}</p>
+            </div>
+          )}
         </div>
       </div>
     );
   };
 
   const renderAdministrativeContent = () => {
-    const currentData = structureData.administrative;
-
     return (
       <div className="space-y-6">
         <div className="flex items-center mb-6">
@@ -318,12 +328,12 @@ const StructurePage = () => {
             <span className="text-2xl">🏢</span>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
-            {currentData.title}
+            {t('structure.administrative.title')}
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {currentData.items.map((item, index) => (
+          {administrativeData.length > 0 ? administrativeData.map((item, index) => (
             <div
               key={index}
               className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 border border-purple-100 hover:shadow-md transition-all duration-300"
@@ -334,22 +344,28 @@ const StructurePage = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                    {item.name}
+                    {getLocalizedText(item, 'name')}
                   </h3>
                   <div className="space-y-2">
                     <p className="text-gray-600 flex items-center">
                       <span className="font-medium mr-2">{t('structure.labels.leader')}:</span>
-                      <span className="text-purple-600">{item.head}</span>
+                      <span className="text-purple-600">{getLocalizedText(item, 'head')}</span>
                     </p>
-                    <p className="text-gray-600 flex items-center">
-                      <span className="font-medium mr-2">{t('structure.labels.phone')}:</span>
-                      <span className="text-purple-500">{item.phone}</span>
-                    </p>
+                    {item.phone && (
+                      <p className="text-gray-600 flex items-center">
+                        <span className="font-medium mr-2">{t('structure.labels.phone')}:</span>
+                        <span className="text-purple-500">{item.phone}</span>
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-          ))}
+          )) : (
+            <div className="col-span-2 text-center py-12">
+              <p className="text-gray-500">{t('structure.administrative.notFound')}</p>
+            </div>
+          )}
         </div>
       </div>
     );

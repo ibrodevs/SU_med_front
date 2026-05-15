@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getLaboratories } from '../../services/infrastructureService';
 
 const Laboratories = () => {
   const { t, i18n } = useTranslation();
@@ -9,30 +10,25 @@ const Laboratories = () => {
   const [activeTab, setActiveTab] = useState('all');
 
   useEffect(() => {
-    // Fetch laboratories from Django API
-    const fetchLaboratories = async () => {
+    const fetchLabs = async () => {
       try {
-        const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/infrastructure/laboratories/');
-        if (response.ok) {
-          const data = await response.json();
-          const labsData = data.results || data;
-          setLaboratories(labsData);
+        setLoading(true);
+        const data = await getLaboratories(i18n.language);
+        if (data && data.length > 0) {
+          setLaboratories(data);
         } else {
-          console.error('Failed to fetch laboratories:', response.statusText);
-          // Fallback to mock data if API fails
           setLaboratories(getMockLaboratories());
         }
       } catch (error) {
         console.error('Error fetching laboratories:', error);
-        // Fallback to mock data if API fails
         setLaboratories(getMockLaboratories());
       } finally {
         setLoading(false);
       }
     };
 
-    fetchLaboratories();
-  }, []);
+    fetchLabs();
+  }, [i18n.language]);
 
   const getMockLaboratories = () => {
     return [

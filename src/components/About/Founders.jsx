@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { newAboutAPI } from '../../services/newAboutAPI';
+import aboutService from '../../services/aboutService';
 
 const Founders = () => {
   const { t, i18n } = useTranslation();
@@ -15,11 +15,8 @@ const Founders = () => {
     const fetchFounders = async () => {
       try {
         setLoading(true);
-        const response = await newAboutAPI.getUniversityFounders();
-
-        if (response.data && response.data.results) {
-          setFoundersData(response.data.results);
-        }
+        const data = await aboutService.getFounders(i18n.language);
+        setFoundersData(data);
         setError(null);
       } catch (err) {
         console.error('Error fetching founders:', err);

@@ -15,7 +15,8 @@ class PartnersService {
   static async getAllPartners(language = 'ru') {
     try {
       const endpoint = API_CONFIG.ENDPOINTS.ABOUT_SECTION.PARTNERS_FRONTEND;
-      const url = `${API_CONFIG.BASE_URL}${endpoint}?lang=${language}`;
+      // buildApiUrl handles the base URL and query params
+      const url = buildApiUrl(endpoint, { lang: language });
       
       const response = await fetch(url, {
         headers: {
@@ -31,8 +32,9 @@ class PartnersService {
       const data = await response.json();
       return data.data || data.partners || data;
     } catch (error) {
-      console.error('Error fetching partners:', error);
-      throw error;
+      console.warn('Error fetching partners from API, using fallback data:', error);
+      const { partnersFallbackData } = await import('../data/aboutFallbackData');
+      return partnersFallbackData;
     }
   }
   

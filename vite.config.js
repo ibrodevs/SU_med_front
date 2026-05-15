@@ -14,7 +14,7 @@ export default defineConfig({
         target: 'https://su-med-backend-35d3d951c74b.herokuapp.com',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/proxy-backend/, '/api')
+        rewrite: (path) => path.replace(/^\/proxy-backend/, '')
       },
       '/media': {
         target: 'https://su-med-backend-35d3d951c74b.herokuapp.com',

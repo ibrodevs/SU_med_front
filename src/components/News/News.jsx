@@ -27,23 +27,38 @@ const News = () => {
     try {
       setLoading(true);
       setError(null);
-      
-      // Fetch local news
-      const response = await fetch(`${API_BASE_URL}/news`, {
-        headers: {
-          'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      let localNews = [];
-      if (response.ok) {
-        const data = await response.json();
-        localNews = data.results || data;
-      }
 
-      // Fetch external news
-      const externalNews = await fetchExternalNews();
+      const localNewsRequest = async () => {
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(() => controller.abort(), 10000);
+
+        try {
+          const response = await fetch(`${API_BASE_URL}/news`, {
+            headers: {
+              'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
+              'Content-Type': 'application/json'
+            },
+            signal: controller.signal,
+          });
+
+          if (!response.ok) {
+            return [];
+          }
+
+          const data = await response.json();
+          return data.results || data;
+        } finally {
+          window.clearTimeout(timeoutId);
+        }
+      };
+
+      const [localResult, externalResult] = await Promise.allSettled([
+        localNewsRequest(),
+        fetchExternalNews(),
+      ]);
+
+      const localNews = localResult.status === 'fulfilled' ? localResult.value : [];
+      const externalNews = externalResult.status === 'fulfilled' ? externalResult.value : [];
 
       // Merge and sort
       const allNews = [...localNews, ...externalNews].sort((a, b) => {
@@ -107,6 +122,10 @@ const News = () => {
     const path = item.image_url || item.image;
     if (!path) return '/placeholder-news.jpg';
     
+    if (item.is_external && path.startsWith('http')) {
+      return path;
+    }
+
     if (path.startsWith('http')) {
       // Используем прокси для обхода защиты от хотлинкинга
       return `https://images.weserv.nl/?url=${encodeURIComponent(path)}&w=800`;

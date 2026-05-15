@@ -1,28 +1,29 @@
-import axios from 'axios';
+import { apiRequest, buildApiUrl } from '../config/api';
+import { teachersFallbackData, managementFallbackData } from '../data/teachersFallbackData';
 
-const API_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/teachers/';
-const API_MANAGEMENT_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/management/';
-
-export const getTeachers = async () => {
+export const getTeachers = async (lang = 'ru') => {
     try {
-        const response = await axios.get(API_URL);
-        console.log("Teachers API response:", response.data);
-        return response.data.results || [];
+        const response = await apiRequest(buildApiUrl('/api/teachers/', { lang }));
+        return response.results || response || teachersFallbackData;
     } catch (error) {
-        console.error("Error fetching teachers:", error);
-        return [];
+        console.warn("Error fetching teachers, using fallback:", error);
+        return teachersFallbackData;
     }
 };
 
-export const getManagement = async () => {
+export const getManagement = async (lang = 'ru') => {
     try {
-        console.log('Making request to:', API_MANAGEMENT_URL);
-        const response = await axios.get(API_MANAGEMENT_URL);
-        console.log("Management API response:", response.data);
-        return response.data.results || [];
+        const response = await apiRequest(buildApiUrl('/api/management/', { lang }));
+        return response.results || response || managementFallbackData;
     } catch (error) {
-        console.error("Error fetching management:", error);
-        console.error("Error details:", error.response?.data || error.message);
-        return [];
+        console.warn("Error fetching management, using fallback:", error);
+        return managementFallbackData;
     }
 };
+
+const teachersService = {
+    getTeachers,
+    getManagement
+};
+
+export default teachersService;

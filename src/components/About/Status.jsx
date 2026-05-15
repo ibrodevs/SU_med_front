@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { hsmAPI } from "../../services/hsmAPI";
+import hsmService from "../../services/hsmService";
 
 const Status = () => {
   const { t, i18n } = useTranslation();
@@ -16,8 +16,8 @@ const Status = () => {
       setLoading(true);
       setError(null);
 
-      const data = await hsmAPI.getAccreditations({ valid_only: false });
-      setAccreditationData(data.results || data || []);
+      const data = await hsmService.getAccreditations(i18n.language);
+      setAccreditationData(data);
     } catch (err) {
       console.error("Error fetching accreditations:", err);
       setError(t("hsm.loading_error"));

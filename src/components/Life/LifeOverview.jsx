@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getLifeOverview } from '../../services/studentLifeService';
 
 const LifeOverview = () => {
   const { t } = useTranslation();
@@ -21,11 +22,7 @@ const LifeOverview = () => {
     const fetchLifeData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/student-life/api/data/life_overview_data/');
-        if (!response.ok) {
-          throw new Error('Failed to fetch life overview data');
-        }
-        const data = await response.json();
+        const data = await getLifeOverview(i18n.language);
         setLifeData(data);
       } catch (err) {
         setError(err.message);
@@ -36,7 +33,7 @@ const LifeOverview = () => {
     };
 
     fetchLifeData();
-  }, []);
+  }, [i18n.language]);
 
   // Генерируем SVG placeholder
   const generatePlaceholder = (text, width = 400, height = 250, type = 'photo') => {

@@ -12,7 +12,6 @@ import Careers from "./components/About/Careers";
 import VacancyDetail from "./components/About/VacancyDetail";
 import Partners from "./components/About/Partners";
 import Mission from "./components/About/Mission";
-import MissionDebug from "./components/About/MissionDebug";
 import Regulations from "./components/About/Regulations";
 import Status from "./components/About/Status";
 import Advices from "./components/About/Advices";
@@ -46,6 +45,7 @@ import StudentCalendar from "./components/academics/calendar";
 import StudentEResources from "./components/Life/EResources";
 import AcadOp from "./components/Life/AcadOp";
 import SocOp from "./components/Life/SocOp";
+import CampusEvents from "./components/Life/CampusEvents";
 
 import AdmissionsOverview from "./components/Admissions/AdmissionsOverview";
 import Requirements from "./components/Admissions/Requirements";
@@ -66,6 +66,7 @@ import Committee from "./components/Admissions/Committee";
 import Courses from "./components/Admissions/Courses";
 import Procedure from "./components/Admissions/Procedure";
 import Payments from "./components/Admissions/Payments";
+import Scholarships from "./components/Admissions/Scholarships";
 
 import News from "./components/News/News";
 import NewsDetail from "./components/News/NewsDetail";
@@ -122,7 +123,6 @@ function App() {
             <Route path="/about/careers/:id" element={<VacancyDetail />} />
             <Route path="/about/partners" element={<Partners />} />
             <Route path="/about/mission" element={<Mission />} />
-            <Route path="/about/mission-debug" element={<MissionDebug />} />
             <Route path="/about/advices" element={<Advices />} />
             <Route path="/about/status" element={<Status />} />
             <Route path="/about/founders" element={<Founders />} />
@@ -209,10 +209,10 @@ function App() {
             <Route path="/admission" element={<AdmissionsOverview />} />
             <Route path="/admission/requirements" element={<Requirements />} />
             <Route path="/admission/tuition" element={<Tuition />} />
-            <Route path="/admission/scholarships" element={<Page title="Scholarships" />} />
+            <Route path="/admission/scholarships" element={<Scholarships />} />
             <Route path="/admission/apply" element={<OnlineApplication />} />
             <Route path="/campus-life" element={<LifeOverview />} />
-            <Route path="/campus-life/events" element={<Page title="Campus Events" />} />
+            <Route path="/campus-life/events" element={<CampusEvents />} />
             <Route path="/campus-life/clubs" element={<ClubsSection />} />
             <Route path="/campus-life/gallery" element={<Gallery />} />
             <Route path="/campus-life/international" element={<InternationalStudents />} />

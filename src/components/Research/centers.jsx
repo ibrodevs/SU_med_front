@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import researchService from '../../services/researchService';
 
 const Centers = () => {
   const { t, i18n } = useTranslation();
@@ -31,17 +32,8 @@ const Centers = () => {
   const fetchCenters = async () => {
     try {
       setLoading(true);
-      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/centers/');
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      // API может возвращать paginated результаты
-      const centersData = data.results || data;
-      setResearchCenters(centersData);
+      const data = await researchService.getResearchCenters(i18n.language);
+      setResearchCenters(data);
       setError(null);
     } catch (err) {
       console.error('Error fetching centers:', err);

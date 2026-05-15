@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import studentLifeService from '../../services/studentLifeService';
 
 const ClubsSection = () => {
   const { t, i18n } = useTranslation();
@@ -22,8 +22,8 @@ const ClubsSection = () => {
         setLoading(true);
         setError(null);
 
-        const response = await axios.get('http://localhost:8000/api/social-opportunities/clubs/');
-        setClubs(response.data.results || response.data);
+        const data = await studentLifeService.getClubs(i18n.language);
+        setClubs(data);
       } catch (err) {
         console.error('Error fetching clubs:', err);
         setError('Ошибка загрузки данных клубов');
@@ -33,7 +33,7 @@ const ClubsSection = () => {
     };
 
     fetchClubs();
-  }, []);
+  }, [i18n.language]);
 
   // Функция для получения правильного поля в зависимости от языка
   const getLocalizedField = (item, fieldName) => {

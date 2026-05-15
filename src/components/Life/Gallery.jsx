@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getGallery } from '../../services/studentLifeService';
 
 const Gallery = () => {
   const { t } = useTranslation();
@@ -19,11 +20,7 @@ const Gallery = () => {
     const fetchGalleryData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/student-life/api/data/gallery_data/');
-        if (!response.ok) {
-          throw new Error('Failed to fetch gallery data');
-        }
-        const data = await response.json();
+        const data = await getGallery(i18n.language);
         setGalleryData(data);
       } catch (err) {
         setError(err.message);
@@ -34,7 +31,7 @@ const Gallery = () => {
     };
 
     fetchGalleryData();
-  }, []);
+  }, [i18n.language]);
 
   // Получение переведенных данных
   const getTranslatedAlbums = () => {

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { accreditationsAPI } from "../services/aboutSectionAPI";
+import aboutService from "../services/aboutService";
 
 /**
  * Custom hook for managing accreditations data
@@ -20,7 +20,7 @@ export const useAccreditations = (initialType = "all") => {
         setLoading(true);
         setError(null);
 
-        const data = await accreditationsAPI.getAccreditations(type);
+        const data = await aboutService.getAccreditations(type, i18n.language);
         setAccreditations(data);
       } catch (err) {
         setError(err.message || "Failed to fetch accreditations");
@@ -32,15 +32,14 @@ export const useAccreditations = (initialType = "all") => {
     [filter]
   );
 
-  // Fetch accreditation types
   const fetchTypes = useCallback(async () => {
     try {
-      const typesList = await accreditationsAPI.getAccreditationTypes();
+      const typesList = await aboutService.getAccreditationTypes(i18n.language);
       setTypes(typesList);
     } catch (err) {
       console.error("Error fetching accreditation types:", err);
     }
-  }, []);
+  }, [i18n.language]);
 
   // Initial data fetch and refetch when language changes
   useEffect(() => {
@@ -124,8 +123,9 @@ export const useAccreditationDetail = (id) => {
       setLoading(true);
       setError(null);
 
-      const data = await accreditationsAPI.getAccreditationDetail(
-        accreditationId
+      const data = await aboutService.getAccreditationDetail(
+        accreditationId,
+        i18n.language
       );
       setAccreditation(data);
     } catch (err) {

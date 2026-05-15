@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import VacancyCard from './VacancyCard';
-import careersAPI from '../../services/careersAPI';
+import careersService from '../../services/careersService';
 import './About.css';
 
 const CareersMain = () => {
@@ -34,36 +34,19 @@ const CareersMain = () => {
       setLoading(true);
       
       const [categoriesData, vacanciesData] = await Promise.all([
-        careersAPI.getCategories(),
-        careersAPI.getVacancies()
+        careersService.getCategories(i18n.language),
+        careersService.getVacancies(i18n.language)
       ]);
-      
-      // Handle categories data - ensure it's an array
-      const categories = Array.isArray(categoriesData) 
-        ? categoriesData 
-        : (categoriesData?.results || []);
-      
-      // Add fallback for empty translations
-      const processedCategories = categories.map(category => ({
-        ...category,
-        display_name: category.display_name || category.name || 'Unknown Category'
-      }));
       
       setCategories([
         { name: 'all', display_name: t('careers.categories.all') },
-        ...processedCategories
+        ...categoriesData
       ]);
       
-      // Handle vacancies data
-      const vacancies = Array.isArray(vacanciesData) 
-        ? vacanciesData 
-        : (vacanciesData?.results || []);
-      
-      setVacancies(vacancies);
+      setVacancies(vacanciesData);
     } catch (err) {
       console.error('Error loading initial data:', err);
       setError(err.message);
-      // No fallback data - show error instead
       setCategories([
         { name: 'all', display_name: t('careers.categories.all') }
       ]);
@@ -76,14 +59,8 @@ const CareersMain = () => {
   const loadVacancies = async () => {
     try {
       const params = filterCategory === 'all' ? {} : { category: filterCategory };
-      const data = await careersAPI.getVacancies(params);
-      
-      // Handle vacancies data - ensure it's an array
-      const vacancies = Array.isArray(data) 
-        ? data 
-        : (data?.results || []);
-      
-      setVacancies(vacancies);
+      const data = await careersService.getVacancies(i18n.language, params);
+      setVacancies(data);
     } catch (err) {
       console.error('Error loading vacancies:', err);
       setError(err.message);
