@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Bell, Calendar, Download, ExternalLink, Pin } from 'lucide-react';
+import { Bell, Calendar, Download, ExternalLink, Pin, BookOpen, Coins, CalendarDays, Trophy, Hospital, Settings } from 'lucide-react';
 
-const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/proxy-backend';
 
 const NewsAnnouncements = () => {
   const { t, i18n } = useTranslation();
@@ -126,36 +126,37 @@ const NewsAnnouncements = () => {
   };
 
   const getTypeInfo = (type) => {
+    const iconClass = 'w-5 h-5';
     const types = {
       academic: { 
         name: t('news.announcements.types.academic'), 
-        color: 'bg-blue-100 text-blue-800', 
-        icon: '📚' 
+        color: 'bg-sky-50 text-[#144272]', 
+        icon: <BookOpen className={iconClass} /> 
       },
       scholarship: { 
         name: t('news.announcements.types.scholarship'), 
-        color: 'bg-green-100 text-green-800', 
-        icon: '💰' 
+        color: 'bg-teal-50 text-[#1B4242]', 
+        icon: <Coins className={iconClass} /> 
       },
       schedule: { 
         name: t('news.announcements.types.schedule'), 
-        color: 'bg-purple-100 text-purple-800', 
-        icon: '📅' 
+        color: 'bg-slate-100 text-[#205295]', 
+        icon: <CalendarDays className={iconClass} /> 
       },
       competition: { 
         name: t('news.announcements.types.competition'), 
-        color: 'bg-orange-100 text-orange-800', 
-        icon: '🏆' 
+        color: 'bg-amber-50 text-[#0A2647]', 
+        icon: <Trophy className={iconClass} /> 
       },
       health: { 
         name: t('news.announcements.types.health'), 
-        color: 'bg-red-100 text-red-800', 
-        icon: '🏥' 
+        color: 'bg-rose-50 text-rose-800', 
+        icon: <Hospital className={iconClass} /> 
       },
       technical: { 
         name: t('news.announcements.types.technical'), 
-        color: 'bg-gray-100 text-gray-800', 
-        icon: '⚙️' 
+        color: 'bg-gray-100 text-[#334155]', 
+        icon: <Settings className={iconClass} /> 
       }
     };
     return types[type] || types.academic;
@@ -182,13 +183,13 @@ const NewsAnnouncements = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-yellow-600 to-yellow-800 text-white py-16">
+      <div className="bg-gradient-to-r from-[#0A2647] to-[#144272] text-white py-16">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               {t('news.announcements.title')}
             </h1>
-            <p className="text-xl text-yellow-100 max-w-2xl mx-auto">
+            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
               {t('news.announcements.subtitle')}
             </p>
           </div>
@@ -230,7 +231,7 @@ const NewsAnnouncements = () => {
                       {item.image_url ? (
                         <div className="md:w-1/4">
                           <img 
-                            src={item.image_url?.startsWith('http') ? item.image_url : `https://su-med-backend-35d3d951c74b.herokuapp.com${item.image_url}`} 
+                            src={item.image_url?.startsWith('http') ? item.image_url : `${import.meta.env.VITE_MEDIA_BASE_URL || '/media'}${item.image_url}`} 
                             alt={item.title}
                             className="w-full h-48 md:h-full object-cover"
                           />
@@ -247,7 +248,7 @@ const NewsAnnouncements = () => {
                         <div className="flex flex-wrap items-start justify-between gap-4">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-3">
-                              <span className="text-2xl">{typeInfo.icon}</span>
+                              <span className="text-[#144272]">{typeInfo.icon}</span>
                               <span className={`px-3 py-1 rounded-full text-sm font-semibold ${typeInfo.color}`}>
                                 {typeInfo.name}
                               </span>
@@ -311,40 +312,40 @@ const NewsAnnouncements = () => {
         <div className="flex flex-wrap justify-center gap-2 mb-8">
           <button
             onClick={() => setFilter('all')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
+            className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
               filter === 'all'
-                ? 'bg-yellow-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-yellow-50'
+                ? 'bg-[#0A2647] text-white'
+                : 'bg-white text-[#334155] hover:bg-slate-50 border border-slate-200'
             }`}
           >
             {t('news.announcements.filters.all')}
           </button>
           <button
             onClick={() => setFilter('academic')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
+            className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
               filter === 'academic'
-                ? 'bg-yellow-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-yellow-50'
+                ? 'bg-[#0A2647] text-white'
+                : 'bg-white text-[#334155] hover:bg-slate-50 border border-slate-200'
             }`}
           >
             {t('news.announcements.filters.academic')}
           </button>
           <button
             onClick={() => setFilter('scholarship')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
+            className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
               filter === 'scholarship'
-                ? 'bg-yellow-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-yellow-50'
+                ? 'bg-[#0A2647] text-white'
+                : 'bg-white text-[#334155] hover:bg-slate-50 border border-slate-200'
             }`}
           >
             {t('news.announcements.filters.scholarship')}
           </button>
           <button
             onClick={() => setFilter('competition')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
+            className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
               filter === 'competition'
-                ? 'bg-yellow-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-yellow-50'
+                ? 'bg-[#0A2647] text-white'
+                : 'bg-white text-[#334155] hover:bg-slate-50 border border-slate-200'
             }`}
           >
             {t('news.announcements.filters.competition')}
@@ -361,7 +362,7 @@ const NewsAnnouncements = () => {
                   {item.image_url ? (
                     <div className="md:w-1/4">
                       <img 
-                        src={item.image_url?.startsWith('http') ? item.image_url : `https://su-med-backend-35d3d951c74b.herokuapp.com${item.image_url}`} 
+                        src={item.image_url?.startsWith('http') ? item.image_url : `${import.meta.env.VITE_MEDIA_BASE_URL || '/media'}${item.image_url}`} 
                         alt={item.title}
                         className="w-full h-48 md:h-full object-cover"
                       />
@@ -378,7 +379,7 @@ const NewsAnnouncements = () => {
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-3 mb-3">
-                          <span className="text-lg">{typeInfo.icon}</span>
+                          <span className="text-[#144272]">{typeInfo.icon}</span>
                           <span className={`px-2 py-1 rounded-full text-xs font-semibold ${typeInfo.color}`}>
                             {typeInfo.name}
                           </span>
@@ -445,7 +446,7 @@ const NewsAnnouncements = () => {
         )}
 
         {/* Newsletter Subscription */}
-        <div className="mt-16 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-xl p-8">
+        <div className="mt-16 bg-gradient-to-r from-[#1B4242] to-[#2C7865] text-white rounded-lg p-8">
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-4">
               {t('news.announcements.newsletter.title')}
@@ -459,7 +460,7 @@ const NewsAnnouncements = () => {
                 placeholder={t('news.announcements.newsletter.placeholder')}
                 className="flex-1 px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500"
               />
-              <button className="bg-white text-yellow-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+              <button className="bg-white text-[#1B4242] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                 {t('news.announcements.newsletter.button')}
               </button>
             </div>

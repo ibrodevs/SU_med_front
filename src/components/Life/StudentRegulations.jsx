@@ -78,7 +78,7 @@ const StudentRegulations = () => {
       setLoading(true);
       setError(null);
       
-      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/student-life/api/data/regulations_data/');
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || '/proxy-backend'}/api/student-life/api/data/regulations_data/`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -116,7 +116,7 @@ const StudentRegulations = () => {
   const handleDownload = (url, filename) => {
     if (url && (url.startsWith('http') || url.startsWith('/media'))) {
       // Создаем правильный URL для скачивания
-      const downloadUrl = url.startsWith('http') ? url : `https://su-med-backend-35d3d951c74b.herokuapp.com${url}`;
+      const downloadUrl = url.startsWith('http') ? url : `${import.meta.env.VITE_MEDIA_BASE_URL || '/media'}${url}`;
       window.open(downloadUrl, '_blank');
     } else {
       // Показываем сообщение, что файл недоступен
@@ -153,7 +153,7 @@ const StudentRegulations = () => {
           <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={fetchRegulationsData}
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            className="bg-[#0A2647] text-white px-6 py-3 rounded-lg hover:bg-[#144272] transition-all shadow-md hover:shadow-lg"
           >
             {t('studentLife.regulations.tryAgain')}
           </button>
@@ -163,10 +163,10 @@ const StudentRegulations = () => {
   }
 
   return (
-    <div className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+    <div className="min-h-screen pt-20 bg-[#f8fafc]">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#0A2647] mb-4">
             {t('studentLife.regulations.title')}
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -180,9 +180,9 @@ const StudentRegulations = () => {
             <div className="flex space-x-1">
               <button
                 onClick={() => handleTabChange('rules')}
-                className={`flex-1 py-3 px-4 rounded-xl font-medium text-sm transition-all duration-300 ${
+                className={`flex-1 py-3 px-4 rounded-lg font-medium text-sm transition-all duration-300 ${
                   activeTab === 'rules'
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                    ? 'bg-[#0A2647] text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
                 }`}
               >
@@ -190,9 +190,9 @@ const StudentRegulations = () => {
               </button>
               <button
                 onClick={() => handleTabChange('academic')}
-                className={`flex-1 py-3 px-4 rounded-xl font-medium text-sm transition-all duration-300 ${
+                className={`flex-1 py-3 px-4 rounded-lg font-medium text-sm transition-all duration-300 ${
                   activeTab === 'academic'
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                    ? 'bg-[#0A2647] text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
                 }`}
               >
@@ -200,9 +200,9 @@ const StudentRegulations = () => {
               </button>
               <button
                 onClick={() => handleTabChange('documents')}
-                className={`flex-1 py-3 px-4 rounded-xl font-medium text-sm transition-all duration-300 ${
+                className={`flex-1 py-3 px-4 rounded-lg font-medium text-sm transition-all duration-300 ${
                   activeTab === 'documents'
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                    ? 'bg-[#0A2647] text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
                 }`}
               >
@@ -219,7 +219,7 @@ const StudentRegulations = () => {
               {data.internal_rules?.map((section, index) => (
                 <div 
                   key={index} 
-                  className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-gray-100"
+                  className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-slate-200"
                 >
                   <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                     <div className="p-2 bg-blue-100 rounded-lg mr-3">
@@ -247,7 +247,7 @@ const StudentRegulations = () => {
                 </div>
               )}
 
-              <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-l-4 border-amber-400 p-6 rounded-2xl shadow">
+              <div className="bg-amber-50 border-l-4 border-amber-400 p-6 rounded-lg shadow">
                 <div className="flex items-start">
                   <div className="p-2 bg-amber-100 rounded-lg mr-4">
                     <ExclamationTriangleIcon className="w-6 h-6 text-amber-600" />
@@ -283,7 +283,7 @@ const StudentRegulations = () => {
               {data.academic_regulations?.map((regulation, index) => (
                 <div 
                   key={index} 
-                  className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-gray-100"
+                  className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-slate-200"
                 >
                   <h3 className="text-xl font-semibold text-gray-900 mb-6">{regulation.title}</h3>
                   
@@ -312,7 +312,7 @@ const StudentRegulations = () => {
                 </div>
               )}
 
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-6 shadow">
+              <div className="bg-[#f1f5f9] border border-slate-200 rounded-lg p-6 shadow">
                 <h3 className="text-lg font-semibold text-blue-900 mb-3">{t('studentLife.regulations.contact.title')}</h3>
                 <div className="text-blue-800 space-y-3">
                   <div className="flex items-center">
@@ -338,7 +338,7 @@ const StudentRegulations = () => {
 
           {activeTab === 'documents' && (
             <div className="space-y-6">
-              <div className="bg-gradient-to-r from-gray-50 to-blue-50 border border-gray-200 rounded-2xl p-6 shadow">
+              <div className="bg-[#f8fafc] border border-slate-200 rounded-lg p-6 shadow">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('studentLife.regulations.documentsInfo.title')}</h3>
                 <div className="text-gray-700 space-y-2 text-sm">
                   <div className="flex items-center">
@@ -364,7 +364,7 @@ const StudentRegulations = () => {
                 {data.downloadable_files?.map((file, index) => (
                   <div 
                     key={index} 
-                    className="bg-white rounded-2xl shadow-md p-5 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                    className="bg-white rounded-lg shadow-md p-5 border border-slate-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
                   >
                     <div className="mb-4 flex-grow">
                       <div className="flex items-start justify-between mb-3">
@@ -384,7 +384,7 @@ const StudentRegulations = () => {
                     
                     <button
                       onClick={() => handleDownload(file.download_url, file.title)}
-                      className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center mt-auto"
+                      className="bg-[#0A2647] text-white px-4 py-3 rounded-lg hover:bg-[#144272] transition-all shadow-md hover:shadow-lg flex items-center justify-center mt-auto"
                     >
                       <DocumentArrowDownIcon className="w-5 h-5 mr-2" />
                       {t('studentLife.regulations.downloadDocument')}
@@ -394,12 +394,12 @@ const StudentRegulations = () => {
               </div>
 
               {data.downloadable_files?.length === 0 && (
-                <div className="text-center py-8 bg-white rounded-2xl shadow">
+                <div className="text-center py-8 bg-white rounded-lg shadow">
                   <p className="text-gray-500">{t('studentLife.regulations.noData.documents')}</p>
                 </div>
               )}
 
-              <div className="bg-gradient-to-r from-green-50 to-teal-50 border border-green-200 rounded-2xl p-6 shadow">
+              <div className="bg-[#f1f5f9] border border-slate-200 rounded-lg p-6 shadow">
                 <h3 className="text-lg font-semibold text-green-800 mb-3">{t('studentLife.regulations.usefulLinks.title')}</h3>
                 <div className="space-y-2 text-green-700">
                   <div className="hover:underline hover:text-green-600 transition-all">

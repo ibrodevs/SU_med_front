@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { getOfficialContent } from "../../data/officialSiteContent";
+import { fetchOfficialContent } from "../../services/officialContentService";
 
 const ForApplicants = () => {
   const { i18n } = useTranslation();
-  const content = getOfficialContent(i18n.language).applicants;
+  const [content, setContent] = useState(() => getOfficialContent(i18n.language).applicants);
+
+  useEffect(() => {
+    setContent(getOfficialContent(i18n.language).applicants);
+    fetchOfficialContent(i18n.language).then(data => {
+      if (data && data.applicants) {
+        setContent(data.applicants);
+      }
+    });
+  }, [i18n.language]);
+
   const openLabel =
     i18n.language === "en" ? "Open" : i18n.language === "kg" ? "Ачуу" : "Открыть";
 

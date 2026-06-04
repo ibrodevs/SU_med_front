@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ClipboardList, FileEdit, GraduationCap, IdCard, ScrollText, Building2, Camera, Lightbulb, BookOpen, PartyPopper } from 'lucide-react';
 
 const ApplyCitizensKG = () => {
   const { t } = useTranslation();
@@ -12,21 +13,21 @@ const ApplyCitizensKG = () => {
       title: t('applyCitizens.step1.title', 'Подача документов'),
       description: t('applyCitizens.step1.desc', 'Сбор и подача необходимых документов'),
       duration: t('applyCitizens.step1.duration', '1-2 недели'),
-      icon: '📋'
+      icon: <ClipboardList className="w-6 h-6" />
     },
     {
       id: 2,
       title: t('applyCitizens.step2.title', 'Сдача экзаменов'),
       description: t('applyCitizens.step2.desc', 'Прохождение вступительных испытаний'),
       duration: t('applyCitizens.step2.duration', '1 день'),
-      icon: '📝'
+      icon: <FileEdit className="w-6 h-6" />
     },
     {
       id: 3,
       title: t('applyCitizens.step3.title', 'Зачисление'),
       description: t('applyCitizens.step3.desc', 'Получение результатов и зачисление'),
       duration: t('applyCitizens.step3.duration', '1-2 недели'),
-      icon: '🎓'
+      icon: <GraduationCap className="w-6 h-6" />
     }
   ];
 
@@ -35,22 +36,22 @@ const ApplyCitizensKG = () => {
     {
       name: t('applyCitizens.docs.passport', 'Паспорт гражданина КР'),
       description: t('applyCitizens.docs.passportDesc', 'Оригинал + копия'),
-      icon: '🆔'
+      icon: <IdCard className="w-6 h-6" />
     },
     {
       name: t('applyCitizens.docs.certificate', 'Аттестат о среднем образовании'),
       description: t('applyCitizens.docs.certificateDesc', 'Оригинал + нотариальная копия'),
-      icon: '📜'
+      icon: <ScrollText className="w-6 h-6" />
     },
     {
       name: t('applyCitizens.docs.medical', 'Медицинская справка'),
       description: t('applyCitizens.docs.medicalDesc', 'Форма 086/у с флюорографией'),
-      icon: '🏥'
+      icon: <Building2 className="w-6 h-6" />
     },
     {
       name: t('applyCitizens.docs.photos', 'Фотографии'),
       description: t('applyCitizens.docs.photosDesc', '6 штук 3x4 см'),
-      icon: '📷'
+      icon: <Camera className="w-6 h-6" />
     }
   ];
 
@@ -162,11 +163,11 @@ const ApplyCitizensKG = () => {
                   </h4>
                   <ul className="space-y-2 text-gray-700">
                     <li className="flex items-start">
-                      <span className="text-green-600 mr-2">💡</span>
+                      <span className="text-green-600 mr-2"><Lightbulb className="w-4 h-4" /></span>
                       {t('applyCitizens.step1.tip1', 'Подавайте документы как можно раньше')}
                     </li>
                     <li className="flex items-start">
-                      <span className="text-green-600 mr-2">💡</span>
+                      <span className="text-green-600 mr-2"><Lightbulb className="w-4 h-4" /></span>
                       {t('applyCitizens.step1.tip2', 'Проверьте все документы заранее')}
                     </li>
                   </ul>
@@ -197,11 +198,11 @@ const ApplyCitizensKG = () => {
                   </h4>
                   <ul className="space-y-2 text-gray-700">
                     <li className="flex items-start">
-                      <span className="text-green-600 mr-2">📚</span>
+                      <span className="text-green-600 mr-2"><BookOpen className="w-4 h-4" /></span>
                       {t('applyCitizens.step2.prep1', 'Изучите программу ОРТ')}
                     </li>
                     <li className="flex items-start">
-                      <span className="text-green-600 mr-2">📚</span>
+                      <span className="text-green-600 mr-2"><BookOpen className="w-4 h-4" /></span>
                       {t('applyCitizens.step2.prep2', 'Пройдите пробные тесты')}
                     </li>
                   </ul>
@@ -236,11 +237,11 @@ const ApplyCitizensKG = () => {
                   </h4>
                   <ul className="space-y-2 text-gray-700">
                     <li className="flex items-start">
-                      <span className="text-green-600 mr-2">🎉</span>
+                      <span className="text-green-600 mr-2"><PartyPopper className="w-4 h-4" /></span>
                       {t('applyCitizens.step3.next1', 'Оплата обучения (для контракта)')}
                     </li>
                     <li className="flex items-start">
-                      <span className="text-green-600 mr-2">🎉</span>
+                      <span className="text-green-600 mr-2"><PartyPopper className="w-4 h-4" /></span>
                       {t('applyCitizens.step3.next2', 'Получение студенческого билета')}
                     </li>
                   </ul>
@@ -268,7 +269,7 @@ const ApplyCitizensKG = () => {
               {requiredDocuments.map((doc, index) => (
                 <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
                   <div className="flex items-start">
-                    <span className="text-2xl mr-3">{doc.icon}</span>
+                    <span className="text-blue-600 mr-3">{doc.icon}</span>
                     <div>
                       <h3 className="font-semibold text-gray-800 mb-1">{doc.name}</h3>
                       <p className="text-gray-600 text-sm">{doc.description}</p>
@@ -320,7 +321,7 @@ const ApplyCitizensKG = () => {
               ))}
             </div>
 
-            <div className="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400">
+            <div className="mt-6 p-4 bg-amber-50/80 border-l-4 border-amber-500">
               <p className="text-sm text-yellow-800">
                 <strong>{t('applyCitizens.calendar.reminder', 'Напоминание:')}</strong> {' '}
                 {t('applyCitizens.calendar.reminderText', 'Рекомендуется подавать документы в первую волну для лучших шансов на зачисление.')}

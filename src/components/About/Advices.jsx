@@ -59,7 +59,7 @@ const Advices = () => {
   const getSafeMemberData = (member, index) => {
     return {
       id: member?.id || `member-${index}`,
-      name: member?.name || t("hsm.councils.unnamed_member") || "Unnamed Member",
+      name: member?.name || t("hsm.councils.unnamed_member", "Участник совета"),
       position: member?.position || "",
       department: member?.department || "",
       bio: member?.bio || "",
@@ -73,7 +73,7 @@ const Advices = () => {
   const getSafeDocumentData = (doc, index) => {
     return {
       id: doc?.id || `doc-${index}`,
-      title: doc?.title || t("hsm.councils.unnamed_document") || "Unnamed Document",
+      title: doc?.title || t("hsm.councils.unnamed_document", "Документ"),
       date: doc?.date || "",
       description: doc?.description || "",
       size: doc?.size || "",

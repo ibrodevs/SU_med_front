@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { getOfficialContent } from "../../data/officialSiteContent";
+import { fetchOfficialContent } from "../../services/officialContentService";
 
 const Scholarships = () => {
   const { i18n } = useTranslation();
-  const content = getOfficialContent(i18n.language).scholarships;
+  const [content, setContent] = useState(() => getOfficialContent(i18n.language).scholarships);
+
+  useEffect(() => {
+    setContent(getOfficialContent(i18n.language).scholarships);
+    fetchOfficialContent(i18n.language).then(data => {
+      if (data && data.scholarships) {
+        setContent(data.scholarships);
+      }
+    });
+  }, [i18n.language]);
 
   return (
     <div className="min-h-screen bg-slate-50">

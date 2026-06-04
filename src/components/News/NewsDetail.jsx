@@ -6,11 +6,11 @@ import DOMPurify from 'dompurify';
 import { fetchExternalArticle } from "../../utils/newsParser";
 
 const API_BASE_URL = import.meta.env.DEV 
-  ? '/proxy-backend' 
-  : (import.meta.env.VITE_API_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com/api');
+  ? '/proxy-backend/api' 
+  : (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_BASE_URL || '/proxy-backend');
 const MEDIA_BASE_URL = import.meta.env.DEV
   ? ''
-  : (import.meta.env.VITE_MEDIA_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com');
+  : (import.meta.env.VITE_MEDIA_BASE_URL || '/media');
 
 const NewsDetail = () => {
   const { id } = useParams();
@@ -141,13 +141,13 @@ const NewsDetail = () => {
     const categoryName = category?.name || category;
     switch (categoryName) {
       case "news":
-        return "bg-blue-100 text-blue-800";
+        return "bg-sky-50 text-[#144272]";
       case "events":
-        return "bg-green-100 text-green-800";
+        return "bg-teal-50 text-[#1B4242]";
       case "announcements":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-slate-100 text-[#334155]";
       default:
-        return "bg-blue-100 text-blue-800";
+        return "bg-sky-50 text-[#144272]";
     }
   };
 
@@ -242,7 +242,7 @@ const NewsDetail = () => {
         <div className="container mx-auto px-4 py-4">
           <Link
             to="/news"
-            className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+            className="inline-flex items-center text-[#144272] hover:text-[#0A2647] transition-colors"
           >
             <ArrowLeft className="w-5 h-5 mr-2" />
             {t("news.detail.backToNews", "Вернуться к новостям")}
@@ -280,7 +280,7 @@ const NewsDetail = () => {
                 </div>
               )}
               <button
-                className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                className="flex items-center text-[#144272] hover:text-[#0A2647] transition-colors"
                 onClick={handleShare}
               >
                 <Share2 className="w-5 h-5 mr-2" />

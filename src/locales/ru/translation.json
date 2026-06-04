@@ -16,7 +16,7 @@
     "procedure": "Порядок приема",
     "payments": "Оплаты ",
     "audience": "Учебные аудитории ",
-    "startups": "Стартапы  ",
+    "startups": "Стартапы ",
     "achievements": "Достижения",
     "admission": "Абитуриенту",
     "research": "Наука",
@@ -741,9 +741,9 @@
       "deadline": "Окончательный срок подачи заявлений",
       "exams": "Вступительные экзамены",
       "status": {
-        "open": "⏳ Прием заявлений открыт",
-        "deadline": "🚨 Последний шанс",
-        "exams": "📝 Время экзаменов"
+        "open": "Прием заявлений открыт",
+        "deadline": "Последний шанс",
+        "exams": "Время экзаменов"
       }
     },
     "cta": {
@@ -1722,7 +1722,7 @@
       }
     },
     "quickActions": {
-      "title": "🚀 Быстрые действия",
+      "title": "Быстрые действия",
       "call": "Позвонить",
       "write": "Написать",
       "copy": "Скопировать",
@@ -1745,7 +1745,7 @@
       "loading": "Загрузка карты...",
       "ariaLabel": "Карта Salymbekov University",
       "universityName": "Salymbekov University",
-      "howToGet": "🚌 Как добраться?",
+      "howToGet": "Как добраться?",
       "transport": {
         "buses": "Автобусы: 1, 5, 12, 24 до остановки «Медицинский университет»",
         "minibuses": "Маршрутки: 105, 107, 120, 134",
@@ -1929,6 +1929,8 @@
     }
   },
   "careers": {
+    "title_not_available": "Название не указано",
+    "no_description": "Описание отсутствует",
     "conditions": "Условия работы",
     "title": "Карьера в университете",
     "subtitle": "Присоединяйтесь к команде профессионалов Салымбековского университета. Найдите свое место в образовательной среде, где ценятся знания, инновации и стремление к развитию.",
@@ -5975,37 +5977,37 @@
           "id": "all",
           "name": "Все ресурсы",
           "count": 8,
-          "icon": "🔄"
+          "icon": ""
         },
         {
           "id": "library",
           "name": "Библиотека",
           "count": 1,
-          "icon": "📚"
+          "icon": ""
         },
         {
           "id": "education",
           "name": "Обучение",
           "count": 1,
-          "icon": "🎓"
+          "icon": ""
         },
         {
           "id": "research",
           "name": "Наука",
           "count": 1,
-          "icon": "🔬"
+          "icon": ""
         },
         {
           "id": "labs",
           "name": "Лаборатории",
           "count": 1,
-          "icon": "🧪"
+          "icon": ""
         },
         {
           "id": "mobile",
           "name": "Мобильные",
           "count": 1,
-          "icon": "📱"
+          "icon": ""
         }
       ]
     },
@@ -6024,7 +6026,7 @@
           "title": "Электронная библиотека",
           "description": "Доступ к более чем 50,000 научных публикаций, учебников и журналов",
           "category": "library",
-          "icon": "📚",
+          "icon": "",
           "color": "from-purple-500 to-purple-600",
           "status": "online",
           "users": "2,500+",
@@ -6042,7 +6044,7 @@
           "title": "Система дистанционного обучения",
           "description": "Платформа для онлайн-курсов, вебинаров и виртуальных классов",
           "category": "education",
-          "icon": "🎓",
+          "icon": "",
           "color": "from-blue-500 to-blue-600",
           "status": "online",
           "users": "3,200+",
@@ -6060,7 +6062,7 @@
           "title": "Научная база данных",
           "description": "Доступ к международным научным базам данных и журналам",
           "category": "research",
-          "icon": "🔬",
+          "icon": "",
           "color": "from-green-500 to-green-600",
           "status": "online",
           "users": "1,800+",
@@ -6078,7 +6080,7 @@
           "title": "Виртуальные лаборатории",
           "description": "3D-симуляторы медицинских процедур и диагностики",
           "category": "labs",
-          "icon": "🧪",
+          "icon": "",
           "color": "from-orange-500 to-orange-600",
           "status": "online",
           "users": "900+",
@@ -6096,7 +6098,7 @@
           "title": "Система тестирования",
           "description": "Платформа для проведения экзаменов и тестирования знаний",
           "category": "testing",
-          "icon": "📝",
+          "icon": "",
           "color": "from-red-500 to-red-600",
           "status": "maintenance",
           "users": "2,100+",
@@ -6114,7 +6116,7 @@
           "title": "Мобильное приложение",
           "description": "Доступ ко всем ресурсам университета с мобильных устройств",
           "category": "mobile",
-          "icon": "📱",
+          "icon": "",
           "color": "from-indigo-500 to-indigo-600",
           "status": "online",
           "users": "4,500+",
@@ -6132,7 +6134,7 @@
           "title": "Облачное хранилище",
           "description": "Безопасное хранение и обмен учебными материалами",
           "category": "storage",
-          "icon": "☁️",
+          "icon": "",
           "color": "from-teal-500 to-teal-600",
           "status": "online",
           "users": "3,800+",
@@ -6150,7 +6152,7 @@
           "title": "Видеоконференции",
           "description": "Платформа для онлайн-занятий и совещаний",
           "category": "conference",
-          "icon": "🎥",
+          "icon": "",
           "color": "from-pink-500 to-pink-600",
           "status": "online",
           "users": "2,700+",
@@ -6197,25 +6199,25 @@
         {
           "id": "all",
           "name": "Все возможности",
-          "icon": "🔄",
+          "icon": "",
           "count": 9
         },
         {
           "id": "events",
           "name": "Мероприятия",
-          "icon": "📅",
+          "icon": "",
           "count": 3
         },
         {
           "id": "clubs",
           "name": "Клубы",
-          "icon": "👥",
+          "icon": "",
           "count": 3
         },
         {
           "id": "projects",
           "name": "Проекты",
-          "icon": "🚀",
+          "icon": "",
           "count": 3
         }
       ]
@@ -6243,7 +6245,7 @@
           "type": "forum",
           "participants": "500+",
           "status": "upcoming",
-          "image": "🎪",
+          "image": "",
           "color": "from-purple-500 to-purple-600",
           "organizer": "Студенческий совет",
           "registration": "open",
@@ -6259,7 +6261,7 @@
           "type": "conference",
           "participants": "300+",
           "status": "upcoming",
-          "image": "🔬",
+          "image": "",
           "color": "from-blue-500 to-blue-600",
           "organizer": "Научное общество",
           "registration": "open",
@@ -6275,7 +6277,7 @@
           "type": "career",
           "participants": "50+ компаний",
           "status": "upcoming",
-          "image": "💼",
+          "image": "",
           "color": "from-green-500 to-green-600",
           "organizer": "Центр карьеры",
           "registration": "open",
@@ -6293,7 +6295,7 @@
           "members": "150+",
           "category": "technology",
           "meetings": "Каждую среду 18:00",
-          "image": "💻",
+          "image": "",
           "color": "from-indigo-500 to-indigo-600",
           "leader": "Айгерим Садыкова",
           "achievements": [
@@ -6312,7 +6314,7 @@
           "members": "200+",
           "category": "social",
           "meetings": "По субботам 10:00",
-          "image": "🤝",
+          "image": "",
           "color": "from-orange-500 to-orange-600",
           "leader": "Данияр Жуманов",
           "achievements": [
@@ -6331,7 +6333,7 @@
           "members": "80+",
           "category": "art",
           "meetings": "Пн/Ср/Пт 19:00",
-          "image": "🎭",
+          "image": "",
           "color": "from-pink-500 to-pink-600",
           "leader": "Айнура Калыкова",
           "achievements": [
@@ -6354,7 +6356,7 @@
           "team": "15 человек",
           "duration": "6 месяцев",
           "category": "technology",
-          "image": "🏫",
+          "image": "",
           "color": "from-teal-500 to-teal-600",
           "progress": 75,
           "needs": [
@@ -6374,7 +6376,7 @@
           "team": "25 человек",
           "duration": "Постоянный",
           "category": "ecology",
-          "image": "🌿",
+          "image": "",
           "color": "from-lime-500 to-lime-600",
           "progress": 40,
           "needs": [
@@ -6394,7 +6396,7 @@
           "team": "30 человек",
           "duration": "Весь год",
           "category": "sports",
-          "image": "⚽",
+          "image": "",
           "color": "from-amber-500 to-amber-600",
           "progress": 90,
           "needs": [

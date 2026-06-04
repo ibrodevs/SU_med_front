@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { GraduationCap, BookOpen, Monitor, BookMarked, MapPin, Camera } from 'lucide-react';
 import { getAcademicBuildings } from '../../services/infrastructureService';
 
 const AcademicBuildings = () => {
@@ -59,25 +60,25 @@ const AcademicBuildings = () => {
             name: { ru: "Лекционные залы", kg: "Лекциялык залдар", en: "Lecture halls" },
             count: 12,
             capacity: "50-200 человек",
-            icon: "🎓"
+            icon: "graduation-cap"
           },
           {
             name: { ru: "Аудитории", kg: "Аудиториялар", en: "Classrooms" },
             count: 25,
             capacity: "20-40 человек",
-            icon: "📚"
+            icon: "book-open"
           },
           {
             name: { ru: "Компьютерные классы", kg: "Компьютердик класстар", en: "Computer labs" },
             count: 4,
             capacity: "20-30 человек",
-            icon: "💻"
+            icon: "monitor"
           },
           {
             name: { ru: "Библиотека", kg: "Китепкана", en: "Library" },
             count: 1,
             capacity: "100 мест для чтения",
-            icon: "📖"
+            icon: "book-marked"
           }
         ],
         photos: [
@@ -403,7 +404,7 @@ const AcademicBuildings = () => {
                         <div className="grid md:grid-cols-2 gap-4">
                           {building.facilities.map((facility, index) => (
                             <div key={index} className="bg-gray-50 p-4 rounded-lg flex items-start">
-                              <span className="text-2xl mr-3">{facility.icon || '📌'}</span>
+                              <span className="text-blue-600 mr-3"><MapPin className="w-6 h-6" /></span>
                               <div>
                                 <h4 className="font-semibold text-gray-800">
                                   {getTranslatedField(facility, 'name')}
@@ -442,7 +443,7 @@ const AcademicBuildings = () => {
                                     e.target.parentElement.classList.add('bg-white');
                                   }}
                                   onError={(e) => {
-                                    console.error('❌ Gallery image failed:', photo.photo_url);
+                                    console.error('[ERROR] Gallery image failed:', photo.photo_url);
                                     e.target.parentElement.classList.remove('bg-gray-100');
                                     e.target.parentElement.classList.add('bg-red-50');
                                     // Create a simple error placeholder
@@ -470,7 +471,7 @@ const AcademicBuildings = () => {
                         </div>
                       ) : (
                         <div className="text-center py-8 text-gray-500 border-2 border-dashed border-gray-300 rounded-lg">
-                          <div className="text-4xl mb-2">📸</div>
+                          <div className="text-gray-400 mb-2"><Camera className="w-10 h-10 mx-auto" /></div>
                           <p>{t('academicBuildings.noPhotos', 'Фотографии пока недоступны')}</p>
                           <p className="text-sm text-gray-400 mt-2">
                             {building.photos ? `Found ${building.photos.length} photos` : 'No photos array found'}

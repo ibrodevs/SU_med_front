@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { Building2, Microscope, GraduationCap, Home } from 'lucide-react';
 
 const Infrastructure = () => {
   const { t, i18n } = useTranslation();
@@ -22,7 +23,7 @@ const Infrastructure = () => {
         en: 'University clinics for student practice with modern equipment and experienced doctors'
       },
       link: '/infrastructure/hospitals',
-      icon: '🏥',
+      icon: Building2,
       stats: { ru: '2 больницы', kg: '2 ооруканалар', en: '2 hospitals' }
     },
     {
@@ -38,7 +39,7 @@ const Infrastructure = () => {
         en: 'Modern laboratories for studying biochemistry, anatomy, pharmacy and microbiology'
       },
       link: '/infrastructure/laboratories',
-      icon: '🔬',
+      icon: Microscope,
       stats: { ru: '4 лаборатории', kg: '4 лабораториялар', en: '4 laboratories' }
     },
     {
@@ -54,7 +55,7 @@ const Infrastructure = () => {
         en: 'Modern academic buildings with lecture halls, classrooms and libraries'
       },
       link: '/infrastructure/academic-buildings',
-      icon: '🏫',
+      icon: GraduationCap,
       stats: { ru: '4 корпуса', kg: '4 корпус', en: '4 buildings' }
     },
     {
@@ -70,7 +71,7 @@ const Infrastructure = () => {
         en: 'Comfortable dormitories for students with modern amenities and affordable prices'
       },
       link: '/infrastructure/dormitories',
-      icon: '🏠',
+      icon: Home,
       stats: { ru: '3 общежития', kg: '3 жатакана', en: '3 dormitories' }
     }
   ];
@@ -112,7 +113,9 @@ const Infrastructure = () => {
               className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 group"
             >
               <div className="text-center">
-                <div className="text-4xl mb-4">{item.icon}</div>
+                <div className="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <item.icon className="w-8 h-8 text-blue-600" />
+                </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors">
                   {item.title[getCurrentLanguage()]}
                 </h3>

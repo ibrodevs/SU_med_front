@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { getOfficialContent } from "../../data/officialSiteContent";
+import { fetchOfficialContent } from "../../services/officialContentService";
 
 const Procedure = () => {
   const { i18n } = useTranslation();
-  const content = getOfficialContent(i18n.language).procedure;
+  const [content, setContent] = useState(() => getOfficialContent(i18n.language).procedure);
+
+  useEffect(() => {
+    setContent(getOfficialContent(i18n.language).procedure);
+    fetchOfficialContent(i18n.language).then(data => {
+      if (data && data.procedure) {
+        setContent(data.procedure);
+      }
+    });
+  }, [i18n.language]);
 
   return (
     <div className="min-h-screen bg-slate-50">

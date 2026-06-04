@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { 
+  Award, 
+  GraduationCap, 
+  Building2, 
+  Calendar, 
+  Mail, 
+  Phone, 
+  Users 
+} from 'lucide-react';
 import { leadershipAPI } from '../../services/leadershipService';
 import { getLocalizedValue, getLocalizedArray, getCurrentLanguage } from '../../utils/localization';
 
@@ -52,9 +61,9 @@ const LeadershipPage = () => {
   }, [i18n.language]); // Добавляем зависимость от языка
 
   const sections = [
-    { id: 'directorate', name: t('leadership.directorate'), icon: '👑' },
-    { id: 'departmentHeads', name: t('leadership.departmentHeads'), icon: '🎓' },
-    { id: 'administration', name: t('leadership.administration'), icon: '🏢' }
+    { id: 'directorate', name: t('leadership.directorate'), icon: Award },
+    { id: 'departmentHeads', name: t('leadership.departmentHeads'), icon: GraduationCap },
+    { id: 'administration', name: t('leadership.administration'), icon: Building2 }
   ];
 
   // Filter directors and department heads from API data
@@ -85,8 +94,8 @@ const LeadershipPage = () => {
     return (
       <div className="space-y-6">
         <div className="flex items-center mb-6">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">👑</span>
+          <div className="p-3 bg-blue-100 rounded-xl mr-4 text-blue-600">
+            <Award className="w-6 h-6" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('leadership.directorate')}
@@ -97,7 +106,7 @@ const LeadershipPage = () => {
           {directors.map((director) => (
             <div
               key={director.id}
-              className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
+              className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-xl p-6 border border-slate-200 hover:shadow-lg transition-all duration-300"
             >
               <div className="text-center mb-4">
                 <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 border-4 border-white shadow-md">
@@ -120,15 +129,15 @@ const LeadershipPage = () => {
 
               <div className="space-y-3">
                 <div className="flex items-center text-sm text-gray-600">
-                  <span className="mr-2">📅</span>
+                  <Calendar className="w-4 h-4 mr-2.5 text-blue-500 flex-shrink-0" />
                   <span>{t('leadership.experience')}: {getLocalizedValue(director, 'experience', i18n.language)}</span>
                 </div>
                 <div className="flex items-center text-sm text-gray-600">
-                  <span className="mr-2">📧</span>
+                  <Mail className="w-4 h-4 mr-2.5 text-blue-500 flex-shrink-0" />
                   <span>{director.email}</span>
                 </div>
                 <div className="flex items-center text-sm text-gray-600">
-                  <span className="mr-2">📞</span>
+                  <Phone className="w-4 h-4 mr-2.5 text-blue-500 flex-shrink-0" />
                   <span>{director.phone}</span>
                 </div>
               </div>
@@ -173,8 +182,8 @@ const LeadershipPage = () => {
     return (
       <div className="space-y-6">
         <div className="flex items-center mb-6">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">🎓</span>
+          <div className="p-3 bg-blue-100 rounded-xl mr-4 text-blue-600">
+            <GraduationCap className="w-6 h-6" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('leadership.departmentHeads')}
@@ -210,16 +219,16 @@ const LeadershipPage = () => {
 
               <div className="space-y-2 mb-4">
                 <div className="flex items-center text-xs text-gray-600">
-                  <span className="mr-2">🎓</span>
+                  <GraduationCap className="w-4 h-4 mr-2 text-blue-500 flex-shrink-0" />
                   <span>{getLocalizedValue(head, 'degree', i18n.language)}</span>
                 </div>
                 <div className="flex items-center text-xs text-gray-600">
-                  <span className="mr-2">📅</span>
+                  <Calendar className="w-4 h-4 mr-2 text-blue-500 flex-shrink-0" />
                   <span>{t('leadership.experience')}: {getLocalizedValue(head, 'experience', i18n.language)}</span>
                 </div>
                 {head.staff_count && getLocalizedValue(head, 'staff_count', i18n.language) && (
                   <div className="flex items-center text-xs text-gray-600">
-                    <span className="mr-2">👥</span>
+                    <Users className="w-4 h-4 mr-2 text-blue-500 flex-shrink-0" />
                     <span>{getLocalizedValue(head, 'staff_count', i18n.language)}</span>
                   </div>
                 )}
@@ -238,7 +247,7 @@ const LeadershipPage = () => {
 
               <div className="border-t border-gray-200 pt-3">
                 <div className="flex items-center text-xs text-gray-600">
-                  <span className="mr-2">📧</span>
+                  <Mail className="w-3.5 h-3.5 mr-2 text-blue-500 flex-shrink-0" />
                   <span className="truncate">{head.email}</span>
                 </div>
               </div>
@@ -269,15 +278,15 @@ const LeadershipPage = () => {
     return (
       <div className="space-y-6">
         <div className="flex items-center mb-6">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">🏢</span>
+          <div className="p-3 bg-blue-100 rounded-xl mr-4 text-blue-600">
+            <Building2 className="w-6 h-6" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('leadership.administration')}
           </h2>
         </div>
 
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+          <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-xl p-6 border border-slate-200">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
@@ -323,8 +332,8 @@ const LeadershipPage = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
     >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
@@ -341,7 +350,7 @@ const LeadershipPage = () => {
           {/* Боковая навигация */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
+              <div className="bg-gradient-to-r from-[#0A2647] to-[#144272] p-4 text-white font-bold text-lg">
                 {t('leadership.sections')}
               </div>
               <nav className="p-2">
@@ -355,7 +364,7 @@ const LeadershipPage = () => {
                           }`}
                         onClick={() => changeActiveSection(section.id)}
                       >
-                        <span className="text-lg mr-3">{section.icon}</span>
+                        <section.icon className="w-5 h-5 mr-3 text-current flex-shrink-0" />
                         {section.name}
                       </button>
                     </li>

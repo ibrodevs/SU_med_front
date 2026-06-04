@@ -11,13 +11,21 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/proxy-backend': {
-        target: 'https://su-med-backend-35d3d951c74b.herokuapp.com',
+        target: 'http://127.0.0.1:8000',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/proxy-backend/, '')
+        // Сервисы используют два стиля путей: одни уже содержат "/api/",
+        // другие — нет (а research смонтирован в бэкенде как "/research").
+        // Нормализуем оба к корректному пути на бэкенде.
+        rewrite: (path) => {
+          const p = path.replace(/^\/proxy-backend/, '');
+          if (p.startsWith('/api/') || p.startsWith('/api?')) return p;
+          if (p.startsWith('/research')) return p;
+          return '/api' + p;
+        }
       },
       '/media': {
-        target: 'https://su-med-backend-35d3d951c74b.herokuapp.com',
+        target: 'http://127.0.0.1:8000',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/media/, '/media')

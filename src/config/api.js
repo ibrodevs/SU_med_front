@@ -33,7 +33,17 @@ const API_CONFIG = {
 
 // Helper function to build full URL
 export const buildApiUrl = (endpoint, params = {}) => {
-  const url = new URL(API_CONFIG.BASE_URL + endpoint);
+  let baseUrl = API_CONFIG.BASE_URL;
+  if (!baseUrl.startsWith('http')) {
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
+    const path = baseUrl.startsWith('/') ? baseUrl : '/' + baseUrl;
+    baseUrl = origin + path;
+  }
+  
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const normalizedEndpoint = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
+  
+  const url = new URL(normalizedBase + normalizedEndpoint);
 
   // Add query parameters
   Object.keys(params).forEach(key => {

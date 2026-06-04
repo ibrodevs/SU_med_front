@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { localizeItems } from '../../utils/i18nHelpers';
 
 const API_BASE_URL = import.meta.env.DEV 
-  ? '/proxy-backend' 
-  : (import.meta.env.VITE_API_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com/api');
+  ? '/proxy-backend/api' 
+  : (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_BASE_URL || '/proxy-backend');
 
 const NewsPreview = ({ maxItems = 3 }) => {
   const { t, i18n } = useTranslation();

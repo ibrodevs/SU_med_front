@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Tv, Newspaper, Monitor, Radio, FileText, AlertTriangle, LayoutGrid } from 'lucide-react';
 
 const Media = () => {
   const { t, i18n } = useTranslation();
@@ -11,7 +12,7 @@ const Media = () => {
   const [error, setError] = useState(null);
 
   // API базовый URL
-  const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/media-coverage';
+  const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '/proxy-backend') + '/api/media-coverage';
 
   // Функции для работы с API
   const fetchMediaArticles = async (categoryId = null) => {
@@ -55,7 +56,7 @@ const Media = () => {
         name_ru: 'Все',
         name_kg: 'Баары',
         name_en: 'All',
-        icon: '📺'
+        icon: 'all'
       };
       
       return [allCategory, ...data.results];
@@ -184,16 +185,15 @@ const Media = () => {
   };
 
   const getCategoryIcon = (category) => {
-    if (typeof category === 'object' && category.icon) {
-      return category.icon;
-    }
-    // Fallback для старых данных
-    switch (category) {
-      case 'tv': return '📺';
-      case 'newspaper': return '📰';
-      case 'online': return '💻';
-      case 'radio': return '📻';
-      default: return '📄';
+    const iconClass = 'w-5 h-5';
+    const slug = typeof category === 'object' ? (category.icon || category.slug) : category;
+    switch (slug) {
+      case 'tv': return <Tv className={iconClass} />;
+      case 'newspaper': return <Newspaper className={iconClass} />;
+      case 'online': return <Monitor className={iconClass} />;
+      case 'radio': return <Radio className={iconClass} />;
+      case 'all': return <LayoutGrid className={iconClass} />;
+      default: return <FileText className={iconClass} />;
     }
   };
 
@@ -218,7 +218,7 @@ const Media = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <div className="flex justify-center mb-4"><AlertTriangle className="w-16 h-16 text-red-500" /></div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">
             {getLocalizedContent({
               ru: 'Ошибка загрузки',
@@ -245,7 +245,7 @@ const Media = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Заголовок страницы */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+      <div className="bg-gradient-to-r from-[#0A2647] to-[#144272] text-white py-16">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -285,13 +285,13 @@ const Media = () => {
             <button
               key={category.id}
               onClick={() => handleCategoryChange(category.slug || category.id)}
-              className={`flex items-center px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+              className={`flex items-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
                 selectedCategory === (category.slug || category.id)
-                  ? 'bg-blue-600 text-white shadow-lg transform scale-105'
-                  : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 shadow-md'
+                  ? 'bg-[#0A2647] text-white shadow-lg'
+                  : 'bg-white text-[#334155] hover:bg-slate-50 hover:text-[#144272] shadow-sm border border-slate-200'
               }`}
             >
-              <span className="mr-2 text-lg">{getCategoryIcon(category)}</span>
+              <span className="mr-2">{getCategoryIcon(category)}</span>
               {getCategoryName(category)}
             </button>
           ))}
@@ -299,9 +299,9 @@ const Media = () => {
 
         {/* Статистика */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          <div className="bg-white rounded-xl p-6 text-center shadow-md">
-            <div className="text-3xl font-bold text-blue-600 mb-2">{getStatsData().tv}+</div>
-            <div className="text-gray-600">
+          <div className="bg-white rounded-lg p-6 text-center shadow-sm border border-slate-100">
+            <div className="text-3xl font-bold text-[#0A2647] mb-2">{getStatsData().tv}+</div>
+            <div className="text-[#64748b]">
               {getLocalizedContent({
                 ru: 'ТВ сюжетов',
                 en: 'TV reports',
@@ -309,9 +309,9 @@ const Media = () => {
               })}
             </div>
           </div>
-          <div className="bg-white rounded-xl p-6 text-center shadow-md">
-            <div className="text-3xl font-bold text-green-600 mb-2">{getStatsData().newspaper}+</div>
-            <div className="text-gray-600">
+          <div className="bg-white rounded-lg p-6 text-center shadow-sm border border-slate-100">
+            <div className="text-3xl font-bold text-[#144272] mb-2">{getStatsData().newspaper}+</div>
+            <div className="text-[#64748b]">
               {getLocalizedContent({
                 ru: 'Статей в прессе',
                 en: 'Press articles',
@@ -319,9 +319,9 @@ const Media = () => {
               })}
             </div>
           </div>
-          <div className="bg-white rounded-xl p-6 text-center shadow-md">
-            <div className="text-3xl font-bold text-purple-600 mb-2">{getStatsData().online}+</div>
-            <div className="text-gray-600">
+          <div className="bg-white rounded-lg p-6 text-center shadow-sm border border-slate-100">
+            <div className="text-3xl font-bold text-[#205295] mb-2">{getStatsData().online}+</div>
+            <div className="text-[#64748b]">
               {getLocalizedContent({
                 ru: 'Онлайн публикаций',
                 en: 'Online publications',
@@ -329,9 +329,9 @@ const Media = () => {
               })}
             </div>
           </div>
-          <div className="bg-white rounded-xl p-6 text-center shadow-md">
-            <div className="text-3xl font-bold text-orange-600 mb-2">{getStatsData().radio}+</div>
-            <div className="text-gray-600">
+          <div className="bg-white rounded-lg p-6 text-center shadow-sm border border-slate-100">
+            <div className="text-3xl font-bold text-[#2C7865] mb-2">{getStatsData().radio}+</div>
+            <div className="text-[#64748b]">
               {getLocalizedContent({
                 ru: 'Радио интервью',
                 en: 'Radio interviews',
@@ -345,23 +345,23 @@ const Media = () => {
         {/* Статьи */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article) => (
-            <div key={article.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div key={article.id} className="bg-white rounded-lg shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
               {/* Изображение или тип медиа */}
               {article.image ? (
                 <img 
-                  src={`https://su-med-backend-35d3d951c74b.herokuapp.com${article.image}`} 
+                  src={`${import.meta.env.VITE_MEDIA_BASE_URL || '/media'}${article.image}`} 
                   alt={article.title}
                   className="w-full h-48 object-cover"
                 />
               ) : (
-                <div className="bg-gradient-to-br from-blue-500 to-blue-700 h-48 flex items-center justify-center">
+                <div className="bg-gradient-to-br from-[#0A2647] to-[#205295] h-48 flex items-center justify-center">
                   <div className="text-center text-white">
-                    <div className="text-4xl mb-2">
-                      {article.outlet?.outlet_type === 'tv' && '📺'}
-                      {article.outlet?.outlet_type === 'newspaper' && '📰'}
-                      {article.outlet?.outlet_type === 'online' && '💻'}
-                      {article.outlet?.outlet_type === 'radio' && '📻'}
-                      {!article.outlet?.outlet_type && '📰'}
+                    <div className="flex justify-center mb-2">
+                      {article.outlet?.outlet_type === 'tv' && <Tv className="w-10 h-10" />}
+                      {article.outlet?.outlet_type === 'newspaper' && <Newspaper className="w-10 h-10" />}
+                      {article.outlet?.outlet_type === 'online' && <Monitor className="w-10 h-10" />}
+                      {article.outlet?.outlet_type === 'radio' && <Radio className="w-10 h-10" />}
+                      {!article.outlet?.outlet_type && <Newspaper className="w-10 h-10" />}
                     </div>
                     <div className="font-semibold text-lg">
                       {article.outlet ? getLocalizedContent({
@@ -395,7 +395,7 @@ const Media = () => {
                 {article.tags && article.tags.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-4">
                     {article.tags.map((tag) => (
-                      <span key={tag.id} className="px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-full">
+                      <span key={tag.id} className="px-2 py-1 bg-slate-100 text-[#144272] text-xs rounded">
                         {getTagName(tag)}
                       </span>
                     ))}

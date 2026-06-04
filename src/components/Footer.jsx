@@ -1,12 +1,22 @@
-import React, { useState } from "react";
-import { FaFacebookF, FaInstagram, FaTwitter, FaWhatsapp, FaYoutube } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { Facebook, Instagram, Twitter, MessageCircle, Youtube } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { getOfficialContent } from "../data/officialSiteContent";
+import { fetchOfficialContent } from "../services/officialContentService";
 
 const Footer = () => {
   const { i18n, t } = useTranslation();
   const [email, setEmail] = useState("");
-  const content = getOfficialContent(i18n.language).footer;
+  const [content, setContent] = useState(() => getOfficialContent(i18n.language).footer);
+
+  useEffect(() => {
+    setContent(getOfficialContent(i18n.language).footer);
+    fetchOfficialContent(i18n.language).then(data => {
+      if (data && data.footer) {
+        setContent(data.footer);
+      }
+    });
+  }, [i18n.language]);
 
   const handleSubscribe = (event) => {
     event.preventDefault();
@@ -15,15 +25,15 @@ const Footer = () => {
   };
 
   const socials = [
-    { icon: <FaFacebookF />, url: "https://www.facebook.com/salymbekov.kg", name: "Facebook" },
-    { icon: <FaTwitter />, url: "https://x.com/SalymbekovO", name: "X" },
-    { icon: <FaInstagram />, url: "https://www.instagram.com/salymbekovuniversity/", name: "Instagram" },
-    { icon: <FaYoutube />, url: "https://www.youtube.com/@salymbekovuniversity8213", name: "YouTube" },
-    { icon: <FaWhatsapp />, url: "https://wa.me/996505658518", name: "WhatsApp" },
+    { icon: <Facebook className="w-4 h-4" />, url: "https://www.facebook.com/salymbekov.kg", name: "Facebook" },
+    { icon: <Twitter className="w-4 h-4" />, url: "https://x.com/SalymbekovO", name: "X" },
+    { icon: <Instagram className="w-4 h-4" />, url: "https://www.instagram.com/salymbekovuniversity/", name: "Instagram" },
+    { icon: <Youtube className="w-4 h-4" />, url: "https://www.youtube.com/@salymbekovuniversity8213", name: "YouTube" },
+    { icon: <MessageCircle className="w-4 h-4" />, url: "https://wa.me/996505658518", name: "WhatsApp" },
   ];
 
   return (
-    <footer className="bg-blue-950 text-white pt-12 pb-6">
+    <footer className="bg-[#0A2647] text-white pt-12 pb-6">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div>
@@ -59,7 +69,7 @@ const Footer = () => {
                 <a
                   key={social.name}
                   href={social.url}
-                  className="bg-blue-800 hover:bg-blue-700 transition-colors h-10 w-10 rounded-full flex items-center justify-center"
+                  className="bg-[#144272] hover:bg-[#205295] transition-colors h-10 w-10 rounded-full flex items-center justify-center"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -75,11 +85,11 @@ const Footer = () => {
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder={t("footer.emailPlaceholder")}
                 required
-                className="bg-blue-900 border border-blue-800 rounded px-3 py-2 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-[#144272] border border-[#205295] rounded px-3 py-2 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-[#0891b2]"
               />
               <button
                 type="submit"
-                className="bg-white text-blue-900 font-semibold py-2 px-4 rounded hover:bg-blue-100 transition-colors"
+                className="bg-white text-[#0A2647] font-semibold py-2 px-4 rounded hover:bg-slate-100 transition-colors"
               >
                 {t("footer.subscribeButton")}
               </button>
@@ -87,7 +97,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-blue-900 mt-8 pt-6 text-center text-sm text-blue-200">
+        <div className="border-t border-[#144272] mt-8 pt-6 text-center text-sm text-blue-200">
           <p>© {new Date().getFullYear()} {t("footer.copyright")}</p>
         </div>
       </div>

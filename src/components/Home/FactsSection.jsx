@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { GraduationCap, Award, BookOpen, Building2 } from 'lucide-react';
 
 import './Facts.css'
 const CounterItem = ({ end, icon, label, duration = 2000, delay = 0 }) => {
@@ -58,7 +59,7 @@ const CounterItem = ({ end, icon, label, duration = 2000, delay = 0 }) => {
       }`}
     >
       <div className="relative inline-block mb-4">
-        <div className="text-5xl mb-2">{icon}</div>
+        <div className="flex justify-center items-center mb-2">{icon}</div>
         {hasAnimated && (
           <div className="absolute -top-2 -right-4">
             <div className="relative">
@@ -85,10 +86,10 @@ const AnimatedFactsSection = () => {
   const { t } = useTranslation();
 
   const facts = [
-    { end: 5000, icon: "👨‍🎓", label: t("facts.students"), delay: 0 },
-    { end: 2500, icon: "🎓", label: t("facts.graduates"), delay: 200 },
-    { end: 25, icon: "📚", label: t("facts.programs"), delay: 400 },
-    { end: 50, icon: "🏥", label: t("facts.clinics"), delay: 600 }
+    { end: 5000, icon: <GraduationCap className="w-12 h-12 text-blue-600" />, label: t("facts.students"), delay: 0 },
+    { end: 2500, icon: <Award className="w-12 h-12 text-blue-600" />, label: t("facts.graduates"), delay: 200 },
+    { end: 25, icon: <BookOpen className="w-12 h-12 text-blue-600" />, label: t("facts.programs"), delay: 400 },
+    { end: 50, icon: <Building2 className="w-12 h-12 text-blue-600" />, label: t("facts.clinics"), delay: 600 }
   ];
 
   return (

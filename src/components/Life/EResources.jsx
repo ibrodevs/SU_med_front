@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { BookOpen, AlertTriangle, Search, Library, Database, FileText, Monitor } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import {
   fetchEResourcesStatistics,
@@ -46,7 +47,7 @@ const EResources = () => {
         const allCategory = {
           id: 'all',
           name: t('eresources.categories.all') || 'Все',
-          icon: '📚',
+          icon: 'library',
           count: resourcesData.length
         };
 
@@ -129,29 +130,29 @@ const EResources = () => {
     {
       label: t('eresources.statistics.total') || 'Всего ресурсов',
       value: stats.total,
-      color: 'from-purple-500 to-purple-600'
+      color: 'bg-[#0A2647]'
     },
     {
       label: t('eresources.statistics.online') || 'Онлайн',
       value: stats.online,
-      color: 'from-green-500 to-green-600'
+      color: 'bg-[#144272]'
     },
     {
       label: t('eresources.statistics.users') || 'Пользователей',
       value: `${stats.users}+`,
-      color: 'from-blue-500 to-blue-600'
+      color: 'bg-[#205295]'
     },
     {
       label: t('eresources.statistics.popular') || 'Популярных',
       value: stats.popular,
-      color: 'from-orange-500 to-orange-600'
+      color: 'bg-[#2C7865]'
     }
   ];
 
   // Показать индикатор загрузки
   if (loading) {
     return (
-      <section className="relative py-20 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900">
+      <section className="relative py-20 overflow-hidden bg-[#0A2647]">
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center py-16">
             <div className="animate-spin inline-block w-8 h-8 border-4 border-cyan-400 border-r-transparent rounded-full mb-4"></div>
@@ -165,10 +166,10 @@ const EResources = () => {
   // Показать ошибку
   if (error) {
     return (
-      <section className="relative py-20 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900">
+      <section className="relative py-20 overflow-hidden bg-[#0A2647]">
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center py-16">
-            <div className="text-6xl mb-4">⚠️</div>
+            <div className="mb-4 flex justify-center"><AlertTriangle className="w-16 h-16 text-amber-400" /></div>
             <h3 className="text-2xl font-bold text-white mb-2">{t('common.error') || 'Ошибка'}</h3>
             <p className="text-gray-400">{error}</p>
           </div>
@@ -178,7 +179,7 @@ const EResources = () => {
   }
 
   return (
-    <section ref={sectionRef} className="relative py-20 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900">
+    <section ref={sectionRef} className="relative py-20 overflow-hidden bg-[#0A2647]">
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Заголовок */}
@@ -201,7 +202,7 @@ const EResources = () => {
           {statisticsDisplay.map((stat, index) => (
             <div
               key={index}
-              className={`bg-gradient-to-br ${stat.color} rounded-2xl p-6 text-white shadow-2xl transform hover:scale-105 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              className={`${stat.color} rounded-lg p-6 text-white shadow-lg transform hover:scale-[1.02] transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
@@ -240,7 +241,7 @@ const EResources = () => {
                   : 'bg-white/10 backdrop-blur-lg text-gray-300 hover:bg-white/20 border border-white/20'
                   }`}
               >
-                <span className="mr-2">{category.icon}</span>
+                <span className="mr-2"><Library className="w-4 h-4" /></span>
                 <span className="font-medium">{category.name}</span>
                 <span className={`ml-2 px-2 py-1 rounded-full text-xs ${activeCategory === category.id ? 'bg-white/20' : 'bg-black/20'
                   }`}>
@@ -256,22 +257,22 @@ const EResources = () => {
           {filteredData.map((resource, index) => (
             <div
               key={resource.id}
-              className={`group bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 overflow-hidden shadow-2xl transition-all duration-500 transform hover:-translate-y-3 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                } ${hoveredCard === resource.id ? 'scale-105 shadow-3xl' : ''}`}
+              className={`group bg-white/10 backdrop-blur-lg rounded-lg border border-white/20 overflow-hidden shadow-lg transition-all duration-500 transform hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                } ${hoveredCard === resource.id ? 'scale-[1.02]' : ''}`}
               style={{ transitionDelay: `${index * 100}ms` }}
               onMouseEnter={() => setHoveredCard(resource.id)}
               onMouseLeave={() => setHoveredCard(null)}
             >
               {/* Бейдж популярности */}
               {resource.is_popular && (
-                <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold z-10 shadow-lg">
+                <div className="absolute top-4 right-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-3 py-1 rounded-full text-xs font-bold z-10 shadow-lg">
                   {t('eresources.resources.popularBadge') || 'Популярный'}
                 </div>
               )}
 
               {/* Статус */}
               <div className="absolute top-4 left-4 flex items-center">
-                <div className={`w-3 h-3 rounded-full mr-2 ${resource.status === 'online' ? 'bg-green-400 animate-pulse' : 'bg-yellow-400'
+                <div className={`w-3 h-3 rounded-full mr-2 ${resource.status === 'online' ? 'bg-green-400 animate-pulse' : 'bg-amber-500'
                   }`}></div>
                 <span className="text-xs text-white/80 font-medium">
                   {resource.status === 'online'
@@ -286,8 +287,8 @@ const EResources = () => {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
                 <div className="relative z-10">
                   <div className="flex items-center mb-4">
-                    <div className="text-3xl mr-4 bg-white/20 rounded-2xl w-16 h-16 flex items-center justify-center shadow-lg">
-                      {resource.icon}
+                    <div className="mr-4 bg-white/20 rounded-lg w-16 h-16 flex items-center justify-center shadow-lg">
+                      <BookOpen className="w-7 h-7 text-white" />
                     </div>
                     <div className="flex-1">
                       <h3 className="text-xl font-bold mb-1">{getLocalizedField(resource, 'title', currentLanguage)}</h3>
@@ -350,8 +351,8 @@ const EResources = () => {
 
         {/* Сообщение если нет результатов */}
         {filteredData.length === 0 && (
-          <div className="text-center py-16 bg-white/5 rounded-2xl backdrop-blur-lg border border-white/20">
-            <div className="text-6xl mb-4">🔍</div>
+          <div className="text-center py-16 bg-white/5 rounded-lg backdrop-blur-lg border border-white/20">
+            <div className="mb-4 flex justify-center"><Search className="w-16 h-16 text-slate-400" /></div>
             <h3 className="text-2xl font-bold text-white mb-2">{t('eresources.noResults.title') || 'Ничего не найдено'}</h3>
             <p className="text-gray-400">{t('eresources.noResults.description') || 'Попробуйте изменить критерии поиска'}</p>
           </div>

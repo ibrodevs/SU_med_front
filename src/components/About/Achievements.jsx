@@ -2,6 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import aboutService from '../../services/aboutService';
+import { Award, GraduationCap, Globe, Building2, Microscope, HeartPulse } from 'lucide-react';
+
+// Единый набор иконок по категориям достижений (вместо эмодзи из данных)
+const achievementIconMap = {
+  education: GraduationCap,
+  international: Globe,
+  infrastructure: Building2,
+  science: Microscope,
+  medical: HeartPulse,
+};
 
 // Компонент карточки достижения (вынесен из основного компонента для исправления Hook ordering)
 const AchievementCard = ({ achievement, index, getBorderColor, t }) => {
@@ -23,7 +33,7 @@ const AchievementCard = ({ achievement, index, getBorderColor, t }) => {
       <div className="p-6">
         <div className="flex items-start mb-4">
           <div className={`p-3 rounded-full ${achievement.iconColor} text-white mr-4 flex-shrink-0`}>
-            <span className="text-xl">{achievement.icon}</span>
+            {(() => { const Icon = achievementIconMap[achievement.category] || Award; return <Icon className="w-6 h-6" />; })()}
           </div>
           <div>
             <h3 className="text-xl font-bold text-gray-800 mb-2">{achievement.title}</h3>
@@ -171,7 +181,7 @@ const AchievementsPage = () => {
     return (
       <section className="py-16 bg-gradient-to-br from-white to-blue-50">
         <div className="container mx-auto px-4 text-center">
-          <div className="text-red-500 mb-4">❌</div>
+          <div className="text-red-500 mb-4 text-lg font-semibold">Error loading data</div>
         </div>
       </section>
     );

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CreditCard, Trophy, Handshake } from 'lucide-react';
 
 const TuitionCitizensKG = () => {
   const { t } = useTranslation();
@@ -87,7 +88,7 @@ const TuitionCitizensKG = () => {
         t('tuitionCitizens.payment.cond2'),
         t('tuitionCitizens.payment.cond3')
       ],
-      icon: '💳'
+      icon: <CreditCard className="w-10 h-10" />
     },
     {
       type: t('tuitionCitizens.payment.scholarship'),
@@ -97,7 +98,7 @@ const TuitionCitizensKG = () => {
         t('tuitionCitizens.payment.scho2'),
         t('tuitionCitizens.payment.scho3')
       ],
-      icon: '🏆'
+      icon: <Trophy className="w-10 h-10" />
     },
     {
       type: t('tuitionCitizens.payment.social'),
@@ -107,7 +108,7 @@ const TuitionCitizensKG = () => {
         t('tuitionCitizens.payment.soc2'),
         t('tuitionCitizens.payment.soc3')
       ],
-      icon: '🤝'
+      icon: <Handshake className="w-10 h-10" />
     }
   ];
 
@@ -220,7 +221,7 @@ const TuitionCitizensKG = () => {
             {paymentOptions.map((option, index) => (
               <div key={index} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                 <div className="text-center mb-4">
-                  <span className="text-4xl mb-2 block">{option.icon}</span>
+                  <span className="flex justify-center text-blue-600 mb-2">{option.icon}</span>
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">{option.type}</h3>
                   <p className="text-gray-600 text-sm">{option.description}</p>
                 </div>
@@ -295,7 +296,7 @@ const TuitionCitizensKG = () => {
             </div>
           </div>
 
-          <div className="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400">
+          <div className="mt-6 p-4 bg-amber-50/80 border-l-4 border-amber-500">
             <div className="flex items-start">
               <svg className="w-5 h-5 text-yellow-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.99-.833-2.768 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />

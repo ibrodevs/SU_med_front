@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { GraduationCap, Users, Coins, Trophy } from 'lucide-react';
 import VacancyCard from './VacancyCard';
 import careersService from '../../services/careersService';
 import './About.css';
@@ -174,32 +175,32 @@ const CareersMain = () => {
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎓</span>
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600">
+                <GraduationCap className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-semibold text-blue-900 mb-2">{t('careers.benefits.development.title')}</h3>
               <p className="text-gray-600">{t('careers.benefits.development.description')}</p>
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🤝</span>
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600">
+                <Users className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-semibold text-blue-900 mb-2">{t('careers.benefits.team.title')}</h3>
               <p className="text-gray-600">{t('careers.benefits.team.description')}</p>
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">💰</span>
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 text-purple-600">
+                <Coins className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-semibold text-blue-900 mb-2">{t('careers.benefits.stability.title')}</h3>
               <p className="text-gray-600">{t('careers.benefits.stability.description')}</p>
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🏆</span>
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 text-orange-600">
+                <Trophy className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-semibold text-blue-900 mb-2">{t('careers.benefits.prestige.title')}</h3>
               <p className="text-gray-600">{t('careers.benefits.prestige.description')}</p>

@@ -21,9 +21,9 @@
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
-/* Page background and containers */
-.min-h-screen{background:linear-gradient(180deg,var(--bg),#EFF6FF)}
-.container{max-width:1200px;margin-left:auto;margin-right:auto}
+/* Scoped background and containers to prevent global pollution */
+.about-layout { background: linear-gradient(180deg, var(--bg), #EFF6FF); }
+.about-container { max-width: 1200px; margin-left: auto; margin-right: auto; }
 
 /* Card base */
 .card{background:var(--card);border-radius:14px;box-shadow:var(--soft-shadow);padding:1.25rem}
@@ -128,8 +128,7 @@
 }
 
 .excellence-badge::before {
-  content: "⭐";
-  font-size: 1rem;
+  content: "";
 }
 
 /* Timeline enhancements for Harvard */

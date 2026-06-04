@@ -1,10 +1,10 @@
 // Конфигурация Email адресов университета
-// 🔧 ЗДЕСЬ МОЖНО ИЗМЕНИТЬ GMAIL АДРЕСА:
+// ЗДЕСЬ МОЖНО ИЗМЕНИТЬ GMAIL АДРЕСА:
 export const emailConfig = {
   // Gmail адреса университета - ИЗМЕНИТЕ НА НУЖНЫЕ ВАМ:
-  admissions: 'adilhansatymkulov40@gmail.com',      // 📧 Сюда приходят заявки абитуриентов
-  info: 'adilhansatymkulov40@gmail.com',            // ❓ Сюда приходят общие вопросы  
-  support: 'adilhansatymkulov40@gmail.com',         // 🔧 Сюда приходят техвопросы
+  admissions: 'adilhansatymkulov40@gmail.com',      // Сюда приходят заявки абитуриентов
+  info: 'adilhansatymkulov40@gmail.com',            // Сюда приходят общие вопросы  
+  support: 'adilhansatymkulov40@gmail.com',         // Сюда приходят техвопросы
 
   // Основной адрес для заявок (используется в форме поступления)
   mainAdmissions: 'adilhansatymkulov40@gmail.com'

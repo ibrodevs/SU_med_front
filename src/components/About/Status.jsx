@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { Landmark, Globe, MapPin, Zap } from 'lucide-react';
 import hsmService from "../../services/hsmService";
 
 const Status = () => {
@@ -52,25 +53,25 @@ const Status = () => {
         color: "from-blue-500 to-blue-600",
         badgeColor: "bg-blue-500",
         iconColor: "text-blue-600",
-        logo: "🏛️"
+        logo: Landmark
       },
       international: {
-        color: "from-green-500 to-green-600",
+        color: "from-teal-600 to-teal-700",
         badgeColor: "bg-green-500",
         iconColor: "text-green-600",
-        logo: "🌍"
+        logo: Globe
       },
       institutional: {
-        color: "from-purple-500 to-purple-600",
+        color: "from-indigo-600 to-indigo-700",
         badgeColor: "bg-purple-500",
         iconColor: "text-purple-600",
-        logo: "📍"
+        logo: MapPin
       },
       programmatic: {
-        color: "from-orange-500 to-orange-600",
-        badgeColor: "bg-orange-500",
+        color: "from-blue-600 to-blue-700",
+        badgeColor: "bg-blue-600",
         iconColor: "text-orange-600",
-        logo: "⚡"
+        logo: Zap
       }
     };
     return styles[type] || styles.national; // Fallback to national
@@ -194,24 +195,7 @@ const Status = () => {
               </nav>
             </div>
 
-            {/* Статистика в боковой панели */}
-            <div className="mt-6 bg-white rounded-xl shadow-lg p-6">
-              <h3 className="font-bold text-gray-800 mb-4">{t("hsm.statistics")}</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">{t("hsm.total_accreditations")}</span>
-                  <span className="font-bold text-blue-600">{accreditationData.length}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">{t("hsm.active")}</span>
-                  <span className="font-bold text-green-600">{accreditationData.length}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">{t("hsm.years_of_work")}</span>
-                  <span className="font-bold text-purple-600">29+</span>
-                </div>
-              </div>
-            </div>
+            {/* Фильтры больше не имеют снизу блока статистики */}
           </div>
 
           {/* Основной контент */}
@@ -235,12 +219,12 @@ const Status = () => {
                     {/* Верхняя часть с градиентом */}
                     <div className={`bg-gradient-to-r ${styles.color} p-6 text-white`}>
                       <div className="flex items-center justify-between mb-4">
-                        <div className={`text-3xl bg-white/20 rounded-2xl w-16 h-16 flex items-center justify-center ${styles.iconColor} backdrop-blur-sm`}>
-                          {styles.logo}
+                        <div className={`bg-white/20 rounded-2xl w-16 h-16 flex items-center justify-center backdrop-blur-sm`}>
+                          {(() => { const LogoIcon = styles.logo; return <LogoIcon className="w-8 h-8 text-white" />; })()}
                         </div>
                         <span className={`px-3 py-1 rounded-full text-sm font-bold backdrop-blur-sm ${item.is_valid
                             ? "bg-green-500/20 text-green-100 border border-green-400/30"
-                            : "bg-red-500/20 text-red-100 border border-red-400/30"
+                            : "bg-rose-500/20 text-rose-100 border border-rose-400/30"
                           }`}>
                           {status}
                         </span>

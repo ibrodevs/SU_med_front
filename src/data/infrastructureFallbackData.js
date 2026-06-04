@@ -72,7 +72,7 @@ export const startupsFallbackData = {
   success: true,
   data: {
     categories: [
-      { id: 'medtech', name_ru: 'MedTech', name_en: 'MedTech', name_kg: 'MedTech', count: 2, icon: '🏥' }
+      { id: 'medtech', name_ru: 'MedTech', name_en: 'MedTech', name_kg: 'MedTech', count: 2, icon: 'building2' }
     ],
     startups: [
       {
@@ -94,8 +94,8 @@ export const classroomsFallbackData = {
   success: true,
   data: {
     categories: [
-      { id: 1, name: 'Лекционные залы', icon: '👨‍🏫', count: 12 },
-      { id: 2, name: 'Семинарские', icon: '📝', count: 25 }
+      { id: 1, name: 'Лекционные залы', icon: 'presentation', count: 12 },
+      { id: 2, name: 'Семинарские', icon: 'file-edit', count: 25 }
     ],
     classrooms: [
       {

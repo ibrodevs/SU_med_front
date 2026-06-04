@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { User, FileText, Paperclip, Lightbulb, CheckCircle2, Mail, Plus, Lock } from 'lucide-react';
 
 const ApplicationForm = ({ vacancy, onClose }) => {
   const [formData, setFormData] = useState({
@@ -114,8 +115,9 @@ const ApplicationForm = ({ vacancy, onClose }) => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Personal Information */}
             <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                📝 Личная информация
+              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <User className="w-5 h-5 text-blue-600" />
+                Личная информация
               </h3>
               
               <div className="grid md:grid-cols-2 gap-6">
@@ -174,8 +176,9 @@ const ApplicationForm = ({ vacancy, onClose }) => {
 
             {/* Resume Upload */}
             <div className="bg-blue-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                📎 Резюме
+              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <Paperclip className="w-5 h-5 text-blue-600" />
+                Резюме
               </h3>
               
               <div>
@@ -191,15 +194,17 @@ const ApplicationForm = ({ vacancy, onClose }) => {
                     errors.cv ? 'border-red-300' : 'border-gray-300'
                   }`}
                 />
-                <p className="text-sm text-gray-500 mt-2">
-                  💡 Принимаются файлы форматов: PDF, DOC, DOCX (до 5 МБ)
+                <p className="text-sm text-gray-500 mt-2 flex items-center gap-1.5">
+                  <Lightbulb className="w-4 h-4 text-blue-600" />
+                  <span>Принимаются файлы форматов: PDF, DOC, DOCX (до 5 МБ)</span>
                 </p>
                 {errors.cv && <p className="text-red-500 text-sm mt-1">{errors.cv}</p>}
                 
                 {formData.cv && (
                   <div className="mt-3 p-3 bg-green-50 rounded-lg border border-green-200">
-                    <p className="text-sm text-green-700">
-                      ✅ Файл загружен: <strong>{formData.cv.name}</strong> ({Math.round(formData.cv.size / 1024)} КБ)
+                    <p className="text-sm text-green-700 flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-green-600" />
+                      <span>Файл загружен: <strong>{formData.cv.name}</strong> ({Math.round(formData.cv.size / 1024)} КБ)</span>
                     </p>
                   </div>
                 )}
@@ -207,9 +212,10 @@ const ApplicationForm = ({ vacancy, onClose }) => {
             </div>
 
             {/* Cover Letter */}
-            <div className="bg-yellow-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                ✉️ Сопроводительное письмо
+            <div className="bg-amber-50/80 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <Mail className="w-5 h-5 text-blue-600" />
+                Сопроводительное письмо
               </h3>
               
               <div>
@@ -237,8 +243,9 @@ const ApplicationForm = ({ vacancy, onClose }) => {
 
             {/* Additional Information */}
             <div className="bg-purple-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                ➕ Дополнительная информация
+              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <Plus className="w-5 h-5 text-blue-600" />
+                Дополнительная информация
               </h3>
               
               <div>
@@ -258,7 +265,12 @@ const ApplicationForm = ({ vacancy, onClose }) => {
             {/* Privacy Notice */}
             <div className="bg-gray-50 rounded-lg p-4 border-l-4 border-blue-500">
               <p className="text-sm text-gray-700">
-                <strong>🔒 Обработка персональных данных:</strong> Отправляя эту форму, вы соглашаетесь с обработкой ваших персональных данных в соответствии с политикой конфиденциальности университета. Ваши данные будут использованы исключительно для рассмотрения вашей кандидатуры.
+                <span className="flex items-start gap-2">
+                  <Lock className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <span>
+                    <strong>Обработка персональных данных:</strong> Отправляя эту форму, вы соглашаетесь с обработкой ваших персональных данных в соответствии с политикой конфиденциальности университета. Ваши данные будут использованы исключительно для рассмотрения вашей кандидатуры.
+                  </span>
+                </span>
               </p>
             </div>
 

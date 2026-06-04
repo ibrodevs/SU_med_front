@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { HelpCircle, FileText, PenLine, DollarSign, Home, Search, FileEdit, CheckCircle2, XCircle, X, Phone, Mail, MessageCircle, MapPin } from 'lucide-react';
 
 const FAQ = () => {
   const { t } = useTranslation();
@@ -12,11 +13,11 @@ const FAQ = () => {
   const [submitStatus, setSubmitStatus] = useState(null);
 
   const categories = [
-    { id: 'general', name: t('admissions.faq.categories.general'), icon: '❓', count: 8 },
-    { id: 'documents', name: t('admissions.faq.categories.documents'), icon: '📄', count: 6 },
-    { id: 'exams', name: t('admissions.faq.categories.exams'), icon: '✍️', count: 7 },
-    { id: 'payment', name: t('admissions.faq.categories.payment'), icon: '💰', count: 5 },
-    { id: 'hostel', name: t('admissions.faq.categories.hostel'), icon: '🏠', count: 4 }
+    { id: 'general', name: t('admissions.faq.categories.general'), icon: <HelpCircle className="w-5 h-5" />, count: 8 },
+    { id: 'documents', name: t('admissions.faq.categories.documents'), icon: <FileText className="w-5 h-5" />, count: 6 },
+    { id: 'exams', name: t('admissions.faq.categories.exams'), icon: <PenLine className="w-5 h-5" />, count: 7 },
+    { id: 'payment', name: t('admissions.faq.categories.payment'), icon: <DollarSign className="w-5 h-5" />, count: 5 },
+    { id: 'hostel', name: t('admissions.faq.categories.hostel'), icon: <Home className="w-5 h-5" />, count: 4 }
   ];
 
   const faqs = {
@@ -252,14 +253,15 @@ const FAQ = () => {
                 className="w-full p-4 pl-12 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
               <div className="absolute left-4 top-4 text-gray-400">
-                🔍
+                <Search className="w-5 h-5" />
               </div>
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm('')}
                   className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+                  aria-label="Clear"
                 >
-                  ✕
+                  <X className="w-5 h-5" />
                 </button>
               )}
             </div>
@@ -316,13 +318,13 @@ const FAQ = () => {
                 <div className="text-center py-8 text-gray-500">
                   {searchTerm ? (
                     <>
-                      <div className="text-4xl mb-4">🔍</div>
+                      <div className="flex justify-center mb-4 text-gray-400"><Search className="w-10 h-10" /></div>
                       <p className="text-lg mb-2">{t('faq.search.noResults')}</p>
                       <p className="text-sm">{t('faq.search.tryDifferent')}</p>
                     </>
                   ) : (
                     <>
-                      <div className="text-4xl mb-4">📝</div>
+                      <div className="flex justify-center mb-4 text-gray-400"><FileEdit className="w-10 h-10" /></div>
                       <p>{t('admissions.faq.noQuestionsInCategory')}</p>
                     </>
                   )}
@@ -480,7 +482,7 @@ const FAQ = () => {
           }`}>
             <div className="flex items-center">
               <div className="mr-2">
-                {submitStatus === 'success' ? '✅' : '❌'}
+                {submitStatus === 'success' ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
               </div>
               <div>
                 {submitStatus === 'success' 
@@ -500,7 +502,7 @@ const FAQ = () => {
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="text-4xl mb-3">📞</div>
+              <div className="flex justify-center mb-3 text-indigo-600"><Phone className="w-10 h-10" /></div>
               <h4 className="font-semibold text-gray-800 mb-2">{t('admissions.faq.admissionsOffice')}</h4>
               <p className="text-indigo-600 font-medium text-lg">+996 312 123 456</p>
               <p className="text-gray-600 mt-1">{t('admissions.faq.schedule')}</p>
@@ -508,14 +510,14 @@ const FAQ = () => {
             </div>
             
             <div className="text-center">
-              <div className="text-4xl mb-3">✉️</div>
+              <div className="flex justify-center mb-3 text-indigo-600"><Mail className="w-10 h-10" /></div>
               <h4 className="font-semibold text-gray-800 mb-2">{t('admissions.faq.email')}</h4>
               <p className="text-indigo-600 font-medium">admission@salymbekov.edu.kg</p>
               <p className="text-gray-600 mt-1">{t('admissions.faq.responseTime24')}</p>
             </div>
             
             <div className="text-center">
-              <div className="text-4xl mb-3">💬</div>
+              <div className="flex justify-center mb-3 text-indigo-600"><MessageCircle className="w-10 h-10" /></div>
               <h4 className="font-semibold text-gray-800 mb-2">{t('admissions.faq.whatsapp')}</h4>
               <p className="text-indigo-600 font-medium">+996 700 123 456</p>
               <p className="text-gray-600 mt-1">{t('admissions.faq.quickResponse')}</p>
@@ -529,7 +531,7 @@ const FAQ = () => {
                 {t('faq.contact.address')}
               </p>
               <p className="text-gray-600 mt-2">
-                📍 <span className="text-indigo-600 hover:underline cursor-pointer">{t('admissions.faq.showOnMap')}</span>
+                <MapPin className="w-4 h-4 inline-block text-indigo-600" /> <span className="text-indigo-600 hover:underline cursor-pointer">{t('admissions.faq.showOnMap')}</span>
               </p>
             </div>
           </div>

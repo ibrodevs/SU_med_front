@@ -54,9 +54,9 @@ const AccreditationCard = ({ accreditation, language }) => {
       case 'international':
         return 'bg-green-100 text-green-800';
       case 'institutional':
-        return 'bg-purple-100 text-purple-800';
+        return 'bg-teal-50 text-[#1B4242]';
       case 'programmatic':
-        return 'bg-orange-100 text-orange-800';
+        return 'bg-amber-50 text-amber-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }

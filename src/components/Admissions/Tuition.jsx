@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Lightbulb, Phone } from 'lucide-react';
 
 const Tuition = () => {
   const { t, i18n } = useTranslation();
@@ -101,7 +102,7 @@ const Tuition = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-purple-600 to-purple-800 text-white py-16">
+      <div className="bg-gradient-to-r from-slate-800 to-slate-900 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -205,7 +206,7 @@ const Tuition = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg">
+            <div className="bg-gradient-to-br from-slate-50 to-blue-50 p-6 rounded-lg">
               <h3 className="text-lg font-semibold mb-4 text-purple-800">
                 {t('tuition.calculator.calculation')}
               </h3>
@@ -300,7 +301,7 @@ const Tuition = () => {
         <div className="mt-12 grid md:grid-cols-2 gap-8">
           <div className="bg-blue-50 p-6 rounded-lg">
             <h4 className="text-lg font-semibold mb-3 text-blue-800">
-              💡 {t('tuition.tips.title')}
+              <Lightbulb className="w-5 h-5 inline-block mr-1" /> {t('tuition.tips.title')}
             </h4>
             <ul className="space-y-2 text-sm text-blue-700">
               <li>• {t('tuition.tips.earlyPayment')}</li>
@@ -312,7 +313,7 @@ const Tuition = () => {
           
           <div className="bg-green-50 p-6 rounded-lg">
             <h4 className="text-lg font-semibold mb-3 text-green-800">
-              📞 {t('tuition.contact.title')}
+              <Phone className="w-5 h-5 inline-block mr-1" /> {t('tuition.contact.title')}
             </h4>
             <p className="text-sm text-green-700 mb-3">
               {t('tuition.contact.description')}

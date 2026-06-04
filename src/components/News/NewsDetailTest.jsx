@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
-const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/proxy-backend';
 
 const NewsDetailTest = () => {
   const { id } = useParams();

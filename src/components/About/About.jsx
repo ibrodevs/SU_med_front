@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Landmark, Building2, Stethoscope, Microscope, Target, Eye, Lightbulb, Star, UserRound, School, GraduationCap, Calendar, Pill, Brain, Monitor, Home, Users, ClipboardList, Briefcase } from 'lucide-react';
 import './About.css';
 
 const About = () => {
@@ -11,46 +12,46 @@ const About = () => {
       year: 1995, 
       event: t('about.timeline_1995'),
       description: t('about.timeline_1995_desc'),
-      icon: "🏛️"
+      icon: Landmark
     },
     { 
       year: 2000, 
       event: t('about.timeline_2000'),
       description: t('about.timeline_2000_desc'),
-      icon: "🏥"
+      icon: Building2
     },
     { 
       year: 2010, 
       event: t('about.timeline_2010'),
       description: t('about.timeline_2010_desc'),
-      icon: "⚕️"
+      icon: Stethoscope
     },
     { 
       year: 2020, 
       event: t('about.timeline_2020'),
       description: t('about.timeline_2020_desc'),
-      icon: "🔬"
+      icon: Microscope
     }
   ];
 
   const values = [
     { 
-      icon: "🎯", 
+      icon: Target, 
       title: t('about.value_1_title'), 
       description: t('about.value_1_desc')
     },
     { 
-      icon: "👁️", 
+      icon: Eye, 
       title: t('about.value_2_title'), 
       description: t('about.value_2_desc')
     },
     { 
-      icon: "💡", 
+      icon: Lightbulb, 
       title: t('about.value_3_title'), 
       description: t('about.value_3_desc')
     },
     { 
-      icon: "🌟", 
+      icon: Star, 
       title: t('about.value_4_title'), 
       description: t('about.value_4_desc')
     }
@@ -60,43 +61,43 @@ const About = () => {
     { 
       number: "150+", 
       label: t('about.faculty_count'),
-      icon: "👩‍⚕️",
+      icon: UserRound,
       color: "blue"
     },
     { 
       number: "6", 
       label: t('about.departments_count'),
-      icon: "🏫",
+      icon: School,
       color: "blue"
     },
     { 
       number: "3,500+", 
       label: t('about.students_count'),
-      icon: "🎓",
+      icon: GraduationCap,
       color: "blue"
     },
     { 
       number: "29", 
       label: t('about.years_count'),
-      icon: "📅",
+      icon: Calendar,
       color: "blue"
     }
   ];
 
   const schools = [
-    { name: t('about.general_medicine'), established: "2000", icon: "🩺" },
-    { name: t('about.dentistry'), established: "2005", icon: "🦷" },
-    { name: t('about.pharmacy'), established: "2008", icon: "💊" },
-    { name: t('about.nursing'), established: "2010", icon: "👩‍⚕️" },
-    { name: t('about.public_health'), established: "2015", icon: "🏥" },
-    { name: t('about.medical_psychology'), established: "2018", icon: "🧠" }
+    { name: t('about.general_medicine'), established: "2000", icon: Stethoscope },
+    { name: t('about.dentistry'), established: "2005", icon: Stethoscope },
+    { name: t('about.pharmacy'), established: "2008", icon: Pill },
+    { name: t('about.nursing'), established: "2010", icon: UserRound },
+    { name: t('about.public_health'), established: "2015", icon: Building2 },
+    { name: t('about.medical_psychology'), established: "2018", icon: Brain }
   ];
 
   const researchCenters = [
-    { name: t('about.clinical_center'), focus: t('about.patient_care'), icon: "🏥" },
-    { name: t('about.research_lab'), focus: t('about.medical_research'), icon: "🔬" },
-    { name: t('about.simulation_center'), focus: t('about.practical_training'), icon: "🩺" },
-    { name: t('about.telemedicine_center'), focus: t('about.remote_care'), icon: "💻" }
+    { name: t('about.clinical_center'), focus: t('about.patient_care'), icon: Building2 },
+    { name: t('about.research_lab'), focus: t('about.medical_research'), icon: Microscope },
+    { name: t('about.simulation_center'), focus: t('about.practical_training'), icon: Stethoscope },
+    { name: t('about.telemedicine_center'), focus: t('about.remote_care'), icon: Monitor }
   ];
 
   return (
@@ -234,8 +235,8 @@ const About = () => {
           <div className="max-w-4xl mx-auto">
             <div className="group bg-gradient-to-br from-white to-blue-50 p-12 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
               <div className="flex flex-col md:flex-row items-center gap-8">
-                <div className="w-40 h-40 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center text-6xl text-white group-hover:scale-110 transition-transform duration-500 shadow-xl">
-                  👩‍🎓
+                <div className="w-40 h-40 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-500 shadow-xl">
+                  <GraduationCap className="w-20 h-20" />
                 </div>
                 <div className="flex-1 text-center md:text-left">
                   <h3 className="text-3xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-2">
@@ -265,8 +266,8 @@ const About = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {schools.map((school, index) => (
               <div key={index} className="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
-                <div className="text-4xl mb-4 transform group-hover:scale-125 transition-transform duration-300">
-                  {school.icon}
+                <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <school.icon className="w-7 h-7 text-blue-600" />
                 </div>
                 <h3 className="text-lg font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-2">
                   {school.name}
@@ -289,8 +290,8 @@ const About = () => {
           <div className="grid md:grid-cols-2 gap-8">
             {researchCenters.map((center, index) => (
               <div key={index} className="group bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
-                <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform duration-300">
-                  {center.icon}
+                <div className="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <center.icon className="w-8 h-8 text-blue-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-2">
                   {center.name}
@@ -362,7 +363,7 @@ const About = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
-              <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform duration-300">🏥</div>
+              <div className="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300"><Building2 className="w-8 h-8 text-blue-600" /></div>
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.university_hospital')}
               </h3>
@@ -373,7 +374,7 @@ const About = () => {
             </div>
             
             <div className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
-              <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform duration-300">🔬</div>
+              <div className="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300"><Microscope className="w-8 h-8 text-blue-600" /></div>
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.medical_labs')}
               </h3>
@@ -384,7 +385,7 @@ const About = () => {
             </div>
             
             <div className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
-              <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform duration-300">🏠</div>
+              <div className="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300"><Home className="w-8 h-8 text-blue-600" /></div>
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.student_dormitory')}
               </h3>
@@ -405,7 +406,7 @@ const About = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <a href="/about/management" className="group bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 text-center transform hover:-translate-y-4 border border-blue-100 hover:border-blue-200">
               <div className="text-6xl mb-6 transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
-                👥
+                <Users className="w-12 h-12 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.management')}
@@ -415,7 +416,7 @@ const About = () => {
             
             <a href="/hsm/accreditation" className="group bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 text-center transform hover:-translate-y-4 border border-blue-100 hover:border-blue-200">
               <div className="text-6xl mb-6 transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
-                📋
+                <ClipboardList className="w-12 h-12 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.charter_documents')}
@@ -425,7 +426,7 @@ const About = () => {
             
             <a href="/about/careers" className="group bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 text-center transform hover:-translate-y-4 border border-blue-100 hover:border-blue-200">
               <div className="text-6xl mb-6 transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
-                💼
+                <Briefcase className="w-12 h-12 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.careers')}

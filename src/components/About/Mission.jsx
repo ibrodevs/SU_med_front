@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import aboutService from '../../services/aboutService';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import {
   AcademicCapIcon,
@@ -36,7 +37,19 @@ const IconComponent = ({ iconName, className }) => {
 const Mission = () => {
   const { i18n } = useTranslation();
   const currentLang = i18n.language || 'ru';
-  const data = missionData[currentLang] || missionData['ru'];
+  const fallback = missionData[currentLang] || missionData['ru'];
+  // Данные с backend (mission_section), статика — резерв (в т.ч. clinicalBases)
+  const [data, setData] = useState(fallback);
+
+  useEffect(() => {
+    let mounted = true;
+    aboutService.getMission(currentLang).then((d) => {
+      if (mounted && d && d.mission && d.mission.title) {
+        setData((prev) => ({ ...prev, ...d }));
+      }
+    });
+    return () => { mounted = false; };
+  }, [currentLang]);
 
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({

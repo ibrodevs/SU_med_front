@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { School, Briefcase, Monitor, BookOpen, DollarSign, MapPin, Clock, Eye } from 'lucide-react';
 
 const VacancyCard = ({ vacancy }) => {
   const { t, i18n } = useTranslation();
@@ -23,21 +24,14 @@ const VacancyCard = ({ vacancy }) => {
   };
 
   const getCategoryIcon = (category) => {
-    // Use icon from API if available
-    if (typeof category === 'object' && category.icon) {
-      return category.icon;
-    }
-    
-    // Fallback to hardcoded icons only if no API icon
-    if (typeof category === 'object' && category.name) {
-      category = category.name;
-    }
-    switch (category) {
-      case 'academic': return '🏫';
-      case 'administrative': return '💼';
-      case 'technical': return '🖥️';
-      case 'service': return '📚';
-      default: return '💼';
+    // Always use proper Lucide icons based on category name
+    const categoryName = typeof category === 'object' ? category.name : category;
+    switch (categoryName) {
+      case 'academic': return <School className="w-6 h-6 text-blue-600" />;
+      case 'administrative': return <Briefcase className="w-6 h-6 text-blue-600" />;
+      case 'technical': return <Monitor className="w-6 h-6 text-blue-600" />;
+      case 'service': return <BookOpen className="w-6 h-6 text-blue-600" />;
+      default: return <Briefcase className="w-6 h-6 text-blue-600" />;
     }
   };
 
@@ -72,7 +66,7 @@ const VacancyCard = ({ vacancy }) => {
         {/* Header with Icon */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center">
-            <span className="text-3xl mr-3">{getCategoryIcon(vacancy.category)}</span>
+            <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mr-3">{getCategoryIcon(vacancy.category)}</div>
             <div>
               <h3 className="text-xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
                 {getFieldValue(vacancy.title, t('careers.title_not_available'))}
@@ -108,34 +102,34 @@ const VacancyCard = ({ vacancy }) => {
         <div className="space-y-2 mb-6">
           {vacancy.salary_display && (
             <div className="flex items-center text-sm text-gray-600">
-              <span className="text-green-600 mr-2">💰</span>
+              <DollarSign className="w-4 h-4 text-green-600 mr-2" />
               <span className="font-medium">{vacancy.salary_display}</span>
             </div>
           )}
           
           {vacancy.location && (
             <div className="flex items-center text-sm text-gray-600">
-              <span className="text-blue-600 mr-2">📍</span>
+              <MapPin className="w-4 h-4 text-blue-600 mr-2" />
               <span>{vacancy.location}</span>
             </div>
           )}
 
           {vacancy.employment_type && (
             <div className="flex items-center text-sm text-gray-600">
-              <span className="text-purple-600 mr-2">⏰</span>
+              <Clock className="w-4 h-4 text-purple-600 mr-2" />
               <span>{t(`careers.employment_types.${vacancy.employment_type}`)}</span>
             </div>
           )}
 
           {vacancy.experience_years && (
             <div className="flex items-center text-sm text-gray-600">
-              <span className="text-orange-600 mr-2">💼</span>
+              <Briefcase className="w-4 h-4 text-orange-600 mr-2" />
               <span>{t('careers.experience')}: {vacancy.experience_years}</span>
             </div>
           )}
 
           <div className="flex items-center text-sm text-gray-600">
-            <span className="text-red-600 mr-2">⏳</span>
+            <Clock className="w-4 h-4 text-red-600 mr-2" />
             <span>{t('careers.deadline')}: {formatDate(vacancy.deadline)}</span>
           </div>
         </div>
@@ -169,8 +163,8 @@ const VacancyCard = ({ vacancy }) => {
               {t('careers.published')}: {formatDate(vacancy.posted_date)}
             </span>
             {vacancy.views_count !== undefined && (
-              <span className="text-gray-400">
-                👁 {vacancy.views_count} {t('careers.views')}
+              <span className="text-gray-400 flex items-center">
+                <Eye className="w-4 h-4 mr-1" /> {vacancy.views_count} {t('careers.views')}
               </span>
             )}
           </div>

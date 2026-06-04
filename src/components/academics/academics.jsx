@@ -1,5 +1,20 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { 
+  BookOpen, 
+  ClipboardCheck, 
+  Briefcase, 
+  Target, 
+  Building2, 
+  HeartPulse, 
+  Globe, 
+  HelpCircle,
+  Clock,
+  Calendar,
+  FileText,
+  Laptop,
+  ChevronDown
+} from 'lucide-react';
 
 const MedicalProgramPage = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
@@ -12,7 +27,7 @@ const MedicalProgramPage = () => {
   const accordionItems = [
     {
       title: t('mededu.subjectHighlights'),
-      icon: "📚",
+      icon: BookOpen,
       content: (
         <div className="space-y-4">
           <div>
@@ -53,7 +68,7 @@ const MedicalProgramPage = () => {
     },
     {
       title: t('mededu.entryRequirements'),
-      icon: "📋",
+      icon: ClipboardCheck,
       content: (
         <div className="space-y-6">
           <div>
@@ -87,7 +102,7 @@ const MedicalProgramPage = () => {
     },
     {
       title: t('mededu.careerOpportunities'),
-      icon: "💼",
+      icon: Briefcase,
       content: (
         <div className="space-y-6">
           <div>
@@ -124,7 +139,7 @@ const MedicalProgramPage = () => {
     },
     {
       title: t('mededu.programAim'),
-      icon: "⚙️",
+      icon: Target,
       content: (
         <div className="space-y-6">
           <div>
@@ -150,7 +165,7 @@ const MedicalProgramPage = () => {
     },
     {
       title: t('mededu.structure'),
-      icon: "🏛️",
+      icon: Building2,
       content: (
         <div className="space-y-6">
           <div>
@@ -177,7 +192,7 @@ const MedicalProgramPage = () => {
     },
     {
       title: t('mededu.clinicalTraining'),
-      icon: "🏥",
+      icon: HeartPulse,
       content: (
         <div className="space-y-6">
           <div>
@@ -204,7 +219,7 @@ const MedicalProgramPage = () => {
     },
     {
       title: t('mededu.internationalOpportunities'),
-      icon: "🌍",
+      icon: Globe,
       content: (
         <div className="space-y-6">
           <div>
@@ -230,7 +245,7 @@ const MedicalProgramPage = () => {
     },
     {
       title: t('mededu.faq'),
-      icon: "❓",
+      icon: HelpCircle,
       content: (
         <div className="space-y-6">
           <div>
@@ -272,76 +287,82 @@ const MedicalProgramPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white py-8 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Заголовок блока */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 border-l-4 border-blue-600">
-          <h1 className="text-4xl font-bold text-blue-800 mb-2">{t('mededu.title')}</h1>
-          <p className="text-blue-600 text-lg">{t('mededu.code')}</p>
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-8 border-l-4 border-[#0A2647]">
+          <h1 className="text-4xl font-bold text-[#0A2647] mb-2">{t('mededu.title')}</h1>
+          <p className="text-[#144272] text-lg">{t('mededu.code')}</p>
         </div>
 
         {/* Основная информация в блоках */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105">
-            <div className="flex items-center mb-3">
-              <span className="text-2xl mr-3">⏱️</span>
-              <h3 className="text-xl font-semibold">{t('mededu.duration')}</h3>
+          <div className="bg-gradient-to-r from-[#0A2647] to-[#144272] text-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center mb-4">
+                <Clock className="w-6 h-6 mr-3 text-blue-100" />
+                <h3 className="text-xl font-semibold">{t('mededu.duration')}</h3>
+              </div>
+              <p className="text-lg">{t('mededu.fullTime')}</p>
+              <p className="text-lg">{t('mededu.partTime')}</p>
             </div>
-            <p className="text-lg">{t('mededu.fullTime')}</p>
-            <p className="text-lg">{t('mededu.partTime')}</p>
           </div>
 
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105">
-            <div className="flex items-center mb-3">
-              <span className="text-2xl mr-3">📅</span>
-              <h3 className="text-xl font-semibold">{t('mededu.intakes')}</h3>
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center mb-4">
+                <Calendar className="w-6 h-6 mr-3 text-blue-100" />
+                <h3 className="text-xl font-semibold">{t('mededu.intakes')}</h3>
+              </div>
+              <p className="text-lg">{t('mededu.intakeMonths')}</p>
             </div>
-            <p className="text-lg">{t('mededu.intakeMonths')}</p>
           </div>
 
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105">
-            <div className="flex items-center mb-3">
-              <span className="text-2xl mr-3">📄</span>
-              <h3 className="text-xl font-semibold">{t('mededu.brochure')}</h3>
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center mb-4">
+                <FileText className="w-6 h-6 mr-3 text-blue-100" />
+                <h3 className="text-xl font-semibold">{t('mededu.brochure')}</h3>
+              </div>
+              <button className="bg-white text-blue-700 px-4 py-2 rounded-lg font-medium hover:bg-blue-50 transition-colors mt-2">
+                {t('mededu.download')}
+              </button>
             </div>
-            <button className="bg-white text-blue-700 px-4 py-2 rounded-lg font-medium hover:bg-blue-50 transition-colors">
-              {t('mededu.download')}
-            </button>
           </div>
 
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105">
-            <div className="flex items-center mb-3">
-              <span className="text-2xl mr-3">💻</span>
-              <h3 className="text-xl font-semibold">{t('mededu.online')}</h3>
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center mb-4">
+                <Laptop className="w-6 h-6 mr-3 text-blue-100" />
+                <h3 className="text-xl font-semibold">{t('mededu.online')}</h3>
+              </div>
+              <p className="text-lg opacity-90">{t('mededu.onlineInfo', 'Дистанционное обучение')}</p>
             </div>
-            <button className="bg-white text-blue-700 px-4 py-2 rounded-lg font-medium hover:bg-blue-50 transition-colors">
-              {t('mededu.application')}
-            </button>
           </div>
         </div>
 
         {/* Описание программы */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-          <h2 className="text-3xl font-bold text-blue-800 mb-6">{t('mededu.overview')}</h2>
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+          <h2 className="text-3xl font-bold text-[#0A2647] mb-6">{t('mededu.overview')}</h2>
           <div className="space-y-4 text-gray-700 text-lg leading-relaxed">
             <p>{t('mededu.overviewText')}</p>
           </div>
         </div>
 
         {/* Аккордеон с дополнительной информацией */}
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h2 className="text-3xl font-bold text-blue-800 mb-6">{t('mededu.details')}</h2>
+        <div className="bg-white rounded-xl shadow-lg p-8">
+          <h2 className="text-3xl font-bold text-[#0A2647] mb-6">{t('mededu.details')}</h2>
           <div className="space-y-4">
             {accordionItems.map((item, index) => (
-              <div key={index} className="border border-blue-200 rounded-lg overflow-hidden">
+              <div key={index} className="border border-slate-200 rounded-lg overflow-hidden">
                 <button
-                  className="flex justify-between items-center w-full p-6 text-left bg-blue-50 hover:bg-blue-100 transition-colors"
+                  className="flex justify-between items-center w-full p-6 text-left bg-slate-50 hover:bg-slate-100 transition-colors"
                   onClick={() => toggleAccordion(index)}
                 >
                   <div className="flex items-center">
-                    <span className="text-2xl mr-4">{item.icon}</span>
-                    <span className="text-xl font-semibold text-blue-800">{item.title}</span>
+                    <div className="text-[#144272] mr-4">
+                      <item.icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-xl font-semibold text-[#0A2647]">{item.title}</span>
                   </div>
-                  <span className={`transform transition-transform text-blue-600 ${activeAccordion === index ? 'rotate-180' : ''}`}>
-                    ▼
-                  </span>
+                  <ChevronDown className={`w-5 h-5 transform transition-transform text-[#144272] ${activeAccordion === index ? 'rotate-180' : ''}`} />
                 </button>
                 <div className={`overflow-hidden transition-all duration-300 ${activeAccordion === index ? 'max-h-screen p-6' : 'max-h-0'}`}>
                   <div className="text-gray-700 leading-relaxed">

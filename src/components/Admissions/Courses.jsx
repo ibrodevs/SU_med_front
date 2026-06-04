@@ -634,15 +634,7 @@ const HSM = () => {
                   <h3 className="font-semibold text-gray-700 mb-2 md:mb-3 text-sm md:text-base">{t('academics.programDetails.requirements')}</h3>
                   <p className="text-gray-600 text-sm md:text-base">{selectedProgram.requirements}</p>
                 </div>
-                
-                <div className="mt-6 md:mt-8 flex justify-center">
-                  <a href="/admission/apply">
-                  <button className="px-4 py-2 md:px-6 md:py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm md:text-base">
-                    {t('academics.programDetails.applyButton')}
-                  </button>
-                  </a>
-                  
-                </div>
+
               </div>
             </div>
           </div>

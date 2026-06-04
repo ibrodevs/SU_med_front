@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const API_BASE_URL = import.meta.env.DEV 
-  ? '/proxy-backend/' 
-  : (import.meta.env.VITE_API_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/');
+  ? '/proxy-backend/api/' 
+  : (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_BASE_URL || '/proxy-backend');
 
 const HeroSlider = () => {
   const { i18n } = useTranslation();
@@ -20,7 +20,7 @@ const HeroSlider = () => {
         setLoading(true);
         setError(null);
 
-        const res = await fetch(`${API_BASE_URL}banners`, {
+        const res = await fetch(`${API_BASE_URL}banners/`, {
           headers: {
             'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
           },
@@ -34,10 +34,16 @@ const HeroSlider = () => {
         if (!banners.length) throw new Error('No banners received');
 
         // processed banners with S3 URLs
-        const processed = banners.map((b) => ({
-          id: b.id,
-          photo: b.photo, // ожидаем, что сериализатор возвращает полный URL
-        }));
+        const processed = banners.map((b) => {
+          let photoUrl = b.photo;
+          if (photoUrl && (photoUrl.startsWith('http://127.0.0.1:8000') || photoUrl.startsWith('http://localhost:8000'))) {
+            photoUrl = photoUrl.replace(/^http:\/\/(127\.0\.0\.1|localhost):8000/, '');
+          }
+          return {
+            id: b.id,
+            photo: photoUrl,
+          };
+        });
 
         setSlides(processed);
       } catch (err) {
@@ -46,8 +52,8 @@ const HeroSlider = () => {
 
         // fallback
         setSlides([
-          { id: 1, photo: 'https://images.weserv.nl/?url=https://salymbekov.com/wp-content/uploads/2021/10/IMG_9747-scaled.jpg&w=1920' },
-          { id: 2, photo: 'https://images.weserv.nl/?url=https://salymbekov.com/wp-content/uploads/2023/10/DSC01602-scaled.jpg&w=1920' },
+          { id: 1, photo: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1920' },
+          { id: 2, photo: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1920' },
         ]);
       } finally {
         setLoading(false);
@@ -119,12 +125,14 @@ const HeroSlider = () => {
                   </div>
                 )}
 
-                <img
-                  src={slide.photo}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover z-50"
-                  onError={() => handleImageError(index)}
-                />
+                {!hasError && (
+                  <img
+                    src={slide.photo}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover z-0 opacity-0 pointer-events-none"
+                    onError={() => handleImageError(index)}
+                  />
+                )}
               </div>
             </div>
           );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Rocket, DollarSign, GraduationCap, Microscope, Check } from 'lucide-react';
 import { startupsAPI, infrastructureHelpers } from '../../services/infrastructureService';
 
 const Startups = () => {
@@ -34,7 +35,7 @@ const Startups = () => {
         const allCategory = {
           id: 'all',
           name: t('startups.allStartups'),
-          icon: '🚀',
+          icon: 'rocket',
           count: transformedData.startups.length
         }; setStartupCategories([allCategory, ...transformedData.categories]);
         setStartups(transformedData.startups);
@@ -145,7 +146,7 @@ const Startups = () => {
                     onClick={() => setSelectedStartup(startup)}
                   >
                     <div className="bg-gradient-to-r from-blue-500 to-blue-700 p-8 text-center text-white">
-                      <div className="text-6xl mb-4">{startup.image}</div>
+                      <div className="flex justify-center mb-4"><Rocket className="w-14 h-14" /></div>
                       <h3 className="text-2xl font-bold mb-2">{startup.name}</h3>
                       <div className="flex justify-center items-center space-x-2">
                         <span className="bg-blue-400 px-3 py-1 rounded-full text-sm">
@@ -218,7 +219,7 @@ const Startups = () => {
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div>
                       <div className="text-center bg-blue-50 rounded-2xl p-8 mb-6">
-                        <div className="text-8xl mb-4">{selectedStartup.image}</div>
+                        <div className="flex justify-center mb-4 text-blue-600"><Rocket className="w-20 h-20" /></div>
                         <div className="text-2xl font-bold text-blue-800">{selectedStartup.name}</div>
                         <div className="text-lg text-blue-600 mt-2">{selectedStartup.stage}</div>
                       </div>
@@ -234,7 +235,7 @@ const Startups = () => {
                       <ul className="space-y-2 mb-6">
                         {selectedStartup.achievements && selectedStartup.achievements.map((achievement, index) => (
                           <li key={index} className="flex items-start">
-                            <span className="text-green-500 mr-2 mt-1">✓</span>
+                            <Check className="w-4 h-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
                             <span className="text-gray-700">{achievement}</span>
                           </li>
                         ))}
@@ -322,21 +323,21 @@ const Startups = () => {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center p-6">
-                  <div className="text-4xl mb-4">💰</div>
+                  <div className="text-white mb-4"><DollarSign className="w-10 h-10 mx-auto" /></div>
                   <h3 className="text-xl font-bold mb-3">{t('startups.fundingSupport')}</h3>
                   <p className="opacity-90">
                     {t('startups.fundingSupportDesc')}
                   </p>
                 </div>
                 <div className="text-center p-6">
-                  <div className="text-4xl mb-4">👨‍🏫</div>
+                  <div className="text-white mb-4"><GraduationCap className="w-10 h-10 mx-auto" /></div>
                   <h3 className="text-xl font-bold mb-3">{t('startups.mentorship')}</h3>
                   <p className="opacity-90">
                     {t('startups.mentorshipDesc')}
                   </p>
                 </div>
                 <div className="text-center p-6">
-                  <div className="text-4xl mb-4">🔬</div>
+                  <div className="text-white mb-4"><Microscope className="w-10 h-10 mx-auto" /></div>
                   <h3 className="text-xl font-bold mb-3">{t('startups.labAccess')}</h3>
                   <p className="opacity-90">
                     {t('startups.labAccessDesc')}

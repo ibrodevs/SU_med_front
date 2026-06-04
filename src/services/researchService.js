@@ -7,7 +7,7 @@ import {
   publicationsFallbackData
 } from '../data/researchFallbackData';
 
-const BASE_PATH = '/api/research';
+const BASE_PATH = '/research/api';
 
 export const getResearchCenters = async (lang = 'ru') => {
   try {

@@ -8,6 +8,7 @@ import {
   ArrowPathIcon,
   MapPinIcon
 } from '@heroicons/react/24/outline';
+import { Calendar, Globe as GlobeIcon } from 'lucide-react';
 import { getMultilingualText } from '../../utils/multilingualUtils';
 import { getMobility } from '../../services/studentLifeService';
 
@@ -90,7 +91,7 @@ const AcademicMobility = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+      <div className="min-h-screen pt-20 bg-[#f8fafc]">
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col justify-center items-center h-96">
             <div className="relative">
@@ -108,7 +109,7 @@ const AcademicMobility = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+      <div className="min-h-screen pt-20 bg-[#f8fafc]">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 border border-red-100 transform transition-all hover:scale-[1.01]">
             <div className="flex flex-col items-center text-center">
@@ -121,7 +122,7 @@ const AcademicMobility = () => {
               <p className="text-red-700 mb-6">{error}</p>
               <button 
                 onClick={fetchAcademicMobilityData}
-                className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-full font-medium flex items-center hover:shadow-lg transition-all duration-300"
+                className="bg-[#0A2647] text-white px-6 py-3 rounded-lg font-medium flex items-center hover:bg-[#144272] hover:shadow-lg transition-all duration-300"
               >
                 <ArrowPathIcon className="w-5 h-5 mr-2" />
                 {t('studentLife.academicMobility.tryAgain')}
@@ -134,11 +135,11 @@ const AcademicMobility = () => {
   }
 
   return (
-    <div className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+    <div className="min-h-screen pt-20 bg-[#f8fafc]">
       <div className="container mx-auto px-4 py-8">
         {/* Заголовок с анимацией */}
         <div className="mb-12 text-center">
-          <h1 className="text-5xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold text-[#0A2647] mb-6">
             {t('studentLife.academicMobility.title')}
           </h1>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
@@ -154,8 +155,8 @@ const AcademicMobility = () => {
                 onClick={() => setActiveTab('opportunities')}
                 className={`py-3 px-6 rounded-full font-medium text-sm flex items-center transition-all duration-300 ${
                   activeTab === 'opportunities'
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md'
-                    : 'text-gray-600 hover:text-blue-600'
+                    ? 'bg-[#0A2647] text-white shadow-md'
+                    : 'text-gray-600 hover:text-[#0A2647]'
                 }`}
               >
                 <GlobeAltIcon className="w-5 h-5 mr-2" />
@@ -165,8 +166,8 @@ const AcademicMobility = () => {
                 onClick={() => setActiveTab('universities')}
                 className={`py-3 px-6 rounded-full font-medium text-sm flex items-center transition-all duration-300 ${
                   activeTab === 'universities'
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md'
-                    : 'text-gray-600 hover:text-blue-600'
+                    ? 'bg-[#0A2647] text-white shadow-md'
+                    : 'text-gray-600 hover:text-[#0A2647]'
                 }`}
               >
                 <AcademicCapIcon className="w-5 h-5 mr-2" />
@@ -185,11 +186,11 @@ const AcademicMobility = () => {
                   data.exchange_opportunities.map((opportunity, index) => (
                       <div 
                       key={opportunity.id || index} 
-                      className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                      className="bg-white rounded-lg shadow-lg p-6 border border-slate-200 transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
                     >
                       <div className="mb-5">
-                        <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center mb-4">
-                          <GlobeAltIcon className="w-8 h-8 text-blue-600" />
+                        <div className="w-14 h-14 bg-[#f1f5f9] rounded-lg flex items-center justify-center mb-4">
+                          <GlobeAltIcon className="w-8 h-8 text-[#0A2647]" />
                         </div>
                         <h3 className="text-xl font-bold text-gray-900 mb-3">{opportunity.title}</h3>
                         <p className="text-gray-600 mb-4 leading-relaxed">{opportunity.description}</p>
@@ -228,7 +229,7 @@ const AcademicMobility = () => {
                 )}
               </div>
 
-              <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl shadow-xl p-8 text-white">
+              <div className="bg-[#0A2647] rounded-lg shadow-xl p-8 text-white">
                 <h3 className="text-2xl font-bold mb-6">{t('studentLife.academicMobility.applicationSteps.title')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[1, 2, 3, 4].map((step) => (
@@ -254,7 +255,7 @@ const AcademicMobility = () => {
                   data.partner_universities.map((university) => (
                     <div 
                       key={university.id} 
-                      className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 overflow-hidden transform transition-all duration-300 hover:shadow-xl"
+                      className="bg-white rounded-lg shadow-lg p-6 border border-slate-200 overflow-hidden transform transition-all duration-300 hover:shadow-xl"
                     >
                       <div className="flex items-start space-x-5 mb-5">
                         <div className="w-20 h-20 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner">
@@ -281,7 +282,7 @@ const AcademicMobility = () => {
                               university.programs.map((program, index) => (
                                 <span 
                                   key={program.id || index} 
-                                  className="bg-gradient-to-r from-green-100 to-emerald-100 text-emerald-800 text-xs px-3 py-1.5 rounded-full font-medium"
+                                  className="bg-[#f1f5f9] text-[#1B4242] text-xs px-3 py-1.5 rounded-full font-medium"
                                 >
                                   {getMultilingualText(program, 'name', program.name)}
                                 </span>
@@ -301,8 +302,8 @@ const AcademicMobility = () => {
                                       {getMultilingualText(program, 'name', program.name)}
                                     </span>
                                     <div className="flex gap-4 text-blue-700">
-                                      <span>📅 {program.duration}</span>
-                                      <span>🌐 {program.language}</span>
+                                      <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {program.duration}</span>
+                                      <span className="flex items-center gap-1"><GlobeIcon className="w-3 h-3" /> {program.language}</span>
                                     </div>
                                   </div>
                                 ))}
@@ -322,7 +323,7 @@ const AcademicMobility = () => {
 
                         <div className="pt-4 border-t border-gray-200">
                           <div className="flex items-center text-sm">
-                            <span className="font-medium text-gray-900 mr-2">🌐 Веб-сайт:</span>
+                            <span className="font-medium text-gray-900 mr-2">Website:</span>
                             <a href={university.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline truncate">
                               {university.website}
                             </a>

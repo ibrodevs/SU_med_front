@@ -1,6 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { emailConfig, openGmailCompose, createMailtoLink } from '../../config/emailConfig';
+import { 
+  ClipboardCheck, 
+  Send, 
+  FileEdit, 
+  CheckCircle, 
+  GraduationCap, 
+  Calendar, 
+  Clock, 
+  FileText, 
+  Map, 
+  Pause, 
+  Play, 
+  ChevronLeft, 
+  ChevronRight, 
+  Stethoscope, 
+  BookOpen, 
+  Award, 
+  Target,
+  HeartPulse
+} from 'lucide-react';
 import './Admissions.css';
 
 const AdmissionsOverview = () => {
@@ -24,10 +44,10 @@ Email: [Введите ваш email]
 Адрес: [Ваш адрес проживания]
 
 ЖЕЛАЕМАЯ ПРОГРАММА ОБУЧЕНИЯ:
-☐ Лечебное дело (6 лет, 170,000 сом/год)
-☐ Стоматология (5 лет, 190,000 сом/год)
-☐ Фармация (5 лет, 150,000 сом/год)
-☐ Сестринское дело (4 года, 130,000 сом/год)
+- Лечебное дело (6 лет, 170,000 сом/год)
+- Стоматология (5 лет, 190,000 сом/год)
+- Фармация (5 лет, 150,000 сом/год)
+- Сестринское дело (4 года, 130,000 сом/год)
 
 ОБРАЗОВАНИЕ:
 Школа/лицей: [Название учебного заведения]
@@ -39,11 +59,11 @@ Email: [Введите ваш email]
 [Укажите любую дополнительную информацию]
 
 Пожалуйста, вышлите мне:
-✓ Подробную информацию о выбранной программе
-✓ Требования к поступлению  
-✓ Список необходимых документов
-✓ Расписание вступительных экзаменов
-✓ Информацию о стипендиях и льготах
+- Подробную информацию о выбранной программе
+- Требования к поступлению
+- Список необходимых документов
+- Расписание вступительных экзаменов
+- Информацию о стипендиях и льготах
 
 С уважением,
 [Ваше имя]
@@ -91,7 +111,7 @@ Email: [Ваш email]
   const timelineSteps = [
     {
       id: 1,
-      icon: '📋',
+      icon: ClipboardCheck,
       titleKey: 'admissions.timeline.step1.title',
       descriptionKey: 'admissions.timeline.step1.description',
       detailsKey: 'admissions.timeline.step1.details',
@@ -99,35 +119,35 @@ Email: [Ваш email]
     },
     {
       id: 2,
-      icon: '📄',
+      icon: Send,
       titleKey: 'admissions.timeline.step2.title',
       descriptionKey: 'admissions.timeline.step2.description',
       detailsKey: 'admissions.timeline.step2.details',
-      color: 'from-purple-500 to-pink-600'
+      color: 'from-blue-700 to-blue-800'
     },
     {
       id: 3,
-      icon: '✍️',
+      icon: FileEdit,
       titleKey: 'admissions.timeline.step3.title',
       descriptionKey: 'admissions.timeline.step3.description',
       detailsKey: 'admissions.timeline.step3.details',
-      color: 'from-pink-500 to-red-600'
+      color: 'from-teal-600 to-teal-700'
     },
     {
       id: 4,
-      icon: '✅',
+      icon: CheckCircle,
       titleKey: 'admissions.timeline.step4.title',
       descriptionKey: 'admissions.timeline.step4.description',
       detailsKey: 'admissions.timeline.step4.details',
-      color: 'from-red-500 to-orange-600'
+      color: 'from-slate-700 to-slate-800'
     },
     {
       id: 5,
-      icon: '🎓',
+      icon: GraduationCap,
       titleKey: 'admissions.timeline.step5.title',
       descriptionKey: 'admissions.timeline.step5.description',
       detailsKey: 'admissions.timeline.step5.details',
-      color: 'from-orange-500 to-yellow-600'
+      color: 'from-indigo-600 to-indigo-700'
     }
   ];
 
@@ -138,8 +158,8 @@ Email: [Ваш email]
       dateNum: '01',
       monthKey: 'common.months.jun',
       highlight: true,
-      icon: '📅',
-      color: 'bg-gradient-to-br from-green-400 to-green-600'
+      icon: Calendar,
+      color: 'bg-gradient-to-br from-green-500 to-green-700 text-white'
     },
     {
       eventKey: 'admissions.dates.deadline',
@@ -147,8 +167,8 @@ Email: [Ваш email]
       dateNum: '15',
       monthKey: 'common.months.aug',
       highlight: true,
-      icon: '⏰',
-      color: 'bg-gradient-to-br from-red-400 to-red-600'
+      icon: Clock,
+      color: 'bg-gradient-to-br from-red-500 to-red-700 text-white'
     },
     {
       eventKey: 'admissions.dates.exams',
@@ -156,8 +176,8 @@ Email: [Ваш email]
       dateNum: '20-25',
       monthKey: 'common.months.aug',
       highlight: true,
-      icon: '📝',
-      color: 'bg-gradient-to-br from-purple-400 to-purple-600'
+      icon: FileText,
+      color: 'bg-gradient-to-br from-purple-500 to-purple-700 text-white'
     }
   ];
 
@@ -191,8 +211,9 @@ Email: [Ваш email]
       <div className="container mx-auto px-4 py-16">
         {/* Roadmap Introduction */}
         <div className="text-center mb-16">
-          <div className="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
-            🗺️ {t('admissions.roadmap.title')}
+          <div className="inline-flex items-center space-x-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
+            <Map className="w-4 h-4" />
+            <span>{t('admissions.roadmap.title')}</span>
           </div>
           <h2 className="text-4xl font-bold mb-4 text-gray-800">
             {t('admissions.roadmap.heading')}
@@ -211,26 +232,26 @@ Email: [Ваш email]
               <div className="bg-white rounded-full p-2 shadow-lg flex items-center space-x-2">
                 <button
                   onClick={() => setIsAutoPlay(!isAutoPlay)}
-                  className={`p-2 rounded-full transition-colors ${
+                  className={`p-2 rounded-full transition-colors flex items-center justify-center ${
                     isAutoPlay ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'
                   }`}
                   title={isAutoPlay ? t('common.pause') : t('common.play')}
                 >
-                  {isAutoPlay ? '⏸️' : '▶️'}
+                  {isAutoPlay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                 </button>
                 <button
                   onClick={() => setActiveStep((prev) => (prev - 1 + timelineSteps.length) % timelineSteps.length)}
-                  className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+                  className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors flex items-center justify-center"
                   title={t('common.previous')}
                 >
-                  ⬅️
+                  <ChevronLeft className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setActiveStep((prev) => (prev + 1) % timelineSteps.length)}
-                  className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+                  className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors flex items-center justify-center"
                   title={t('common.next')}
                 >
-                  ➡️
+                  <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -255,12 +276,12 @@ Email: [Ваш email]
                     }}
                   >
                     {/* Step Circle */}
-                    <div className={`relative w-20 h-20 rounded-full flex items-center justify-center text-2xl transition-all duration-500 transform group-hover:scale-110 ${
+                    <div className={`relative w-20 h-20 rounded-full flex items-center justify-center transition-all duration-500 transform group-hover:scale-110 ${
                       index <= activeStep 
                         ? `bg-gradient-to-br ${step.color} text-white shadow-lg` 
                         : 'bg-gray-200 text-gray-500'
                     }`}>
-                      {step.icon}
+                      <step.icon className="w-8 h-8" />
                       {index <= activeStep && (
                         <div className="absolute inset-0 rounded-full bg-white opacity-20 animate-pulse"></div>
                       )}
@@ -294,12 +315,12 @@ Email: [Ваш email]
                     : 'bg-gray-50'
                 }`}
               >
-                <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-lg ${
+                <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center ${
                   index <= activeStep 
                     ? `bg-gradient-to-br ${step.color} text-white` 
                     : 'bg-gray-200 text-gray-500'
                 }`}>
-                  {step.icon}
+                  <step.icon className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-800 mb-2">
@@ -325,8 +346,9 @@ Email: [Ваш email]
         {/* Important Dates Calendar */}
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-16">
           <div className="text-center mb-8">
-            <div className="inline-block bg-red-100 text-red-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
-              📅 {t('admissions.dates.title')}
+            <div className="inline-flex items-center space-x-2 bg-red-100 text-red-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <Calendar className="w-4 h-4" />
+              <span>{t('admissions.dates.title')}</span>
             </div>
             <h2 className="text-3xl font-bold text-gray-800 mb-2">
               {t('admissions.dates.heading')}
@@ -343,10 +365,10 @@ Email: [Ваш email]
                 className={`group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${item.color}`}
               >
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-                <div className="relative p-8 text-gray-700 text-center">
+                <div className="relative p-8 text-white text-center">
                   {/* Date Icon */}
-                  <div className="text-4xl mb-4">
-                    {item.icon}
+                  <div className="mb-4 flex justify-center">
+                    <item.icon className="w-10 h-10 text-white/90" />
                   </div>
                   
                   {/* Calendar Style Date */}
@@ -390,7 +412,9 @@ Email: [Ваш email]
             </div>
             
             <div className="relative z-10">
-              <div className="text-6xl mb-6">🏥</div>
+              <div className="flex justify-center mb-6">
+                <HeartPulse className="w-16 h-16 text-white/90" />
+              </div>
               <h3 className="text-3xl font-bold mb-4">
                 {t('admissions.cta.title')}
               </h3>
@@ -399,40 +423,23 @@ Email: [Ваш email]
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <a 
-                  href="/admissions/apply"
+                  href="/contacts/admission"
                   className="group bg-white text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
                 >
                   <span className="flex items-center justify-center">
-                    🚀 {t('admissions.cta.applyOnline')}
+                    {t('admissions.cta.contactUs')}
                     <svg className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
                   </span>
                 </a>
                 <button 
-                  onClick={handleQuickApplication}
-                  className="group bg-green-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
-                  title="Отправить заявку через Gmail"
-                >
-                  <span className="flex items-center justify-center">
-                    📧 {t('admissions.cta.sendEmail')}
-                  </span>
-                </button>
-                <a 
-                  href="/contacts/admission"
-                  className="group border-2 border-white text-white px-6 py-4 rounded-xl font-bold hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105"
-                >
-                  <span className="flex items-center justify-center">
-                    📞 {t('admissions.cta.contactUs')}
-                  </span>
-                </a>
-                <button 
                   onClick={handleQuickQuestion}
-                  className="group bg-orange-500 text-white px-6 py-4 rounded-xl font-bold hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  className="group border-2 border-white text-white px-6 py-4 rounded-xl font-bold hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105"
                   title="Задать быстрый вопрос через Gmail"
                 >
                   <span className="flex items-center justify-center">
-                    ❓ {t('admissions.cta.askQuestion')}
+                    {t('admissions.cta.askQuestion')}
                   </span>
                 </button>
               </div>
@@ -458,23 +465,31 @@ Email: [Ваш email]
 
         {/* Quick Info Cards */}
         <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
-            <div className="text-3xl mb-2">📚</div>
+          <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow flex flex-col items-center">
+            <div className="text-blue-600 mb-3">
+              <BookOpen className="w-10 h-10" />
+            </div>
             <h4 className="font-bold text-gray-800 mb-1">{t('admissions.info.programs')}</h4>
             <p className="text-sm text-gray-600">{t('admissions.info.programsDesc')}</p>
           </div>
-          <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
-            <div className="text-3xl mb-2">🏆</div>
+          <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow flex flex-col items-center">
+            <div className="text-blue-600 mb-3">
+              <Award className="w-10 h-10" />
+            </div>
             <h4 className="font-bold text-gray-800 mb-1">{t('admissions.info.quality')}</h4>
             <p className="text-sm text-gray-600">{t('admissions.info.qualityDesc')}</p>
           </div>
-          <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
-            <div className="text-3xl mb-2">👨‍⚕️</div>
+          <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow flex flex-col items-center">
+            <div className="text-blue-600 mb-3">
+              <Stethoscope className="w-10 h-10" />
+            </div>
             <h4 className="font-bold text-gray-800 mb-1">{t('admissions.info.teachers')}</h4>
             <p className="text-sm text-gray-600">{t('admissions.info.teachersDesc')}</p>
           </div>
-          <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
-            <div className="text-3xl mb-2">🎯</div>
+          <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow flex flex-col items-center">
+            <div className="text-blue-600 mb-3">
+              <Target className="w-10 h-10" />
+            </div>
             <h4 className="font-bold text-gray-800 mb-1">{t('admissions.info.practice')}</h4>
             <p className="text-sm text-gray-600">{t('admissions.info.practiceDesc')}</p>
           </div>

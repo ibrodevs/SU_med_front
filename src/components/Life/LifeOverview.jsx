@@ -64,8 +64,8 @@ const LifeOverview = () => {
 
   // Временные локальные изображения для демонстрации
   const fallbackPhotos = [
-    'https://su-med-backend-35d3d951c74b.herokuapp.com/media/news/images/IMG_0249.JPG',
-    'https://su-med-backend-35d3d951c74b.herokuapp.com/media/news/images/scholarship.jpg',
+    `${import.meta.env.VITE_MEDIA_BASE_URL || '/media'}/media/news/images/IMG_0249.JPG`,
+    `${import.meta.env.VITE_MEDIA_BASE_URL || '/media'}/media/news/images/scholarship.jpg`,
     // Добавляем placeholder'ы для остальных
     generatePlaceholder('Student Life 1'),
     generatePlaceholder('Student Life 2'),
@@ -117,9 +117,9 @@ const LifeOverview = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#f8fafc] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center text-blue-800 mb-12">
+        <h2 className="text-4xl font-bold text-center text-[#0A2647] mb-12">
           {t('life.title')}
         </h2>
         
@@ -148,18 +148,11 @@ const LifeOverview = () => {
         {/* Content */}
         {!loading && !error && (
           <>
-            {/* Debug info */}
-                        <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
-              <strong>Debug info:</strong><br/>
-              Photos: {lifeData.photo_urls ? lifeData.photo_urls.length : 'none'}<br/>
-              Videos: {lifeData.video_data ? lifeData.video_data.length : 'none'}<br/>
-              Stats: {lifeData.stats ? lifeData.stats.length : 'none'}<br/>
-              Image Load Status: {JSON.stringify(imageLoadStatus, null, 2)}
-            </div>
+
         
         {/* Фото-коллаж */}
         <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-blue-700 mb-6 text-center">
+          <h3 className="text-2xl font-semibold text-[#0A2647] mb-6 text-center">
             {t('life.photoCollage.title')}
           </h3>
           {lifeData.photo_urls && lifeData.photo_urls.length > 0 ? (
@@ -178,25 +171,22 @@ const LifeOverview = () => {
                     }}
                     onLoad={(e) => handleImageLoad(e, index, 'photo')}
                   />
-                  <div className="absolute inset-0 bg-blue-900 bg-opacity-0 hover:bg-opacity-20 transition-all duration-300 cursor-pointer"></div>
+                  <div className="absolute inset-0 bg-[#0A2647] bg-opacity-0 hover:bg-opacity-20 transition-all duration-300 cursor-pointer"></div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 bg-gray-100 rounded-lg">
-              <div className="text-gray-500 text-lg">
-                {t('life.photoCollage.noPhotos', 'Фотографии пока не загружены')}
+              <div className="text-center py-12 bg-slate-100 rounded-lg">
+                <div className="text-gray-500 text-lg">
+                  {t('life.photoCollage.noPhotos', 'Фотографии пока не загружены')}
+                </div>
               </div>
-              <div className="text-sm text-gray-400 mt-2">
-                Debug: photos array length = {lifeData.photo_urls ? lifeData.photo_urls.length : 'undefined'}
-              </div>
-            </div>
           )}
         </div>
         
         {/* Видео-репортажи */}
         <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-blue-700 mb-6 text-center">
+          <h3 className="text-2xl font-semibold text-[#0A2647] mb-6 text-center">
             {t('life.videos.title')}
           </h3>
           {lifeData.video_data && lifeData.video_data.length > 0 ? (
@@ -253,10 +243,10 @@ const LifeOverview = () => {
                     )}
                   </div>
                   <div className="p-4">
-                    <h4 className="text-lg font-medium text-blue-900">
+                    <h4 className="text-lg font-medium text-[#0A2647]">
                       {t(video.titleKey)}
                     </h4>
-                    <p className="text-blue-600">
+                    <p className="text-[#334155]">
                       {t(video.durationKey)} {video.duration && `- ${video.duration}`}
                     </p>
                     {!video.url || !video.url.trim() && (
@@ -269,26 +259,23 @@ const LifeOverview = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 bg-gray-100 rounded-lg">
-              <div className="text-gray-500 text-lg">
-                {t('life.videos.noVideos', 'Видео пока не загружены')}
+              <div className="text-center py-12 bg-slate-100 rounded-lg">
+                <div className="text-gray-500 text-lg">
+                  {t('life.videos.noVideos', 'Видео пока не загружены')}
+                </div>
               </div>
-              <div className="text-sm text-gray-400 mt-2">
-                Debug: videos array length = {lifeData.video_data ? lifeData.video_data.length : 'undefined'}
-              </div>
-            </div>
           )}
         </div>
         
         {/* Цифры и статистика */}
         {lifeData.stats && lifeData.stats.length > 0 && (
-          <div className="bg-blue-800 text-white rounded-2xl p-8 shadow-xl">
+          <div className="bg-[#0A2647] text-white rounded-lg p-8 shadow-xl">
             <h3 className="text-2xl font-semibold mb-8 text-center">
               {t('life.stats.title')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {stats.map((stat, index) => (
-                <div key={index} className="text-center p-6 bg-blue-700 rounded-xl transition-transform duration-300 hover:scale-105">
+                <div key={index} className="text-center p-6 bg-white/10 rounded-lg transition-transform duration-300 hover:scale-[1.02]">
                   <div className="text-5xl font-bold mb-2">{stat.value}</div>
                   <div className="text-xl">{t(stat.labelKey)}</div>
                 </div>

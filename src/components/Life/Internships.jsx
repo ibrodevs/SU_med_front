@@ -80,7 +80,7 @@ const Internships = () => {
       window.open(template.download_url, '_blank');
     } else if (template.file && (template.file.startsWith('http') || template.file.startsWith('/media'))) {
       // Fallback для старых файлов
-      const downloadUrl = template.file.startsWith('http') ? template.file : `https://su-med-backend-35d3d951c74b.herokuapp.com${template.file}`;
+      const downloadUrl = template.file.startsWith('http') ? template.file : `${import.meta.env.VITE_MEDIA_BASE_URL || '/media'}${template.file}`;
       window.open(downloadUrl, '_blank');
     } else {
       // Показываем сообщение, что файл недоступен
@@ -107,7 +107,7 @@ const Internships = () => {
   // Показать загрузку
   if (loading) {
     return (
-      <div className="min-h-screen pt-20 flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50">
+      <div className="min-h-screen pt-20 flex items-center justify-center bg-[#f8fafc]">
         <div className="text-center">
           <div className="relative">
             <div className="animate-spin rounded-full h-20 w-20 border-b-2 border-blue-600 mx-auto mb-4"></div>
@@ -123,8 +123,8 @@ const Internships = () => {
   // Показать ошибку
   if (error) {
     return (
-      <div className="min-h-screen pt-20 flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50">
-        <div className="text-center max-w-md mx-auto bg-white p-8 rounded-2xl shadow-xl">
+      <div className="min-h-screen pt-20 flex items-center justify-center bg-[#f8fafc]">
+        <div className="text-center max-w-md mx-auto bg-white p-8 rounded-lg shadow-xl">
           <div className="text-red-500 mb-4 relative">
             <div className="relative w-20 h-20 mx-auto">
               <svg className="w-20 h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -137,7 +137,7 @@ const Internships = () => {
           <p className="text-gray-600 mb-6">{error}</p>
           <button
             onClick={fetchInternshipsData}
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg"
+            className="bg-[#0A2647] text-white px-6 py-3 rounded-lg hover:bg-[#144272] transition-all duration-300 shadow-md hover:shadow-lg"
           >
             {t('studentLife.internships.tryAgain')}
           </button>
@@ -147,10 +147,10 @@ const Internships = () => {
   }
 
   return (
-    <div className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50">
+    <div className="min-h-screen pt-20 bg-[#f8fafc]">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#0A2647] mb-4">
             {t('studentLife.internships.title')}
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -160,12 +160,12 @@ const Internships = () => {
 
         {/* Анимированные табы */}
         <div className="mb-8 flex justify-center">
-          <div className="bg-white p-1 rounded-2xl shadow-inner flex flex-wrap justify-center">
+          <div className="bg-white p-1 rounded-lg shadow-inner flex flex-wrap justify-center">
             <nav className="flex flex-wrap justify-center gap-2">
               <button
                 onClick={() => setActiveTab('partners')}
-                className={`py-3 px-6 rounded-xl font-medium text-sm transition-all duration-300 flex items-center ${activeTab === 'partners'
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                className={`py-3 px-6 rounded-lg font-medium text-sm transition-all duration-300 flex items-center ${activeTab === 'partners'
+                    ? 'bg-[#0A2647] text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
                   }`}
               >
@@ -174,8 +174,8 @@ const Internships = () => {
               </button>
               <button
                 onClick={() => setActiveTab('requirements')}
-                className={`py-3 px-6 rounded-xl font-medium text-sm transition-all duration-300 flex items-center ${activeTab === 'requirements'
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                className={`py-3 px-6 rounded-lg font-medium text-sm transition-all duration-300 flex items-center ${activeTab === 'requirements'
+                    ? 'bg-[#0A2647] text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
                   }`}
               >
@@ -184,8 +184,8 @@ const Internships = () => {
               </button>
               <button
                 onClick={() => setActiveTab('templates')}
-                className={`py-3 px-6 rounded-xl font-medium text-sm transition-all duration-300 flex items-center ${activeTab === 'templates'
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                className={`py-3 px-6 rounded-lg font-medium text-sm transition-all duration-300 flex items-center ${activeTab === 'templates'
+                    ? 'bg-[#0A2647] text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
                   }`}
               >
@@ -206,7 +206,7 @@ const Internships = () => {
                 {filteredOrganizations?.map((org, index) => (
                   <div
                     key={org.id}
-                    className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group"
+                    className="bg-white rounded-lg shadow-lg overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 group"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className="relative h-48 overflow-hidden">
@@ -224,7 +224,7 @@ const Internships = () => {
                         </div>
                       </div>
                       <div className="absolute top-4 right-4">
-                        <span className="bg-blue-600 text-white text-xs px-3 py-1 rounded-full">
+                        <span className="bg-[#0A2647] text-white text-xs px-3 py-1 rounded-full">
                           {org.specializations?.[0]?.name}
                         </span>
                       </div>
@@ -237,7 +237,7 @@ const Internships = () => {
                           {org.specializations?.map((spec, index) => (
                             <span
                               key={index}
-                              className="bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 text-xs px-3 py-1.5 rounded-full"
+                              className="bg-[#f1f5f9] text-[#144272] text-xs px-3 py-1.5 rounded-full"
                             >
                               {spec.name}
                             </span>
@@ -264,7 +264,7 @@ const Internships = () => {
               </div>
 
               {filteredOrganizations?.length === 0 && (
-                <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
+                <div className="text-center py-16 bg-white rounded-lg shadow-lg">
                   <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
                     <MagnifyingGlassIcon className="w-12 h-12 text-gray-400" />
                   </div>
@@ -280,14 +280,14 @@ const Internships = () => {
               {Object.entries(data.requirements || {}).map(([category, requirements], index) => (
                 <div
                   key={category}
-                  className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1"
+                  className="bg-white rounded-lg shadow-lg p-6 border border-slate-200 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                    <div className="p-2 bg-blue-100 rounded-lg mr-3">
-                      {category === 'academic' && <CheckCircleIcon className="w-6 h-6 text-blue-600" />}
-                      {category === 'documents' && <DocumentArrowDownIcon className="w-6 h-6 text-blue-600" />}
-                      {category === 'duration' && <ClockIcon className="w-6 h-6 text-blue-600" />}
+                    <div className="p-2 bg-[#0A2647]/10 rounded-lg mr-3">
+                      {category === 'academic' && <CheckCircleIcon className="w-6 h-6 text-[#0A2647]" />}
+                      {category === 'documents' && <DocumentArrowDownIcon className="w-6 h-6 text-[#0A2647]" />}
+                      {category === 'duration' && <ClockIcon className="w-6 h-6 text-[#0A2647]" />}
                     </div>
                     {getMultilingualText(requirements[0], 'title', requirements[0]?.title || category)}
                   </h3>
@@ -309,28 +309,28 @@ const Internships = () => {
                 </div>
               ))}
 
-              <div className="bg-gradient-to-r from-yellow-50 to-amber-50 border-l-4 border-yellow-400 p-6 rounded-2xl shadow transition-all duration-300 hover:shadow-md">
-                <h3 className="text-lg font-semibold text-yellow-800 mb-3 flex items-center">
+              <div className="bg-[#0A2647]/5 border-l-4 border-[#0A2647] p-6 rounded-lg shadow transition-all duration-300 hover:shadow-md">
+                <h3 className="text-lg font-semibold text-[#0A2647] mb-3 flex items-center">
                   <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
                   {t('studentLife.internships.importantInfo')}
                 </h3>
-                <ul className="text-yellow-700 space-y-2 text-sm">
+                <ul className="text-[#0A2647]/80 space-y-2 text-sm">
                   <li className="flex items-start">
-                    <span className="inline-block w-1.5 h-1.5 bg-yellow-500 rounded-full mt-1.5 mr-2"></span>
+                    <span className="inline-block w-1.5 h-1.5 bg-[#0A2647] rounded-full mt-1.5 mr-2"></span>
                     {t('studentLife.internships.docDeadline')}
                   </li>
                   <li className="flex items-start">
-                    <span className="inline-block w-1.5 h-1.5 bg-yellow-500 rounded-full mt-1.5 mr-2"></span>
+                    <span className="inline-block w-1.5 h-1.5 bg-[#0A2647] rounded-full mt-1.5 mr-2"></span>
                     {t('studentLife.internships.medExamValidity')}
                   </li>
                   <li className="flex items-start">
-                    <span className="inline-block w-1.5 h-1.5 bg-yellow-500 rounded-full mt-1.5 mr-2"></span>
+                    <span className="inline-block w-1.5 h-1.5 bg-[#0A2647] rounded-full mt-1.5 mr-2"></span>
                     {t('studentLife.internships.rulesCompliance')}
                   </li>
                   <li className="flex items-start">
-                    <span className="inline-block w-1.5 h-1.5 bg-yellow-500 rounded-full mt-1.5 mr-2"></span>
+                    <span className="inline-block w-1.5 h-1.5 bg-[#0A2647] rounded-full mt-1.5 mr-2"></span>
                     {t('studentLife.internships.reportDeadline')}
                   </li>
                 </ul>
@@ -340,26 +340,26 @@ const Internships = () => {
 
           {activeTab === 'templates' && (
             <div className="space-y-6 animate-fade-in">
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-6 shadow transition-all duration-300 hover:shadow-md">
-                <h3 className="text-lg font-semibold text-blue-900 mb-3 flex items-center">
+              <div className="bg-[#f1f5f9] border border-slate-200 rounded-lg p-6 shadow transition-all duration-300 hover:shadow-md">
+                <h3 className="text-lg font-semibold text-[#0A2647] mb-3 flex items-center">
                   <DocumentArrowDownIcon className="w-5 h-5 mr-2" />
                   {t('studentLife.internships.reportRequirements')}
                 </h3>
-                <ul className="text-blue-800 space-y-2 text-sm">
+                <ul className="text-[#0A2647]/80 space-y-2 text-sm">
                   <li className="flex items-start">
-                    <span className="inline-block w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-2"></span>
+                    <span className="inline-block w-1.5 h-1.5 bg-[#0A2647] rounded-full mt-1.5 mr-2"></span>
                     {t('studentLife.internships.reportFormat')}
                   </li>
                   <li className="flex items-start">
-                    <span className="inline-block w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-2"></span>
+                    <span className="inline-block w-1.5 h-1.5 bg-[#0A2647] rounded-full mt-1.5 mr-2"></span>
                     {t('studentLife.internships.reportLength')}
                   </li>
                   <li className="flex items-start">
-                    <span className="inline-block w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-2"></span>
+                    <span className="inline-block w-1.5 h-1.5 bg-[#0A2647] rounded-full mt-1.5 mr-2"></span>
                     {t('studentLife.internships.reportFont')}
                   </li>
                   <li className="flex items-start">
-                    <span className="inline-block w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-2"></span>
+                    <span className="inline-block w-1.5 h-1.5 bg-[#0A2647] rounded-full mt-1.5 mr-2"></span>
                     {t('studentLife.internships.reportSignatures')}
                   </li>
                 </ul>
@@ -369,7 +369,7 @@ const Internships = () => {
                 {data.report_templates?.map((template, index) => (
                   <div
                     key={index}
-                    className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 group"
+                    className="bg-white rounded-lg shadow-lg p-6 border border-slate-200 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 group"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className="flex items-start justify-between mb-4">
@@ -388,7 +388,7 @@ const Internships = () => {
                     </div>
                     <button
                       onClick={() => handleDownload(template)}
-                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:-translate-y-0.5 shadow-md flex items-center justify-center group-hover:shadow-lg"
+                      className="w-full bg-[#0A2647] text-white px-4 py-3 rounded-lg hover:bg-[#144272] transition-all duration-300 shadow-md flex items-center justify-center group-hover:shadow-lg"
                     >
                       <DocumentArrowDownIcon className="w-5 h-5 mr-2 group-hover:animate-bounce" />
                       {t('studentLife.internships.downloadDocument')}
@@ -398,12 +398,12 @@ const Internships = () => {
               </div>
 
               {data.report_templates?.length === 0 && (
-                <div className="text-center py-12 bg-white rounded-2xl shadow">
+                <div className="text-center py-12 bg-white rounded-lg shadow">
                   <p className="text-gray-500 text-lg">{t('studentLife.internships.noDocuments')}</p>
                 </div>
               )}
 
-              <div className="bg-gradient-to-r from-gray-50 to-blue-50 border border-gray-200 rounded-2xl p-6 shadow transition-all duration-300 hover:shadow-md">
+              <div className="bg-[#f8fafc] border border-slate-200 rounded-lg p-6 shadow transition-all duration-300 hover:shadow-md">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('common.additionalInfo')}</h3>
                 <div className="text-gray-700 space-y-2 text-sm">
                   <p className="flex items-start">

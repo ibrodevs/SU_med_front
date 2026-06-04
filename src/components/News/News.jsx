@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { fetchExternalNews } from '../../utils/newsParser';
 
 const API_BASE_URL = import.meta.env.DEV 
-  ? '/proxy-backend' 
-  : (import.meta.env.VITE_API_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com/api');
+  ? '/proxy-backend/api' 
+  : (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_BASE_URL || '/proxy-backend');
 const MEDIA_BASE_URL = import.meta.env.DEV
   ? ''
-  : (import.meta.env.VITE_MEDIA_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com');
+  : (import.meta.env.VITE_MEDIA_BASE_URL || '/media');
 
 const News = () => {
   const { t, i18n } = useTranslation();
@@ -184,7 +184,7 @@ const News = () => {
     return (
       <div className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+        <div className="bg-gradient-to-r from-[#0A2647] to-[#144272] text-white py-16">
           <div className="container mx-auto px-4">
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -211,7 +211,7 @@ const News = () => {
                 fetchNews();
                 fetchFeaturedNews();
               }}
-              className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors"
+              className="bg-[#0A2647] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#144272] transition-colors"
             >
               Обновить
             </button>
@@ -224,7 +224,7 @@ const News = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+      <div className="bg-gradient-to-r from-[#0A2647] to-[#144272] text-white py-16">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -274,7 +274,7 @@ const News = () => {
                         </svg>
                       </div>
                       <div className="absolute top-4 left-4">
-                        <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        <span className="bg-[#0A2647] text-white px-3 py-1 rounded text-sm font-semibold">
                           {t('news.important')}
                         </span>
                       </div>
@@ -337,10 +337,10 @@ const News = () => {
                       <span className="text-sm text-gray-500">
                         {formatDate(item.published_at || item.date)}
                       </span>
-                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                        (item.category?.name || item.category) === 'news' ? 'bg-blue-100 text-blue-800' :
-                        (item.category?.name || item.category) === 'events' ? 'bg-green-100 text-green-800' :
-                        'bg-yellow-100 text-yellow-800'
+                      <span className={`px-2 py-1 rounded text-xs font-semibold ${
+                        (item.category?.name || item.category) === 'news' ? 'bg-sky-50 text-[#144272]' :
+                        (item.category?.name || item.category) === 'events' ? 'bg-teal-50 text-[#1B4242]' :
+                        'bg-slate-100 text-[#334155]'
                       }`}>
                         {getCategoryName(item.category?.name || item.category)}
                       </span>
@@ -377,7 +377,7 @@ const News = () => {
 
         {/* Load More Button */}
         <div className="text-center mt-12">
-          <button className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors">
+          <button className="bg-[#0A2647] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#144272] transition-colors">
             {t('news.loadMore')}
           </button>
         </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Calendar, FileText, Users, Award, ArrowRight, Clock, MapPin, ChevronRight, ExternalLink, BookOpen, Mic2 } from 'lucide-react';
+import { Calendar, FileText, Users, Award, ArrowRight, Clock, MapPin, ChevronRight, ExternalLink, BookOpen, Mic2, Heart, Brain, Microscope, Dna, Bone, Pill, Activity } from 'lucide-react';
 
 const Research = () => {
   const { t, i18n } = useTranslation();
@@ -88,16 +88,16 @@ const Research = () => {
 
   const getAreaIcon = (areaName) => {
     const icons = {
-      'Кардиология': '🫀',
-      'Неврология': '🧠',
-      'Онкология': '🦠',
-      'Генетика': '🧬',
-      'Иммунология': '🦴',
-      'Фармакология': '💊',
-      'Общая медицина': '⚕️'
+      'Кардиология': Heart,
+      'Неврология': Brain,
+      'Онкология': Microscope,
+      'Генетика': Dna,
+      'Иммунология': Bone,
+      'Фармакология': Pill,
+      'Общая медицина': Activity
     };
     
-    return icons[areaName] || '🔬';
+    return icons[areaName] || Microscope;
   };
 
   const getAreaColor = (areaName) => {
@@ -131,7 +131,7 @@ const Research = () => {
   // Функции для получения данных из API
   const fetchPublications = async () => {
     try {
-      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/publications/');
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || '/proxy-backend'}/research/api/publications/`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -147,7 +147,7 @@ const Research = () => {
 
   const fetchConferences = async () => {
     try {
-      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/conferences/upcoming/');
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || '/proxy-backend'}/research/api/conferences/upcoming/`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -164,7 +164,7 @@ const Research = () => {
   const fetchResearchAreas = async () => {
     try {
       // Получаем все публикации для анализа
-      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/publications/');
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || '/proxy-backend'}/research/api/publications/`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -376,7 +376,7 @@ const Research = () => {
                 
                 <div className="relative z-10">
                   <div className="flex items-start justify-between mb-4">
-                    <span className="text-4xl transform group-hover:scale-110 transition-transform duration-300">{area.icon || '🔬'}</span>
+                    {(() => { const IconComp = area.icon || Microscope; return typeof IconComp === 'function' ? <IconComp className="w-10 h-10 text-blue-600 group-hover:scale-110 transition-transform duration-300" /> : <Microscope className="w-10 h-10 text-blue-600 group-hover:scale-110 transition-transform duration-300" />; })()}
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${getColorClasses(area.color)}`}>
                       {area.projects_count || 0} {t('research.researchAreas.projects')}
                     </span>
@@ -504,7 +504,7 @@ const Research = () => {
                   <Link 
                     key={conf.id}
                     to="/research/conferences"
-                    className="block p-4 border border-gray-100 rounded-xl hover:border-orange-200 hover:bg-orange-50/30 transition-all duration-300 group"
+                    className="block p-4 border border-gray-100 rounded-xl hover:border-blue-200 hover:bg-blue-50/30 transition-all duration-300 group"
                   >
                     <div className="flex justify-between items-start mb-3">
                       <h3 className="font-semibold text-gray-800 flex-1 mr-4 group-hover:text-orange-700 transition-colors">

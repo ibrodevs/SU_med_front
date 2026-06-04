@@ -142,19 +142,19 @@ const  HSMAcademicStuff = () => {
 							<h3 className="text-xl font-semibold mb-4">{t('hsm.faculty_statistics', 'Статистика ППС')}</h3>
 							<div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
 								<div>
-									<div className="text-2xl font-bold text-blue-600">{allFaculty.length}</div>
+									<div className="text-2xl font-bold text-[#0A2647]">{allFaculty.length}</div>
 									<div className="text-sm text-gray-600">{t('hsm.total_faculty', 'Всего преподавателей')}</div>
 								</div>
 								<div>
-									<div className="text-2xl font-bold text-green-600">{allFaculty.filter(f => f.position === 'professor' || (f.position_display || '').toLowerCase().includes('профессор')).length}</div>
+									<div className="text-2xl font-bold text-[#144272]">{allFaculty.filter(f => f.position === 'professor' || (f.position_display || '').toLowerCase().includes('профессор')).length}</div>
 									<div className="text-sm text-gray-600">{t('hsm.professors', 'Профессоров')}</div>
 								</div>
 								<div>
-									<div className="text-2xl font-bold text-purple-600">{allFaculty.filter(f => f.position === 'associate_professor' || (f.position_display || '').toLowerCase().includes('доцент')).length}</div>
+									<div className="text-2xl font-bold text-[#205295]">{allFaculty.filter(f => f.position === 'associate_professor' || (f.position_display || '').toLowerCase().includes('доцент')).length}</div>
 									<div className="text-sm text-gray-600">{t('hsm.associate_professors', 'Доцентов')}</div>
 								</div>
 								<div>
-									<div className="text-2xl font-bold text-orange-600">{allFaculty.filter(f => (f.academic_degree_display || '').toLowerCase().includes('доктор')).length}</div>
+									<div className="text-2xl font-bold text-[#2C7865]">{allFaculty.filter(f => (f.academic_degree_display || '').toLowerCase().includes('доктор')).length}</div>
 									<div className="text-sm text-gray-600">{t('hsm.doctors', 'Докторов наук')}</div>
 								</div>
 							</div>

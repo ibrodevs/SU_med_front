@@ -126,8 +126,8 @@ const HorizontalModal = ({ isOpen, onClose, goal, language }) => {
                     transition={{ delay: 0.3 }}
                   >
                     <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                      <div className="p-2 rounded-full bg-purple-100">
-                        <svg className="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                      <div className="p-2 rounded-full bg-teal-50">
+                        <svg className="w-5 h-5 text-[#2C7865]" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
                           <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
                         </svg>
@@ -169,8 +169,8 @@ const LearningGoalCard = ({ goal, language, index, isActive, onOpenModal }) => {
 
   return (
     <motion.div
-      className={`bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 border-2 ${
-        isActive ? 'border-blue-500 scale-105' : 'border-gray-100 scale-95'
+      className={`bg-white rounded-xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 border-2 ${
+        isActive ? 'border-[#144272] scale-105' : 'border-gray-100 scale-95'
       } overflow-hidden flex-shrink-0 w-80 lg:w-96 mx-4 cursor-pointer`}
       whileHover={{ y: -8, scale: 1.02 }}
       initial={{ opacity: 0, x: 30 }}
@@ -380,7 +380,7 @@ const HSMLearningGoals = () => {
             <input
               type="text"
               placeholder={t('hsm.search_placeholder', 'Поиск целей обучения...')}
-              className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white shadow-sm transition-all"
+              className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#144272] focus:border-[#144272] bg-white shadow-sm transition-all"
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
@@ -429,10 +429,8 @@ const HSMLearningGoals = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="bg-white rounded-2xl shadow-lg p-8 max-w-md mx-auto"
+            <div
+              className="bg-white rounded-xl shadow-lg p-8 max-w-md mx-auto"
             >
               <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg className="w-10 h-10 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
@@ -451,7 +449,7 @@ const HSMLearningGoals = () => {
               >
                 {t('hsm.clear_filters', 'Сбросить фильтры')}
               </button>
-            </motion.div>
+            </div>
           </motion.div>
         )}
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Crown, Landmark, Scale, Mail, Phone } from 'lucide-react';
 import { researchAPI } from '../../services/researchService';
 
 const ResearchManagement = () => {
@@ -22,9 +23,9 @@ const ResearchManagement = () => {
   }, []);
 
   const sections = [
-    { id: 'management', name: t('research.management.tabs.management'), icon: '👑' },
-    { id: 'councils', name: t('research.management.tabs.councils'), icon: '🏛️' },
-    { id: 'commissions', name: t('research.management.tabs.commissions'), icon: '⚖️' }
+    { id: 'management', name: t('research.management.tabs.management'), icon: Crown },
+    { id: 'councils', name: t('research.management.tabs.councils'), icon: Landmark },
+    { id: 'commissions', name: t('research.management.tabs.commissions'), icon: Scale }
   ];
 
   const fetchData = async () => {
@@ -115,7 +116,7 @@ const ResearchManagement = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">👑</span>
+          <Crown className="w-6 h-6 text-blue-700" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('research.management.tabs.management')}
@@ -124,7 +125,7 @@ const ResearchManagement = () => {
 
       {managementData.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-xl border border-blue-100">
-          <p className="text-gray-500 text-lg">{t('research.management.noData')}</p>
+          <p className="text-gray-500 text-lg">{t('research.management.noData.management', 'Нет данных об управлении')}</p>
         </div>
       ) : (
         <div className="space-y-8">
@@ -186,7 +187,7 @@ const ResearchManagement = () => {
                           href={`mailto:${person.contact_email}`}
                           className="text-blue-600 hover:text-blue-800 text-sm"
                         >
-                          📧 {person.contact_email}
+                          <Mail className="w-4 h-4 inline mr-1" /> {person.contact_email}
                         </a>
                       )}
                       {person.contact_phone && (
@@ -194,7 +195,7 @@ const ResearchManagement = () => {
                           href={`tel:${person.contact_phone}`}
                           className="text-blue-600 hover:text-blue-800 text-sm"
                         >
-                          📞 {person.contact_phone}
+                          <Phone className="w-4 h-4 inline mr-1" /> {person.contact_phone}
                         </a>
                       )}
                     </div>
@@ -212,7 +213,7 @@ const ResearchManagement = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🏛️</span>
+          <Landmark className="w-6 h-6 text-blue-700" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('research.management.tabs.councils')}
@@ -221,7 +222,7 @@ const ResearchManagement = () => {
 
       {councilsData.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-xl border border-blue-100">
-          <p className="text-gray-500 text-lg">{t('research.management.noData')}</p>
+          <p className="text-gray-500 text-lg">{t('research.management.noData.councils', 'Нет данных о научных советах')}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -270,7 +271,7 @@ const ResearchManagement = () => {
                     href={`mailto:${council.contact_email}`}
                     className="text-blue-600 hover:text-blue-800 text-sm"
                   >
-                    📧 {council.contact_email}
+                    <Mail className="w-4 h-4 inline mr-1" /> {council.contact_email}
                   </a>
                 )}
                 {council.contact_phone && (
@@ -278,7 +279,7 @@ const ResearchManagement = () => {
                     href={`tel:${council.contact_phone}`}
                     className="text-blue-600 hover:text-blue-800 text-sm"
                   >
-                    📞 {council.contact_phone}
+                    <Phone className="w-4 h-4 inline mr-1" /> {council.contact_phone}
                   </a>
                 )}
               </div>
@@ -293,7 +294,7 @@ const ResearchManagement = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">⚖️</span>
+          <Scale className="w-6 h-6 text-blue-700" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('research.management.tabs.commissions')}
@@ -302,7 +303,7 @@ const ResearchManagement = () => {
 
       {commissionsData.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-xl border border-blue-100">
-          <p className="text-gray-500 text-lg">{t('research.management.noData')}</p>
+          <p className="text-gray-500 text-lg">{t('research.management.noData.commissions', 'Нет данных о комиссиях')}</p>
         </div>
       ) : (
         <div className="space-y-8">
@@ -346,7 +347,7 @@ const ResearchManagement = () => {
                           href={`mailto:${commission.contact_email}`}
                           className="text-blue-600 hover:text-blue-800 text-sm"
                         >
-                          📧 {commission.contact_email}
+                          <Mail className="w-4 h-4 inline mr-1" /> {commission.contact_email}
                         </a>
                       )}
                       {commission.contact_phone && (
@@ -354,7 +355,7 @@ const ResearchManagement = () => {
                           href={`tel:${commission.contact_phone}`}
                           className="text-blue-600 hover:text-blue-800 text-sm"
                         >
-                          📞 {commission.contact_phone}
+                          <Phone className="w-4 h-4 inline mr-1" /> {commission.contact_phone}
                         </a>
                       )}
                     </div>
@@ -458,7 +459,7 @@ const ResearchManagement = () => {
                           onClick={() => changeActiveSection(section.id)}
                         >
                           <div className="flex items-center">
-                            <span className="text-lg mr-3">{section.icon}</span>
+                            <section.icon className="w-5 h-5 mr-3" />
                             {section.name}
                           </div>
                           <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">

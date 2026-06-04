@@ -21,15 +21,15 @@ const ScientificJournals = () => {
 
   const fetchJournals = async () => {
     try {
-      console.log('🔍 Journals: Starting to fetch journals...');
+      console.log('[INFO] Journals: Starting to fetch journals...');
       setLoading(true);
       const data = await researchService.getScientificJournals(i18n.language);
-      console.log('✅ Journals: Received data:', data);
+      console.log('[OK] Journals: Received data:', data);
 
       setJournalsData(data);
       setError(null);
     } catch (err) {
-      console.error('❌ Journals: Error fetching journals:', err);
+      console.error('[ERROR] Journals: Error fetching journals:', err);
       setError('Ошибка загрузки журналов');
       setJournalsData([]);
     } finally {

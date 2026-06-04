@@ -35,8 +35,8 @@ const Regulations = () => {
       });
       
       const [documentsResponse, categoriesResponse] = await Promise.all([
-        fetch(`https://su-med-backend-35d3d951c74b.herokuapp.com/api/documents/?${documentsParams}`),
-        fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/documents/categories/')
+        fetch(`${import.meta.env.VITE_API_BASE_URL || '/proxy-backend'}/api/documents/?${documentsParams}`),
+        fetch(`${import.meta.env.VITE_API_BASE_URL || '/proxy-backend'}/api/documents/categories/`)
       ]);
 
       if (!documentsResponse.ok || !categoriesResponse.ok) {
@@ -156,7 +156,7 @@ const Regulations = () => {
             <p className="text-red-700 mb-6">{error}</p>
             <button 
               onClick={fetchData}
-              className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg"
+              className="bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg"
             >
               Попробовать снова
             </button>

@@ -73,7 +73,6 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         { title: t('nav.status'), link: '/about/status' },
         { title: t('nav.regulations'), link: 'https://salymbekov.com/npa/' },
         { title: t('nav.advices'), link: '/about/advices' },
-        { title: t('nav.achievements'), link: '/about/achievements' },
       ]
     },
     HSM: {
@@ -197,8 +196,8 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled
-          ? 'bg-white py-2'
-          : 'bg-gradient-to-r from-blue-900 to-blue-800 py-1'
+          ? 'bg-white shadow-sm py-2'
+          : 'bg-gradient-to-r from-[#0A2647] to-[#144272] py-1'
         }`}
       ref={menuRef}
     >
@@ -243,18 +242,18 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                 >
                   <button
                     className={`relative px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 group ${activeMenu === key
-                        ? 'text-white bg-blue-600 shadow-lg'
+                        ? 'text-white bg-[#205295] shadow-lg'
                         : isScrolled
-                          ? 'text-blue-800 hover:text-blue-600 hover:bg-blue-50'
-                          : 'text-blue-100 hover:text-white hover:bg-blue-700/50'
+                          ? 'text-[#0A2647] hover:text-[#144272] hover:bg-slate-50'
+                          : 'text-blue-100 hover:text-white hover:bg-white/10'
                       }`}
                   >
                     <span className="relative z-10">{item.title}</span>
-                    <div className={`absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isScrolled ? '' : 'group-hover:opacity-100'
+                    <div className={`absolute inset-0 bg-gradient-to-r from-[#205295] to-[#144272] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isScrolled ? '' : 'group-hover:opacity-100'
                       }`}></div>
 
                     {/* Индикатор при наведении */}
-                    <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-3/4 ${activeMenu === key ? 'w-3/4' : ''
+                    <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-[#0891b2] transition-all duration-300 group-hover:w-3/4 ${activeMenu === key ? 'w-3/4' : ''
                       }`}></div>
                   </button>
 
@@ -285,7 +284,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                           >
                             <a
                               href={subItem.link}
-                              className="flex justify-between items-center px-4 py-3 text-sm text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+                              className="flex justify-between items-center px-4 py-3 text-sm text-[#334155] hover:bg-slate-50 hover:text-[#144272] transition-colors duration-200"
                             >
                               <span>{subItem.title}</span>
                               {subItem.hasNested && (
@@ -312,7 +311,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                                     <a
                                       key={nestedIndex}
                                       href={nestedItem.link}
-                                      className="block px-4 py-3 text-sm text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+                                      className="block px-4 py-3 text-sm text-[#334155] hover:bg-slate-50 hover:text-[#144272] transition-colors duration-200"
                                     >
                                       {nestedItem.title}
                                     </a>
@@ -333,18 +332,6 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
 
           {/* Правая часть: кнопка подачи заявки, язык и мобильное меню */}
           <div className="flex items-center space-x-3">
-            {/* Кнопка подачи заявки - скрыта на мобильных */}
-            <div className="hidden md:block">
-              <a
-                href="/admissions/apply"
-                className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 ${isScrolled
-                    ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800'
-                    : 'bg-white text-blue-800 hover:bg-blue-50'
-                  }`}
-              >
-                {t('nav.apply')}
-              </a>
-            </div>
 
             {/* Переключатель языка */}
             <div className="relative" ref={langRef}>
@@ -389,24 +376,14 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
           className="block min-[1475px]:hidden bg-white/95 backdrop-blur-md shadow-xl transform transition-all duration-300 ease-out animate-in slide-in-from-top-2 fade-in"
         >
           <div className="px-4 pt-2 pb-6 space-y-1">
-            {/* Кнопка подачи заявки в мобильном меню */}
-            <div className="md:hidden px-4 py-2">
-              <a
-                href="/admissions/apply"
-                className="block w-full text-center px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold transition-all duration-300 hover:shadow-lg"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t('nav.apply')}
-              </a>
-            </div>
 
             {Object.entries(menuData).map(([key, item]) => (
               <div key={key} className="relative">
                 <button
                   onClick={() => setActiveMenu(activeMenu === key ? null : key)}
                   className={`w-full text-left flex justify-between items-center px-4 py-4 rounded-xl text-base font-semibold transition-colors duration-200 ${activeMenu === key
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'text-blue-900 hover:bg-blue-50 hover:text-blue-700'
+                      ? 'bg-[#0A2647] text-white shadow-lg'
+                      : 'text-[#0A2647] hover:bg-slate-50 hover:text-[#144272]'
                     }`}
                 >
                   {item.title}
@@ -427,7 +404,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                           <div>
                             <button
                               onClick={() => setNestedMenu(nestedMenu === `${key}-${index}` ? null : `${key}-${index}`)}
-                              className="w-full text-left flex justify-between items-center px-4 py-3 rounded-lg text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+                              className="w-full text-left flex justify-between items-center px-4 py-3 rounded-lg text-sm text-[#334155] hover:bg-slate-50 hover:text-[#144272] transition-colors duration-200"
                             >
                               {subItem.title}
                               <svg
@@ -446,7 +423,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                                   <a
                                     key={nestedIndex}
                                     href={nestedItem.link}
-                                    className="block px-4 py-3 rounded-lg text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+                                    className="block px-4 py-3 rounded-lg text-sm text-[#64748b] hover:bg-slate-50 hover:text-[#144272] transition-colors duration-200"
                                     onClick={() => setIsMenuOpen(false)}
                                   >
                                     {nestedItem.title}
@@ -458,7 +435,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                         ) : (
                           <a
                             href={subItem.link}
-                            className="block px-4 py-3 rounded-lg text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+                            className="block px-4 py-3 rounded-lg text-sm text-[#334155] hover:bg-slate-50 hover:text-[#144272] transition-colors duration-200"
                             onClick={() => setIsMenuOpen(false)}
                           >
                             {subItem.title}

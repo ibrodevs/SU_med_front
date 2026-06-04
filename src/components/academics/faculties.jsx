@@ -1,6 +1,14 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { 
+  Stethoscope, 
+  Activity, 
+  Microscope, 
+  HeartPulse, 
+  Thermometer, 
+  BarChart3 
+} from 'lucide-react';
 
 const Faculties = () => {
   const { t, i18n } = useTranslation();
@@ -24,12 +32,12 @@ const Faculties = () => {
 
     
     careers: [
-      { icon: '🏥', key: 'therapist' },
-      { icon: '🚑', key: 'emergency' },
-      { icon: '🔬', key: 'researcher' },
-      { icon: '👨‍⚕️', key: 'surgeon' },
-      { icon: '🌡️', key: 'family_doctor' },
-      { icon: '📊', key: 'medical_manager' }
+      { icon: Stethoscope, key: 'therapist' },
+      { icon: Activity, key: 'emergency' },
+      { icon: Microscope, key: 'researcher' },
+      { icon: HeartPulse, key: 'surgeon' },
+      { icon: Thermometer, key: 'family_doctor' },
+      { icon: BarChart3, key: 'medical_manager' }
     ],
     
     stats: [
@@ -79,7 +87,7 @@ const Faculties = () => {
   }, [i18n]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50">
       {/* Хлебные крошки */}
       <div className="container mx-auto px-4 pt-4 md:pt-8">
         <nav className="text-xs md:text-sm text-gray-600 mb-4 md:mb-8">
@@ -94,14 +102,14 @@ const Faculties = () => {
       <div className="container mx-auto px-4 pb-8 md:pb-16">
         {/* Герой-блок */}
         <div className="relative rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-12 shadow-lg md:shadow-xl">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-purple-900/70 z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0A2647]/90 to-[#144272]/80 z-10"></div>
           <img 
             src={program.image} 
             alt={t('faculties.program.general_medicine')}
             className="w-full h-64 md:h-96 object-cover"
             onError={(e) => {
               e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4=';
-              e.target.className = "w-full h-64 md:h-96 object-cover bg-gradient-to-r from-blue-400 to-indigo-600";
+              e.target.className = "w-full h-64 md:h-96 object-cover bg-gradient-to-r from-[#0A2647] to-[#205295]";
             }}
           />
           <div className="absolute inset-0 z-20 flex items-center p-4 md:p-8">
@@ -117,15 +125,6 @@ const Faculties = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-2 md:gap-4">
-                <button
-                  onClick={handleApply}
-                  className="bg-white text-blue-600 hover:bg-blue-50 px-4 py-2 md:px-8 md:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center text-sm md:text-base"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5 mr-1 md:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  {t('faculties.program.apply')}
-                </button>
                 <button
                   onClick={handleDownloadBrochure}
                   className="border border-white md:border-2 text-white hover:bg-white hover:text-blue-600 px-3 py-2 md:px-6 md:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center text-sm md:text-base"
@@ -273,9 +272,11 @@ const Faculties = () => {
     {program.careers.map((career) => (
       <div
         key={career.key}
-        className="text-center p-4 md:p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg md:rounded-xl hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+        className="text-center p-4 md:p-6 bg-gradient-to-br from-slate-50 to-blue-50 rounded-lg md:rounded-xl hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 flex flex-col items-center"
       >
-        <div className="text-3xl md:text-4xl mb-2 md:mb-4">{career.icon}</div>
+        <div className="text-blue-600 mb-3">
+          <career.icon className="w-10 h-10" />
+        </div>
 
         {/* Название профессии */}
         <h4 className="font-semibold text-gray-800 mb-1 md:mb-2 text-sm md:text-base">

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ClipboardList, Star, FolderOpen, RefreshCw, BarChart3, AlertTriangle } from 'lucide-react';
 import {
   getQualityManagementSystem,
   incrementDocumentDownload,
@@ -53,11 +54,11 @@ const HSMCMK = () => {
   };
 
   const sections = [
-    { id: 'about', name: t('smk.tabs.about'), icon: '📋' },
-    { id: 'principles', name: t('smk.tabs.principles'), icon: '🌟' },
-    { id: 'documents', name: t('smk.tabs.documents'), icon: '📁' },
-    { id: 'processes', name: t('smk.tabs.processes'), icon: '🔄' },
-    { id: 'statistics', name: t('smk.statistics.title'), icon: '📊' }
+    { id: 'about', name: t('smk.tabs.about'), icon: ClipboardList },
+    { id: 'principles', name: t('smk.tabs.principles'), icon: Star },
+    { id: 'documents', name: t('smk.tabs.documents'), icon: FolderOpen },
+    { id: 'processes', name: t('smk.tabs.processes'), icon: RefreshCw },
+    { id: 'statistics', name: t('smk.statistics.title'), icon: BarChart3 }
   ];
 
   const changeActiveSection = (sectionId) => {
@@ -78,7 +79,7 @@ const HSMCMK = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-4 text-lg text-gray-600">Загрузка данных...</p>
@@ -89,9 +90,9 @@ const HSMCMK = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl text-red-500 mb-4">⚠️</div>
+          <div className="text-red-500 mb-4"><AlertTriangle className="w-16 h-16 mx-auto" /></div>
           <p className="text-lg text-red-600">{error}</p>
           <button
             onClick={() => window.location.reload()}
@@ -113,7 +114,7 @@ const HSMCMK = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">📋</span>
+            <ClipboardList className="w-6 h-6 text-[#0A2647]" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.about.title')}
@@ -127,7 +128,7 @@ const HSMCMK = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+          <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-xl p-6 border border-slate-200">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">{t('smk.about.advantages')}</h3>
             <ul className="space-y-3">
               {advantages.map((advantage) => (
@@ -166,7 +167,7 @@ const HSMCMK = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">🌟</span>
+            <Star className="w-6 h-6 text-[#0A2647]" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.principles.title')}
@@ -180,8 +181,8 @@ const HSMCMK = () => {
               className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-md transition-all duration-300"
             >
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-2xl mr-4">
-                  {principle.icon}
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                  <Star className="w-6 h-6 text-[#0A2647]" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-800">
                   {getLocalizedField(principle, 'title', currentLang)}
@@ -204,7 +205,7 @@ const HSMCMK = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">📁</span>
+            <FolderOpen className="w-6 h-6 text-[#0A2647]" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.documents.title')}
@@ -221,7 +222,7 @@ const HSMCMK = () => {
                   className="flex items-center justify-between p-4 bg-white rounded-xl border border-blue-100 hover:shadow-sm transition-all duration-300"
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-lg ${doc.document_type === 'pdf' ? 'bg-red-500' : 'bg-blue-500'
+                    <div className={`w-12 h-12 rounded-lg ${doc.document_type === 'pdf' ? 'bg-rose-600' : 'bg-blue-500'
                       } flex items-center justify-center text-white font-bold text-sm`}>
                       {doc.document_type_display || doc.document_type.toUpperCase()}
                     </div>
@@ -262,7 +263,7 @@ const HSMCMK = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">🔄</span>
+            <RefreshCw className="w-6 h-6 text-[#0A2647]" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.processes.title')}
@@ -276,7 +277,7 @@ const HSMCMK = () => {
               className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-md transition-all duration-300"
             >
               <div className="flex items-center gap-4 mb-6">
-                <div className="text-2xl">{group.icon}</div>
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center"><RefreshCw className="w-5 h-5 text-[#0A2647]" /></div>
                 <h3 className="text-xl font-semibold text-gray-800">
                   {getLocalizedField(group, 'title', currentLang)}
                 </h3>
@@ -306,7 +307,7 @@ const HSMCMK = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">📊</span>
+            <BarChart3 className="w-6 h-6 text-[#0A2647]" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.statistics.title')}
@@ -353,7 +354,7 @@ const HSMCMK = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      className={`min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
     >
       <div className="max-w-7xl mx-auto">
@@ -377,7 +378,7 @@ const HSMCMK = () => {
           {/* Боковая навигация */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
+              <div className="bg-gradient-to-r from-[#0A2647] to-[#144272] p-4 text-white font-bold text-lg">
                 {t('smk.sections')}
               </div>
               <nav className="p-2">
@@ -391,7 +392,7 @@ const HSMCMK = () => {
                           }`}
                         onClick={() => changeActiveSection(section.id)}
                       >
-                        <span className="text-lg mr-3">{section.icon}</span>
+                        <section.icon className="w-5 h-5 mr-3" />
                         {section.name}
                       </button>
                     </li>

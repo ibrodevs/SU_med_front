@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import studentLifeService from '../../services/studentLifeService';
+import { Star, GraduationCap, Trophy, Theater, Users } from 'lucide-react';
 
 const ClubsSection = () => {
   const { t, i18n } = useTranslation();
@@ -69,17 +70,25 @@ const ClubsSection = () => {
     leader: getLocalizedField(club, 'leader'),
     schedule: getLocalizedField(club, 'meetings'), // API использует 'meetings', а компонент ожидает 'schedule'
     achievements: getLocalizedArray(club, 'achievements'),
-    icon: club.image || "👥", // API использует 'image', а компонент ожидает 'icon'
+    icon: club.image || null, // API использует 'image', а компонент ожидает 'icon'
     location: getLocalizedField(club, 'location') || t('clubs.defaultLocation', 'Университет'), // fallback location
     social_media_link: club.social_media_link // Ссылка на социальные сети
   }));
 
+  const sectionIcons = {
+    all: Star,
+    academic: GraduationCap,
+    sports: Trophy,
+    cultural: Theater,
+    social: Users
+  };
+
   const sections = [
-    { id: 'all', name: t('clubs.categories.all'), icon: '🌟' },
-    { id: 'academic', name: t('clubs.categories.academic'), icon: '🎓' },
-    { id: 'sports', name: t('clubs.categories.sports'), icon: '⚽' },
-    { id: 'cultural', name: t('clubs.categories.cultural'), icon: '🎭' },
-    { id: 'social', name: t('clubs.categories.social'), icon: '🤝' }
+    { id: 'all', name: t('clubs.categories.all'), icon: 'all' },
+    { id: 'academic', name: t('clubs.categories.academic'), icon: 'academic' },
+    { id: 'sports', name: t('clubs.categories.sports'), icon: 'sports' },
+    { id: 'cultural', name: t('clubs.categories.cultural'), icon: 'cultural' },
+    { id: 'social', name: t('clubs.categories.social'), icon: 'social' }
   ];
 
   const changeActiveSection = (sectionId) => {
@@ -93,8 +102,8 @@ const ClubsSection = () => {
   const renderAllClubsContent = () => (
     <div className="space-y-6">
       <div className="flex items-center mb-6">
-        <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🌟</span>
+        <div className="p-3 bg-slate-100 rounded-lg mr-4">
+          <Star className="w-6 h-6 text-[#0A2647]" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('clubs.categories.all')}
@@ -105,19 +114,19 @@ const ClubsSection = () => {
         {filteredClubs.map((club) => (
           <div
             key={club.id}
-            className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
+            className="bg-white rounded-lg p-6 border border-slate-200 hover:shadow-lg transition-all duration-300"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-2xl mr-4">
-                  {club.icon}
+                <div className="w-12 h-12 bg-[#0A2647]/10 rounded-lg flex items-center justify-center mr-4">
+                  <Users className="w-6 h-6 text-[#0A2647]" />
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-gray-800">
                     {club.name}
                   </h3>
-                  <div className="flex items-center text-sm text-blue-600">
-                    <span className="bg-blue-100 px-2 py-1 rounded-full">
+                  <div className="flex items-center text-sm text-[#205295]">
+                    <span className="bg-[#205295]/10 px-2 py-1 rounded-full">
                       {club.members} {t('clubs.members')}
                     </span>
                   </div>
@@ -149,7 +158,7 @@ const ClubsSection = () => {
               target={club.social_media_link ? '_blank' : '_self'}
               rel={club.social_media_link ? 'noopener noreferrer' : ''}
               className={`w-full mt-4 px-4 py-2 rounded-lg transition-colors duration-300 font-medium text-center block ${club.social_media_link
-                  ? 'bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'
+                  ? 'bg-[#0A2647] text-white hover:bg-[#144272] cursor-pointer'
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
               onClick={!club.social_media_link ? (e) => e.preventDefault() : undefined}
@@ -165,8 +174,8 @@ const ClubsSection = () => {
   const renderAcademicClubsContent = () => (
     <div className="space-y-6">
       <div className="flex items-center mb-6">
-        <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🎓</span>
+        <div className="p-3 bg-slate-100 rounded-lg mr-4">
+          <GraduationCap className="w-6 h-6 text-[#0A2647]" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('clubs.categories.academic')}
@@ -177,11 +186,11 @@ const ClubsSection = () => {
         {filteredClubs.map((club) => (
           <div
             key={club.id}
-            className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
+            className="bg-white rounded-lg p-6 border border-slate-200 hover:shadow-lg transition-all duration-300"
           >
             <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-2xl text-white mr-4">
-                {club.icon}
+              <div className="w-12 h-12 bg-[#0A2647] rounded-lg flex items-center justify-center mr-4">
+                <GraduationCap className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">
@@ -208,7 +217,7 @@ const ClubsSection = () => {
                 target={club.social_media_link ? '_blank' : '_self'}
                 rel={club.social_media_link ? 'noopener noreferrer' : ''}
                 className={`px-4 py-2 rounded-lg transition-colors duration-300 text-sm font-medium ${club.social_media_link
-                    ? 'bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'
+                    ? 'bg-[#0A2647] text-white hover:bg-[#144272] cursor-pointer'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 onClick={!club.social_media_link ? (e) => e.preventDefault() : undefined}
@@ -225,8 +234,8 @@ const ClubsSection = () => {
   const renderSportsClubsContent = () => (
     <div className="space-y-6">
       <div className="flex items-center mb-6">
-        <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">⚽</span>
+        <div className="p-3 bg-slate-100 rounded-lg mr-4">
+          <Trophy className="w-6 h-6 text-[#0A2647]" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('clubs.categories.sports')}
@@ -237,20 +246,20 @@ const ClubsSection = () => {
         {filteredClubs.map((club) => (
           <div
             key={club.id}
-            className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100 hover:shadow-lg transition-all duration-300"
+            className="bg-white rounded-lg p-6 border border-slate-200 hover:shadow-lg transition-all duration-300"
           >
             <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center text-2xl text-white mr-4">
-                {club.icon}
+              <div className="w-12 h-12 bg-[#2C7865] rounded-lg flex items-center justify-center mr-4">
+                <Trophy className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">
                   {club.name}
                 </h3>
-                <div className="flex items-center text-sm text-green-600">
-                  <span className="bg-green-100 px-2 py-1 rounded-full">
-                    {club.members} {t('clubs.members')}
-                  </span>
+                  <div className="flex items-center text-sm text-[#0A2647]">
+                    <span className="bg-[#0A2647]/10 px-2 py-1 rounded-full">
+                      {club.members} {t('clubs.members')}
+                    </span>
                 </div>
               </div>
             </div>
@@ -276,7 +285,7 @@ const ClubsSection = () => {
                 target={club.social_media_link ? '_blank' : '_self'}
                 rel={club.social_media_link ? 'noopener noreferrer' : ''}
                 className={`px-4 py-2 rounded-lg transition-colors duration-300 text-sm font-medium ${club.social_media_link
-                    ? 'bg-green-500 text-white hover:bg-green-600 cursor-pointer'
+                    ? 'bg-[#0A2647] text-white hover:bg-[#144272] cursor-pointer'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 onClick={!club.social_media_link ? (e) => e.preventDefault() : undefined}
@@ -293,8 +302,8 @@ const ClubsSection = () => {
   const renderCulturalClubsContent = () => (
     <div className="space-y-6">
       <div className="flex items-center mb-6">
-        <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🎭</span>
+        <div className="p-3 bg-slate-100 rounded-lg mr-4">
+          <Theater className="w-6 h-6 text-[#0A2647]" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('clubs.categories.cultural')}
@@ -305,20 +314,20 @@ const ClubsSection = () => {
         {filteredClubs.map((club) => (
           <div
             key={club.id}
-            className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100 hover:shadow-lg transition-all duration-300"
+            className="bg-white rounded-lg p-6 border border-slate-200 hover:shadow-lg transition-all duration-300"
           >
             <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center text-2xl text-white mr-4">
-                {club.icon}
+              <div className="w-12 h-12 bg-[#0A2647] rounded-lg flex items-center justify-center mr-4">
+                <Theater className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">
                   {club.name}
                 </h3>
-                <div className="flex items-center text-sm text-purple-600">
-                  <span className="bg-purple-100 px-2 py-1 rounded-full">
-                    {club.members} {t('clubs.members')}
-                  </span>
+                  <div className="flex items-center text-sm text-[#0A2647]">
+                    <span className="bg-[#0A2647]/10 px-2 py-1 rounded-full">
+                      {club.members} {t('clubs.members')}
+                    </span>
                 </div>
               </div>
             </div>
@@ -336,7 +345,7 @@ const ClubsSection = () => {
                 target={club.social_media_link ? '_blank' : '_self'}
                 rel={club.social_media_link ? 'noopener noreferrer' : ''}
                 className={`px-4 py-2 rounded-lg transition-colors duration-300 text-sm font-medium ${club.social_media_link
-                    ? 'bg-purple-500 text-white hover:bg-purple-600 cursor-pointer'
+                    ? 'bg-[#0A2647] text-white hover:bg-[#144272] cursor-pointer'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 onClick={!club.social_media_link ? (e) => e.preventDefault() : undefined}
@@ -353,8 +362,8 @@ const ClubsSection = () => {
   const renderSocialClubsContent = () => (
     <div className="space-y-6">
       <div className="flex items-center mb-6">
-        <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🤝</span>
+        <div className="p-3 bg-slate-100 rounded-lg mr-4">
+          <Users className="w-6 h-6 text-[#0A2647]" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('clubs.categories.social')}
@@ -365,27 +374,18 @@ const ClubsSection = () => {
         {filteredClubs.map((club) => (
           <div
             key={club.id}
-            className="bg-gradient-to-br from-orange-50 to-red-50 rounded-xl p-6 border border-orange-100 hover:shadow-lg transition-all duration-300"
+            className="bg-white rounded-lg p-6 border border-slate-200 hover:shadow-lg transition-all duration-300"
           >
             <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center text-2xl text-white mr-4">
-                {club.icon}
+              <div className="w-12 h-12 bg-[#0A2647] rounded-lg flex items-center justify-center mr-4">
+                <Users className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">
                   {club.name}
                 </h3>
-                <div className="flex items-center text-sm text-orange-600">
-                  <span className="bg-orange-100 px-2 py-1 rounded-full">
-                    {club.members} {t('clubs.members')}
-                  </span>
-                </div>
               </div>
             </div>
-
-            <p className="text-gray-600 mb-4 leading-relaxed">
-              {club.description}
-            </p>
 
             <div className="space-y-2 text-sm text-gray-600">
               <div className="flex justify-between">
@@ -404,7 +404,7 @@ const ClubsSection = () => {
                 target={club.social_media_link ? '_blank' : '_self'}
                 rel={club.social_media_link ? 'noopener noreferrer' : ''}
                 className={`px-4 py-2 rounded-lg transition-colors duration-300 text-sm font-medium ${club.social_media_link
-                    ? 'bg-orange-500 text-white hover:bg-orange-600 cursor-pointer'
+                    ? 'bg-[#205295] text-white hover:bg-[#144272] cursor-pointer'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 onClick={!club.social_media_link ? (e) => e.preventDefault() : undefined}
@@ -437,7 +437,7 @@ const ClubsSection = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      className={`min-h-screen bg-[#f8fafc] py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
     >
       <div className="max-w-7xl mx-auto">
@@ -481,7 +481,7 @@ const ClubsSection = () => {
               {/* Боковая навигация */}
               <div className="lg:w-1/4">
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-                  <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
+                  <div className="bg-[#0A2647] p-4 text-white font-bold text-lg">
                     {t('clubs.categories.title')}
                   </div>
                   <nav className="p-2">
@@ -490,12 +490,12 @@ const ClubsSection = () => {
                         <li key={section.id}>
                           <button
                             className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${activeSection === section.id
-                                ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                                ? "bg-[#0A2647]/10 text-[#0A2647] font-medium shadow-sm"
                                 : "text-gray-700 hover:bg-gray-100"
                               }`}
                             onClick={() => changeActiveSection(section.id)}
                           >
-                            <span className="text-lg mr-3">{section.icon}</span>
+                            {(() => { const Icon = sectionIcons[section.icon]; return Icon ? <Icon className="w-5 h-5 mr-3" /> : null; })()}
                             {section.name}
                           </button>
                         </li>

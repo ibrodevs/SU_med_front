@@ -37,110 +37,110 @@ const Calendar = () => {
       title: t('calendar.events.fallSemester.title'),
       start: '2024-09-01',
       end: '2024-12-20',
-      color: '#3B82F6',
+      color: '#144272',
       type: t('calendar.eventTypes.studyPeriod'),
       description: t('calendar.events.fallSemester.description'),
-      icon: '📚'
+      icon: null
     },
     {
       id: 2,
       title: t('calendar.events.fallSession.title'),
       start: '2024-12-23',
       end: '2025-01-10',
-      color: '#EF4444',
+      color: '#991b1b',
       type: t('calendar.eventTypes.examSession'),
       description: t('calendar.events.fallSession.description'),
-      icon: '📝'
+      icon: null
     },
     {
       id: 3,
       title: t('calendar.events.winterVacation.title'),
       start: '2025-01-11',
       end: '2025-02-02',
-      color: '#10B981',
+      color: '#2C7865',
       type: t('calendar.eventTypes.vacation'),
       description: t('calendar.events.winterVacation.description'),
-      icon: '⛷️'
+      icon: null
     },
     {
       id: 4,
       title: t('calendar.events.springSemester.title'),
       start: '2025-02-03',
       end: '2025-05-20',
-      color: '#3B82F6',
+      color: '#144272',
       type: t('calendar.eventTypes.studyPeriod'),
       description: t('calendar.events.springSemester.description'),
-      icon: '🌱'
+      icon: null
     },
     {
       id: 5,
       title: t('calendar.events.scienceConference.title'),
       start: '2025-03-15',
       end: '2025-03-17',
-      color: '#8B5CF6',
+      color: '#205295',
       type: t('calendar.eventTypes.scientificEvent'),
       description: t('calendar.events.scienceConference.description'),
-      icon: '🔬'
+      icon: null
     },
     {
       id: 6,
       title: t('calendar.events.springSession.title'),
       start: '2025-05-23',
       end: '2025-06-15',
-      color: '#EF4444',
+      color: '#991b1b',
       type: t('calendar.eventTypes.examSession'),
       description: t('calendar.events.springSession.description'),
-      icon: '📖'
+      icon: null
     },
     {
       id: 7,
       title: t('calendar.events.summerVacation.title'),
       start: '2025-06-16',
       end: '2025-08-31',
-      color: '#10B981',
+      color: '#2C7865',
       type: t('calendar.eventTypes.vacation'),
       description: t('calendar.events.summerVacation.description'),
-      icon: '🌞'
+      icon: null
     },
     {
       id: 8,
       title: t('calendar.events.openDay.title'),
       start: '2025-04-12T10:00:00',
       end: '2025-04-12T16:00:00',
-      color: '#F59E0B',
+      color: '#0891b2',
       type: t('calendar.eventTypes.event'),
       description: t('calendar.events.openDay.description'),
-      icon: '🎓'
+      icon: null
     },
     {
       id: 9,
       title: t('calendar.events.thesisDefense.title'),
       start: '2025-06-20',
       end: '2025-06-25',
-      color: '#EC4899',
+      color: '#1B4242',
       type: t('calendar.eventTypes.certification'),
       description: t('calendar.events.thesisDefense.description'),
-      icon: '🎯'
+      icon: null
     },
     {
       id: 10,
       title: t('calendar.events.doctorDay.title'),
       start: '2024-10-07',
-      color: '#6366F1',
+      color: '#0A2647',
       type: t('calendar.eventTypes.event'),
       description: t('calendar.events.doctorDay.description'),
-      icon: '👨‍⚕️'
+      icon: null
     }
   ];
 
   // Легенда событий
   const eventTypes = [
-    { color: '#3B82F6', label: t('calendar.legend.studyPeriods'), icon: '📚', type: t('calendar.eventTypes.studyPeriod') },
-    { color: '#EF4444', label: t('calendar.legend.examSessions'), icon: '📝', type: t('calendar.eventTypes.examSession') },
-    { color: '#10B981', label: t('calendar.legend.vacations'), icon: '🎉', type: t('calendar.eventTypes.vacation') },
-    { color: '#8B5CF6', label: t('calendar.legend.scientificEvents'), icon: '🔬', type: t('calendar.eventTypes.scientificEvent') },
-    { color: '#F59E0B', label: t('calendar.legend.generalEvents'), icon: '🎓', type: t('calendar.eventTypes.event') },
-    { color: '#EC4899', label: t('calendar.legend.certification'), icon: '🎯', type: t('calendar.eventTypes.certification') }
+    { color: '#144272', label: t('calendar.legend.studyPeriods'), type: t('calendar.eventTypes.studyPeriod') },
+    { color: '#991b1b', label: t('calendar.legend.examSessions'), type: t('calendar.eventTypes.examSession') },
+    { color: '#2C7865', label: t('calendar.legend.vacations'), type: t('calendar.eventTypes.vacation') },
+    { color: '#205295', label: t('calendar.legend.scientificEvents'), type: t('calendar.eventTypes.scientificEvent') },
+    { color: '#0891b2', label: t('calendar.legend.generalEvents'), type: t('calendar.eventTypes.event') },
+    { color: '#1B4242', label: t('calendar.legend.certification'), type: t('calendar.eventTypes.certification') }
   ];
 
   // Фильтрация событий по выбранным типам
@@ -279,7 +279,7 @@ END:VCALENDAR`;
   }, [i18n.language]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
       <div className="container mx-auto px-4 py-8">
         {/* Хлебные крошки */}
         <nav className="text-sm text-gray-600 mb-8 flex items-center">
@@ -312,7 +312,7 @@ END:VCALENDAR`;
                 }`}
                 style={{ backgroundColor: filteredTypes.includes(type.type) ? type.color : '#f3f4f6' }}
               >
-                <span className="text-lg mr-2">{type.icon}</span>
+
                 <span className="text-sm font-medium">{type.label}</span>
                 <div className="w-3 h-3 rounded-full ml-2" style={{ backgroundColor: type.color }}></div>
               </button>
@@ -423,7 +423,7 @@ END:VCALENDAR`;
                     <h3 className="font-semibold text-gray-900">{event.title}</h3>
                     <p className="text-sm text-gray-600 mt-1">{event.description}</p>
                   </div>
-                  <span className="text-lg">{event.icon}</span>
+
                 </div>
                 <div className="flex items-center mt-3 text-sm text-gray-500">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

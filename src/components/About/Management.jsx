@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Award, GraduationCap, BarChart3, Building2, Users } from 'lucide-react';
 import { getManagement, getTeachers } from '../../services/teachers';
 
 const Management = () => {
@@ -36,9 +37,9 @@ const Management = () => {
   }, []);
 
 const sections = [
-  { id: 'management', name: t('management.organizationTitle'), icon: '👑' },
-  { id: 'teachers', name: t('management.teachersTitle'), icon: '🎓' },
-  { id: 'statistics', name: t('management.statistics'), icon: '📊' }
+  { id: 'management', name: t('management.organizationTitle'), icon: Award },
+  { id: 'teachers', name: t('management.teachersTitle'), icon: GraduationCap },
+  { id: 'statistics', name: t('management.statistics'), icon: BarChart3 }
 ];
 
 
@@ -152,7 +153,7 @@ const sections = [
       return (
         <div 
           key={teacher.id} 
-          className="bg-gradient-to-br from-green-500 to-teal-600 rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl"
+          className="bg-gradient-to-br from-teal-700 to-teal-800 rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl"
         >
           <div className="text-center">
             <div className="relative mb-4">
@@ -194,10 +195,10 @@ const sections = [
 
   const renderStatisticsContent = () => {
     const statistics = [
-      { number: '150+', label: t('management.teachersCount'), icon: '👨‍🏫', color: 'from-blue-500 to-blue-600' },
-      { number: '15', label: t('management.departmentsCount'), icon: '🏛️', color: 'from-purple-500 to-purple-600' },
-      { number: '5', label: t('management.facultiesCount'), icon: '🎓', color: 'from-green-500 to-green-600' },
-      { number: '2000+', label: t('management.studentsCount'), icon: '👥', color: 'from-orange-500 to-orange-600' }
+      { number: '150+', label: t('management.teachersCount'), icon: GraduationCap, color: 'from-blue-500 to-blue-600' },
+      { number: '15', label: t('management.departmentsCount'), icon: Building2, color: 'from-indigo-600 to-indigo-700' },
+      { number: '5', label: t('management.facultiesCount'), icon: GraduationCap, color: 'from-teal-600 to-teal-700' },
+      { number: '2000+', label: t('management.studentsCount'), icon: Users, color: 'from-blue-600 to-blue-700' }
     ];
 
     return (
@@ -214,7 +215,7 @@ const sections = [
               key={index}
               className={`bg-gradient-to-br ${stat.color} rounded-xl p-6 text-white shadow-lg text-center`}
             >
-              <div className="text-3xl mb-3">{stat.icon}</div>
+              <div className="mb-3 flex justify-center text-white/95"><stat.icon className="w-8 h-8" /></div>
               <div className="text-3xl font-bold mb-2">{stat.number}</div>
               <div className="text-white/90 text-sm">{stat.label}</div>
             </div>
@@ -291,7 +292,7 @@ const sections = [
                         }`}
                         onClick={() => changeActiveSection(section.id)}
                       >
-                        <span className="text-lg mr-3">{section.icon}</span>
+                        <section.icon className="w-5 h-5 mr-3 text-current flex-shrink-0" />
                         {section.name}
                       </button>
                     </li>

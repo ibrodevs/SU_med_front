@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getOfficialContent } from "../../data/officialSiteContent";
+import { fetchOfficialContent } from "../../services/officialContentService";
 
 const ForCitizensKG = () => {
   const { i18n } = useTranslation();
-  const content = getOfficialContent(i18n.language).citizens;
+  const [content, setContent] = useState(() => getOfficialContent(i18n.language).citizens);
+
+  useEffect(() => {
+    setContent(getOfficialContent(i18n.language).citizens);
+    fetchOfficialContent(i18n.language).then(data => {
+      if (data && data.citizens) {
+        setContent(data.citizens);
+      }
+    });
+  }, [i18n.language]);
 
   return (
     <div className="min-h-screen bg-gray-50">

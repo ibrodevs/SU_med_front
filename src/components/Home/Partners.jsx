@@ -1,78 +1,48 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import PartnersService from '../../services/partnersService';
+import API_CONFIG from '../../config/api';
 
 const Partners = () => {
-  const { t } = useTranslation();
-  const [hoveredPartner, setHoveredPartner] = useState(null);
+  const { t, i18n } = useTranslation();
+  const [partners, setPartners] = useState([]);
+  const [loading, setLoading] = useState(true);
   const scrollerRef = useRef(null);
   
-  // Данные партнеров с улучшенным дизайном
-  const partners = [
-    { 
-      id: 1, 
-      nameKey: 'partners.nationalHospital', 
-      icon: '🏥', 
-      color: 'from-blue-500 to-indigo-600',
-      glow: 'hover:shadow-blue-500/50'
-    },
-    { 
-      id: 2, 
-      nameKey: 'partners.cityHospital', 
-      icon: '🏨', 
-      color: 'from-purple-500 to-pink-600',
-      glow: 'hover:shadow-purple-500/50'
-    },
-    { 
-      id: 3, 
-      nameKey: 'partners.medicalCenters', 
-      icon: '⛑️', 
-      color: 'from-green-500 to-teal-600',
-      glow: 'hover:shadow-green-500/50'
-    },
-    { 
-      id: 4, 
-      nameKey: 'partners.who', 
-      icon: '🌐', 
-      color: 'from-amber-500 to-orange-600',
-      glow: 'hover:shadow-amber-500/50'
-    },
-    { 
-      id: 5, 
-      nameKey: 'partners.redCross', 
-      icon: '➕', 
-      color: 'from-red-500 to-rose-600',
-      glow: 'hover:shadow-red-500/50'
-    },
-    { 
-      id: 6, 
-      nameKey: 'partners.medicalAssociation', 
-      icon: '⚕️', 
-      color: 'from-indigo-500 to-blue-600',
-      glow: 'hover:shadow-indigo-500/50'
-    },
-    { 
-      id: 7, 
-      nameKey: 'partners.healthInstitute', 
-      icon: '🔬', 
-      color: 'from-pink-500 to-rose-600',
-      glow: 'hover:shadow-pink-500/50'
-    },
-    { 
-      id: 8, 
-      nameKey: 'partners.researchFoundation', 
-      icon: '💉', 
-      color: 'from-teal-500 to-emerald-600',
-      glow: 'hover:shadow-teal-500/50'
-    },
-  ];
+  // Fetch partners from backend
+  useEffect(() => {
+    let isMounted = true;
+    
+    const fetchPartnersData = async () => {
+      try {
+        const data = await PartnersService.getAllPartners(i18n.language);
+        if (isMounted) {
+          // Filter active partners or default to whatever is returned
+          setPartners(data || []);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error in Partners component:', error);
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
 
-  // Удваиваем массив для бесшовной анимации
-  const duplicatedPartners = [...partners, ...partners];
+    fetchPartnersData();
+    
+    return () => {
+      isMounted = false;
+    };
+  }, [i18n.language]);
 
-  // Эффект для плавного скролла с requestAnimationFrame
+  // Duplicating array for infinite scrolling effect
+  const duplicatedPartners = partners.length > 0 ? [...partners, ...partners] : [];
+
+  // Smooth scroll effect using requestAnimationFrame
   useEffect(() => {
     const scroller = scrollerRef.current;
-    if (!scroller) return;
+    if (!scroller || duplicatedPartners.length === 0) return;
     
     let animationId;
     let position = 0;
@@ -95,62 +65,58 @@ const Partners = () => {
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [duplicatedPartners.length]);
+
+  if (loading || partners.length === 0) {
+    return null; // Don't render partners section if loading or empty
+  }
 
   return (
-    <section className="py-16 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden relative">
-      {/* Анимированный фон */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(10)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full bg-blue-500/10 animate-pulse"
-            style={{
-              width: `${Math.random() * 100 + 50}px`,
-              height: `${Math.random() * 100 + 50}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDuration: `${Math.random() * 10 + 10}s`,
-              animationDelay: `${Math.random() * 5}s`
-            }}
-          />
-        ))}
-      </div>
-      
-      <div className="container mx-auto relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-indigo-200 to-cyan-300">
-            {t('partners.title')}
-          </span>
+    <section className="py-16 bg-slate-50 border-t border-b border-slate-100 overflow-hidden relative">
+      <div className="container mx-auto relative z-10 px-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-12">
+          {t('partners.title')}
         </h2>
         
-        <div className="relative py-6">
+        <div className="relative py-4">
           <div 
             ref={scrollerRef}
-            className="flex whitespace-nowrap"
+            className="flex whitespace-nowrap items-center"
           >
-            {duplicatedPartners.map((partner, index) => (
-              <div 
-                key={`${partner.id}-${index}`} 
-                className={`inline-flex flex-col items-center mx-4 p-6 rounded-2xl bg-gradient-to-r ${partner.color} transition-all duration-500 transform hover:-translate-y-2 ${partner.glow} hover:shadow-2xl`}
-                style={{ minWidth: '220px' }}
-                onMouseEnter={() => setHoveredPartner(partner.id)}
-                onMouseLeave={() => setHoveredPartner(null)}
-              >
-                <span className={`text-5xl mb-3 transition-transform duration-700 ${hoveredPartner === partner.id ? 'scale-125 rotate-12' : ''}`}>
-                  {partner.icon}
-                </span>
-                <span className="text-lg font-medium text-center bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
-                  {t(partner.nameKey)}
-                </span>
-                {/* Индикатор наведения */}
-                <div className={`absolute -bottom-2 w-10 h-1 bg-white rounded-full transition-all duration-300 ${hoveredPartner === partner.id ? 'scale-125 opacity-100' : 'scale-0 opacity-0'}`} />
-              </div>
-            ))}
+            {duplicatedPartners.map((partner, index) => {
+              // Use relative path directly — Vite proxies /media/* to backend
+              const logoUrl = partner.logo 
+                ? (partner.logo.startsWith('http') ? partner.logo : partner.logo)
+                : null;
+
+              // Skip partners without a logo
+              if (!logoUrl) return null;
+
+              return (
+                <a 
+                  key={`${partner.id}-${index}`} 
+                  href={partner.website || '#'}
+                  target={partner.website ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center mx-6 p-4 rounded-xl bg-white border border-slate-200/60 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-105"
+                  style={{ minWidth: '140px', height: '80px' }}
+                  title={partner.name}
+                >
+                  <img 
+                    src={logoUrl} 
+                    alt={partner.name} 
+                    className="max-h-14 max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      // Hide the entire card if logo fails to load
+                      e.target.closest('a').style.display = 'none';
+                    }}
+                  />
+                </a>
+              );
+            })}
           </div>
-          
         </div>
-        
       </div>
     </section>
   );

@@ -2,18 +2,22 @@ import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getHSMInfo, getLocalizedText } from '../../data/hsmData';
+import hsmService from '../../services/hsmService';
 import { 
-  AcademicCapIcon, 
-  UserGroupIcon, 
-  DocumentCheckIcon, 
-  ChartBarIcon,
-  ArrowTopRightOnSquareIcon,
-  HeartIcon,
-  ShieldCheckIcon,
-  StarIcon,
-  ClockIcon,
-  BuildingLibraryIcon
-} from '@heroicons/react/24/outline';
+  GraduationCap, 
+  Users, 
+  FileCheck, 
+  BarChart3,
+  ExternalLink,
+  Heart,
+  ShieldCheck,
+  Star,
+  Clock,
+  Building2,
+  Stethoscope,
+  Microscope,
+  Globe
+} from 'lucide-react';
 
 const HSMInfo = () => {
   const { t, i18n } = useTranslation();
@@ -23,26 +27,26 @@ const HSMInfo = () => {
   const [activeSection, setActiveSection] = useState(0);
 
   useEffect(() => {
-    try {
-      const loadData = async () => {
-        setLoading(true);
-        await new Promise(resolve => setTimeout(resolve, 800));
-        const data = getHSMInfo();
-        
-        if (!data) {
-          throw new Error('Failed to load HSM data');
-        }
-        
+    const loadData = async () => {
+      setLoading(true);
+      let data = null;
+      try {
+        const res = await hsmService.getHSMInfo(i18n.language);
+        if (res && res.title) data = res; // данные с backend
+      } catch {
+        // игнорируем — используем статический резерв ниже
+      }
+      if (!data) data = getHSMInfo(); // статический резерв
+      if (!data) {
+        setError('Failed to load HSM data');
+      } else {
         setHsmInfo(data);
-        setLoading(false);
-      };
-      
-      loadData();
-    } catch (err) {
-      setError(err.message);
+      }
       setLoading(false);
-    }
-  }, []);
+    };
+
+    loadData();
+  }, [i18n.language]);
 
   const localizedData = useMemo(() => {
     if (!hsmInfo) return null;
@@ -70,61 +74,61 @@ const HSMInfo = () => {
   }, []);
 
   const medicalStats = [
-    { icon: <UserGroupIcon className="w-8 h-8" />, value: "500+", label: t('hsm.students', 'Студентов') },
-    { icon: <AcademicCapIcon className="w-8 h-8" />, value: "50+", label: t('hsm.professors', 'Профессоров') },
-    { icon: <ShieldCheckIcon className="w-8 h-8" />, value: "95%", label: t('hsm.success_rate', 'Успеваемость') },
-    { icon: <HeartIcon className="w-8 h-8" />, value: "1000+", label: t('hsm.patients', 'Пациентов в год') }
+    { icon: <Users className="w-8 h-8" />, value: "500+", label: t('hsm.students', 'Студентов') },
+    { icon: <GraduationCap className="w-8 h-8" />, value: "50+", label: t('hsm.professors', 'Профессоров') },
+    { icon: <ShieldCheck className="w-8 h-8" />, value: "95%", label: t('hsm.success_rate', 'Успеваемость') },
+    { icon: <Heart className="w-8 h-8" />, value: "1000+", label: t('hsm.patients', 'Пациентов в год') }
   ];
 
   const quickLinks = [
     {
       href:'/hsm/programs',
-      icon: <AcademicCapIcon className="w-6 h-6" />,
+      icon: <GraduationCap className="w-6 h-6" />,
       title: t('hsm.programs', 'Программы'),
       description: t('hsm.view_programs', 'Ознакомьтесь с нашими образовательными программами'),
-      gradient: "from-blue-500 to-cyan-500"
+      gradient: "from-[#0A2647] to-[#144272]"
     },
     {
       href: "/hsm/AS",
-      icon: <UserGroupIcon className="w-6 h-6" />,
+      icon: <Users className="w-6 h-6" />,
       title: t('hsm.faculty', 'Преподаватели'),
       description: t('hsm.meet_faculty', 'Познакомьтесь с нашими преподавателями'),
-      gradient: "from-green-500 to-emerald-500"
+      gradient: "from-[#1B4242] to-[#2C7865]"
     },
     {
       href: "/hsm/accreditation",
-      icon: <DocumentCheckIcon className="w-6 h-6" />,
+      icon: <FileCheck className="w-6 h-6" />,
       title: t('hsm.accreditation', 'Аккредитация'),
       description: t('hsm.view_accreditation', 'Наши аккредитации и сертификаты'),
-      gradient: "from-purple-500 to-violet-500"
+      gradient: "from-[#205295] to-[#144272]"
     },
     {
       href: "/hsm/learning-goals",
-      icon: <ChartBarIcon className="w-6 h-6" />,
+      icon: <BarChart3 className="w-6 h-6" />,
       title: t('hsm.learning_goals', 'Цели обучения'),
       description: t('hsm.view_goals', 'Цели и результаты обучения'),
-      gradient: "from-orange-500 to-red-500"
+      gradient: "from-[#0891b2] to-[#0d9488]"
     }
   ];
 
   const medicalFeatures = [
     {
-      icon: "🏥",
+      icon: Building2,
       title: t('hsm.modern_equipment', 'Современное оборудование'),
       description: t('hsm.modern_equipment_desc', 'Оснащение последними медицинскими технологиями')
     },
     {
-      icon: "👨‍⚕️",
+      icon: Stethoscope,
       title: t('hsm.practice', 'Практическая подготовка'),
       description: t('hsm.practice_desc', 'Реальная практика в лучших клиниках')
     },
     {
-      icon: "🌍",
+      icon: Globe,
       title: t('hsm.international', 'Международные стандарты'),
       description: t('hsm.international_desc', 'Обучение по мировым стандартам медицины')
     },
     {
-      icon: "🔬",
+      icon: Microscope,
       title: t('hsm.research', 'Научные исследования'),
       description: t('hsm.research_desc', 'Участие в передовых медицинских исследованиях')
     }
@@ -291,27 +295,27 @@ const HSMInfo = () => {
           </motion.div>
         </div>
 
-        {/* Плавающие медицинские иконки */}
+        {/* Subtle floating medical icons */}
         <motion.div
-          className="absolute top-10 left-10 text-4xl opacity-20"
+          className="absolute top-10 left-10 opacity-10"
           animate={{ y: [0, -20, 0] }}
           transition={{ duration: 4, repeat: Infinity }}
         >
-          🏥
+          <Building2 className="w-12 h-12 text-white" />
         </motion.div>
         <motion.div
-          className="absolute top-20 right-20 text-3xl opacity-20"
+          className="absolute top-20 right-20 opacity-10"
           animate={{ y: [0, 20, 0] }}
           transition={{ duration: 5, repeat: Infinity, delay: 1 }}
         >
-          ❤️
+          <Heart className="w-10 h-10 text-white" />
         </motion.div>
         <motion.div
-          className="absolute bottom-10 left-20 text-2xl opacity-20"
+          className="absolute bottom-10 left-20 opacity-10"
           animate={{ y: [0, -15, 0] }}
           transition={{ duration: 6, repeat: Infinity, delay: 2 }}
         >
-          ⚕️
+          <Stethoscope className="w-8 h-8 text-white" />
         </motion.div>
       </motion.section>
 
@@ -376,8 +380,8 @@ const HSMInfo = () => {
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -5 }}
               >
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {feature.icon}
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#0A2647] to-[#144272] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <feature.icon className="w-7 h-7 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
@@ -486,7 +490,7 @@ const HSMInfo = () => {
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
                     {link.title}
-                    <ArrowTopRightOnSquareIcon className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ExternalLink className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </h3>
                   <p className="text-gray-600 text-sm leading-relaxed">
                     {link.description}

@@ -4,17 +4,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import hsmService from '../../services/hsmService';
 import SafeImage from '../common/SafeImage';
 import {
-  AcademicCapIcon,
-  UserGroupIcon,
-  BookOpenIcon,
-  MagnifyingGlassIcon,
-  XMarkIcon,
-  EnvelopeIcon,
-  PhoneIcon,
-  BuildingOfficeIcon,
-  EyeIcon,
-  XCircleIcon
-} from '@heroicons/react/24/outline';
+  GraduationCap,
+  Users,
+  Search,
+  X,
+  Mail,
+  Phone,
+  Building2,
+  Eye,
+  XCircle
+} from 'lucide-react';
 
 const FacultyCard = ({ faculty, language, onViewDetails }) => {
   const { t } = useTranslation();
@@ -64,7 +63,7 @@ const FacultyCard = ({ faculty, language, onViewDetails }) => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-md overflow-hidden border border-blue-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+    <div className="bg-gradient-to-br from-white to-slate-50 rounded-xl shadow-md overflow-hidden border border-slate-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
       <div className="p-6">
         <div className="flex items-center mb-4">
           <SafeImage
@@ -72,8 +71,8 @@ const FacultyCard = ({ faculty, language, onViewDetails }) => {
             alt={getName()}
             className="w-16 h-16 rounded-full object-cover mr-4"
             fallback={
-              <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 font-bold text-xl mr-4">
-                <UserGroupIcon className="w-8 h-8 text-blue-500" />
+              <div className="w-16 h-16 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 font-bold text-xl mr-4">
+                <Users className="w-8 h-8 text-[#144272]" />
               </div>
             }
           />
@@ -81,11 +80,11 @@ const FacultyCard = ({ faculty, language, onViewDetails }) => {
             <h3 className="font-bold text-lg text-gray-900 mb-1">
               {getName()}
             </h3>
-            <p className="text-blue-600 text-sm font-medium">
+            <p className="text-[#144272] text-sm font-medium">
               {getPosition()}
             </p>
             {getAcademicTitle() && (
-              <p className="text-purple-600 text-xs">
+              <p className="text-[#2C7865] text-xs">
                 {getAcademicTitle()}
               </p>
             )}
@@ -93,50 +92,20 @@ const FacultyCard = ({ faculty, language, onViewDetails }) => {
         </div>
 
         {getAcademicDegree() && (
-          <div className="mb-3">
-            <span className="text-xs font-medium bg-purple-100 text-purple-800 px-2 py-1 rounded-full flex items-center w-fit">
-              <AcademicCapIcon className="w-3 h-3 mr-1" />
+          <div className="mb-4">
+            <span className="text-xs font-medium bg-teal-50 text-[#1B4242] px-2 py-1 rounded-full flex items-center w-fit">
+              <GraduationCap className="w-3 h-3 mr-1" />
               {getAcademicDegree()}
             </span>
           </div>
         )}
 
-        {getSpecialization() && (
-          <div className="mb-3">
-            <p className="text-gray-700 text-sm line-clamp-2">{getSpecialization()}</p>
-          </div>
-        )}
-
-        {/* Контактная информация */}
-        <div className="space-y-2 mb-4">
-          {faculty.email && (
-            <div className="flex items-center text-sm text-gray-600">
-              <EnvelopeIcon className="w-4 h-4 mr-2 text-blue-500" />
-              <span className="truncate">{faculty.email}</span>
-            </div>
-          )}
-
-          {faculty.phone && (
-            <div className="flex items-center text-sm text-gray-600">
-              <PhoneIcon className="w-4 h-4 mr-2 text-green-500" />
-              <span>{faculty.phone}</span>
-            </div>
-          )}
-
-          {faculty.office && (
-            <div className="flex items-center text-sm text-gray-600">
-              <BuildingOfficeIcon className="w-4 h-4 mr-2 text-orange-500" />
-              <span>{faculty.office}</span>
-            </div>
-          )}
-        </div>
-
         {/* Кнопка подробнее */}
         <button
           onClick={() => onViewDetails && onViewDetails(faculty)}
-          className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 px-4 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 flex items-center justify-center font-medium"
+          className="w-full bg-gradient-to-r from-[#0A2647] to-[#144272] text-white py-2 px-4 rounded-lg hover:from-[#144272] hover:to-[#205295] transition-all duration-300 flex items-center justify-center font-medium"
         >
-          <EyeIcon className="w-4 h-4 mr-2" />
+          <Eye className="w-4 h-4 mr-2" />
           {t('hsm.view_details', 'Подробнее')}
         </button>
       </div>
@@ -226,7 +195,7 @@ const FacultyDetailModal = ({ faculty, language, isOpen, onClose }) => {
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-4 flex items-center justify-between">
+          <div className="bg-gradient-to-r from-[#0A2647] to-[#144272] px-6 py-4 flex items-center justify-between">
             <h3 className="text-lg font-bold text-white">
               {t('hsm.faculty_details', 'Информация о преподавателе')}
             </h3>
@@ -234,7 +203,7 @@ const FacultyDetailModal = ({ faculty, language, isOpen, onClose }) => {
               onClick={onClose}
               className="text-white hover:text-gray-200 transition-colors p-1"
             >
-              <XCircleIcon className="w-6 h-6" />
+              <XCircle className="w-6 h-6" />
             </button>
           </div>
 
@@ -248,8 +217,8 @@ const FacultyDetailModal = ({ faculty, language, isOpen, onClose }) => {
                   alt={getName()}
                   className="w-32 h-32 rounded-lg object-cover"
                   fallback={
-                    <div className="w-32 h-32 bg-blue-200 rounded-lg flex items-center justify-center text-blue-700">
-                      <UserGroupIcon className="w-16 h-16 text-blue-500" />
+                    <div className="w-32 h-32 bg-slate-200 rounded-lg flex items-center justify-center text-slate-700">
+                      <Users className="w-16 h-16 text-[#144272]" />
                     </div>
                   }
                 />
@@ -261,21 +230,21 @@ const FacultyDetailModal = ({ faculty, language, isOpen, onClose }) => {
                 </h4>
 
                 <div className="space-y-2">
-                  <p className="text-blue-600 font-medium text-lg">
+                  <p className="text-[#144272] font-medium text-lg">
                     {getPosition()}
                   </p>
 
                   {getAcademicDegree() && (
                     <div>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
-                        <AcademicCapIcon className="w-4 h-4 mr-1" />
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-teal-50 text-[#1B4242]">
+                        <GraduationCap className="w-4 h-4 mr-1" />
                         {getAcademicDegree()}
                       </span>
                     </div>
                   )}
 
                   {getAcademicTitle() && (
-                    <p className="text-purple-600 font-medium">
+                    <p className="text-[#2C7865] font-medium">
                       {getAcademicTitle()}
                     </p>
                   )}
@@ -285,7 +254,7 @@ const FacultyDetailModal = ({ faculty, language, isOpen, onClose }) => {
                 <div className="mt-4 space-y-2">
                   {faculty.email && (
                     <div className="flex items-center text-sm text-gray-600">
-                      <EnvelopeIcon className="w-4 h-4 mr-2 text-blue-500" />
+                      <Mail className="w-4 h-4 mr-2 text-[#144272]" />
                       <a href={`mailto:${faculty.email}`} className="hover:text-blue-600 transition-colors">
                         {faculty.email}
                       </a>
@@ -294,7 +263,7 @@ const FacultyDetailModal = ({ faculty, language, isOpen, onClose }) => {
 
                   {faculty.phone && (
                     <div className="flex items-center text-sm text-gray-600">
-                      <PhoneIcon className="w-4 h-4 mr-2 text-green-500" />
+                      <Phone className="w-4 h-4 mr-2 text-[#2C7865]" />
                       <a href={`tel:${faculty.phone}`} className="hover:text-green-600 transition-colors">
                         {faculty.phone}
                       </a>
@@ -303,7 +272,7 @@ const FacultyDetailModal = ({ faculty, language, isOpen, onClose }) => {
 
                   {faculty.office && (
                     <div className="flex items-center text-sm text-gray-600">
-                      <BuildingOfficeIcon className="w-4 h-4 mr-2 text-orange-500" />
+                      <Building2 className="w-4 h-4 mr-2 text-[#205295]" />
                       <span>{faculty.office}</span>
                     </div>
                   )}
@@ -559,7 +528,7 @@ const HSMAcademicStuff = () => {
   if (loading) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        className={`min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
       >
         <div className="max-w-7xl mx-auto">
@@ -575,7 +544,7 @@ const HSMAcademicStuff = () => {
   if (error) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        className={`min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
       >
         <div className="max-w-7xl mx-auto">
@@ -615,7 +584,7 @@ const HSMAcademicStuff = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      className={`min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
     >
       <div className="max-w-7xl mx-auto">
@@ -633,7 +602,7 @@ const HSMAcademicStuff = () => {
           {/* Боковая навигация */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
+              <div className="bg-gradient-to-r from-[#0A2647] to-[#144272] p-4 text-white font-bold text-lg">
                 {t("hsm.positions", "Должности")}
               </div>
               <nav className="p-2">
@@ -679,7 +648,7 @@ const HSMAcademicStuff = () => {
               <div className="mb-6">
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+                    <Search className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
                     type="text"
@@ -693,7 +662,7 @@ const HSMAcademicStuff = () => {
                       onClick={() => setSearch('')}
                       className="absolute inset-y-0 right-0 pr-3 flex items-center"
                     >
-                      <XMarkIcon className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                      <X className="h-5 w-5 text-gray-400 hover:text-gray-600" />
                     </button>
                   )}
                 </div>

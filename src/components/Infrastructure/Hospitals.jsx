@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Building2 } from 'lucide-react';
 import infrastructureService from '../../services/infrastructureService';
 import { hospitalsFallbackData } from '../../data/infrastructureFallbackData';
 
@@ -270,7 +271,7 @@ const fetchHospitals = async () => {
                       {hospital.departments && hospital.departments.length > 0 ? (
                         hospital.departments.map((dept, index) => (
                           <div key={index} className="bg-gray-50 p-4 rounded-lg flex items-start">
-                            <span className="text-2xl mr-3">🏥</span>
+                            <Building2 className="w-6 h-6 text-blue-600 mr-3 flex-shrink-0" />
                             <div className="flex-1">
                               <h4 className="font-semibold text-gray-800">
                                 {getTranslatedField(dept, 'name')}

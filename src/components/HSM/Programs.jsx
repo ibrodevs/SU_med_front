@@ -270,7 +270,7 @@ const HSM = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-6 md:mb-10">
           <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-3">{t('academics.title')}</h1>
@@ -453,7 +453,7 @@ const HSM = () => {
                       className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
                       onClick={() => setSelectedProgram(program)}
                     >
-                      <div className="h-40 md:h-48 bg-gradient-to-r from-blue-400 to-indigo-600 relative overflow-hidden">
+                      <div className="h-40 md:h-48 bg-gradient-to-r from-[#0A2647] to-[#205295] relative overflow-hidden">
                         <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                           <span className="text-white font-medium text-sm md:text-base">{t('academics.details')}</span>
                         </div>
@@ -485,9 +485,9 @@ const HSM = () => {
                         <div className="flex justify-between items-center mt-2 md:mt-4">
                           <span className="text-xs md:text-sm text-gray-600">{program.studyForm}</span>
                           <span className={`text-xs md:text-sm px-1.5 py-0.5 md:px-2 md:py-1 rounded-full ${
-                            program.language === t('academics.languages.russian') ? 'bg-red-100 text-red-800' :
-                            program.language === t('academics.languages.kyrgyz') ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-purple-100 text-purple-800'
+                            program.language === t('academics.languages.russian') ? 'bg-slate-100 text-slate-700' :
+                            program.language === t('academics.languages.kyrgyz') ? 'bg-teal-50 text-[#1B4242]' :
+                            'bg-blue-50 text-[#144272]'
                           }`}>
                             {program.language}
                           </span>
@@ -566,7 +566,7 @@ const HSM = () => {
             <div className="relative">
                 <button 
                   onClick={() => setSelectedProgram(null)}
-                  className="absolute top-2 md:top-4 right-2 md:right-4 bg-blue-300 rounded-full p-1 md:p-2 shadow-md hover:bg-blue-600 transition-colors"
+                  className="absolute top-2 md:top-4 right-2 md:right-4 bg-white/90 rounded-full p-1 md:p-2 shadow-md hover:bg-gray-100 transition-colors"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -634,15 +634,7 @@ const HSM = () => {
                   <h3 className="font-semibold text-gray-700 mb-2 md:mb-3 text-sm md:text-base">{t('academics.programDetails.requirements')}</h3>
                   <p className="text-gray-600 text-sm md:text-base">{selectedProgram.requirements}</p>
                 </div>
-                
-                <div className="mt-6 md:mt-8 flex justify-center">
-                  <a href="/admission/apply">
-                  <button className="px-4 py-2 md:px-6 md:py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm md:text-base">
-                    {t('academics.programDetails.applyButton')}
-                  </button>
-                  </a>
-                  
-                </div>
+
               </div>
             </div>
           </div>

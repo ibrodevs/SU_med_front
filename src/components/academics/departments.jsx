@@ -33,7 +33,7 @@ const Departments = () => {
       email: 'dean@med.salymbekov.kg',
       phone: '+996 312 123 456',
       color: 'bg-blue-500',
-      icon: '🏥',
+      icon: null,
       departments: [
         {
           id: 101,
@@ -456,7 +456,7 @@ const Departments = () => {
                         onClick={() => toggleNode(`faculty-${faculty.id}`)}
                       >
                         <div className="flex items-center">
-                          <span className="text-xl sm:text-2xl mr-2 sm:mr-3">{faculty.icon}</span>
+                          <div className="p-1.5 sm:p-2 bg-blue-100 rounded-lg mr-2 sm:mr-3"><Building2 className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" /></div>
                           <div>
                             <h3 className="font-semibold text-gray-800 text-sm sm:text-base">{faculty.name}</h3>
                             <p className="text-xs sm:text-sm text-gray-600">{faculty.departments.length} {t('departments.departmentsCount')}</p>

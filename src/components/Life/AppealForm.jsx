@@ -110,7 +110,7 @@ const AppealForm = () => {
       });
 
       // Отправляем на Django backend
-      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/student-life/api/student-appeals/', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || '/proxy-backend'}/api/student-life/api/student-appeals/`, {
         method: 'POST',
         body: formDataToSend,
         // Не устанавливаем Content-Type, позволяем браузеру установить правильный
@@ -507,7 +507,7 @@ const AppealForm = () => {
               </div>
             </div>
 
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+            <div className="bg-amber-50/80 border border-amber-200 rounded-lg p-6">
               <h3 className="text-lg font-semibold text-yellow-800 mb-3">{t('studentLife.appealForm.sidebar.importantInfo.title')}</h3>
               <ul className="space-y-2 text-yellow-700 text-sm">
                 <li>• {t('studentLife.appealForm.sidebar.importantInfo.anonymous')}</li>

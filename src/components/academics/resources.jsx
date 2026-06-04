@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { BookOpen, Microscope, BarChart3, Video, Monitor, FileText } from 'lucide-react';
 
 const Resources = () => {
   const { t } = useTranslation();
@@ -25,12 +26,12 @@ const Resources = () => {
       resources: [
         {
           id: 1,
-          icon: '📚',
+          icon: BookOpen,
           key: 'library',
           link: 'https://su-e-library.vercel.app/',
           status: 'online',
           section: 'library',
-          color: 'from-blue-500 to-cyan-500',
+          color: 'from-[#0A2647] to-[#144272]',
           bgColor: 'bg-blue-50 border-blue-200',
           title: t('resources.libTitle', 'Электронная библиотека'),
           description: t('resources.libDesc', 'Доступ к учебной литературе и научным публикациям'),
@@ -43,7 +44,7 @@ const Resources = () => {
         },
         {
           id: 2,
-          icon: '🔬',
+          icon: Microscope,
           key: 'databases',
           links: [
             { 
@@ -67,7 +68,7 @@ const Resources = () => {
           ],
           status: 'external',
           section: 'databases',
-          color: 'from-purple-500 to-pink-500',
+          color: 'from-[#205295] to-[#144272]',
           bgColor: 'bg-purple-50 border-purple-200',
           title: t('resources.dbTitle', 'Научные базы данных'),
           description: t('resources.dbDesc', 'Доступ к международным научным базам данных'),
@@ -80,12 +81,12 @@ const Resources = () => {
         },
         {
           id: 3,
-          icon: '📊',
+          icon: BarChart3,
           key: 'materials',
           status: 'download',
           section: 'materials',
-          color: 'from-orange-500 to-red-500',
-          bgColor: 'bg-orange-50 border-orange-200',
+          color: 'from-[#1B4242] to-[#2C7865]',
+          bgColor: 'bg-slate-50 border-slate-200',
           title: t('resources.materialsTitle', 'Учебные материалы'),
           description: t('resources.materialsDesc', 'Методические пособия и учебные материалы'),
           features: [
@@ -97,12 +98,12 @@ const Resources = () => {
         },
         {
           id: 4,
-          icon: '🎥',
+          icon: Video,
           key: 'video',
           link: '#video-resources',
           status: 'online',
           section: 'multimedia',
-          color: 'from-green-500 to-emerald-500',
+          color: 'from-[#2C7865] to-[#0d9488]',
           bgColor: 'bg-green-50 border-green-200',
           title: t('resources.videoTitle', 'Видеоресурсы'),
           description: t('resources.videoDesc', 'Обучающие видео и видеолекции'),
@@ -115,12 +116,12 @@ const Resources = () => {
         },
         {
           id: 5,
-          icon: '💻',
+          icon: Monitor,
           key: 'moodle',
           status: 'login',
           section: 'platforms',
-          color: 'from-indigo-500 to-blue-500',
-          bgColor: 'bg-indigo-50 border-indigo-200',
+          color: 'from-[#144272] to-[#205295]',
+          bgColor: 'bg-blue-50 border-slate-200',
           title: t('resources.moodleTitle', 'Moodle система'),
           description: t('resources.moodleDesc', 'Система дистанционного обучения'),
           features: [
@@ -132,12 +133,12 @@ const Resources = () => {
         },
         {
           id: 6,
-          icon: '📖',
+          icon: FileText,
           key: 'research',
           link: '#research-portal',
           status: 'online',
           section: 'research',
-          color: 'from-teal-500 to-cyan-500',
+          color: 'from-[#0891b2] to-[#0d9488]',
           bgColor: 'bg-teal-50 border-teal-200',
           title: t('resources.researchTitle', 'Научные ресурсы'),
           description: t('resources.researchDesc', 'Ресурсы для научной работы и исследований'),
@@ -238,7 +239,7 @@ const Resources = () => {
   if (false) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
+        className={`min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4 transition-all duration-700 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
@@ -253,7 +254,7 @@ const Resources = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
+      className={`min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 py-8 px-4 transition-all duration-700 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
@@ -272,7 +273,7 @@ const Resources = () => {
           {/* Боковая навигация */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
+              <div className="bg-gradient-to-r from-[#0A2647] to-[#144272] p-4 text-white font-bold text-lg">
                 {t("resources.categories", "Категории")}
               </div>
               <nav className="p-2">
@@ -324,8 +325,8 @@ const Resources = () => {
                       >
                         <div className="p-6">
                           <div className="flex items-center mb-4">
-                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${resource.color} flex items-center justify-center text-xl mr-4`}>
-                              {resource.icon}
+                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${resource.color} flex items-center justify-center mr-4`}>
+                              {resource.icon && <resource.icon className="w-6 h-6 text-white" />}
                             </div>
                             <div>
                               <h3 className="font-bold text-lg text-gray-900">
@@ -356,7 +357,7 @@ const Resources = () => {
                                 href={resource.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 w-full font-medium text-sm"
+                                className="inline-flex items-center justify-center bg-gradient-to-r from-[#0A2647] to-[#144272] text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 w-full font-medium text-sm"
                               >
                                 <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -369,7 +370,7 @@ const Resources = () => {
                               <div>
                                 <button
                                   onClick={() => setActiveResource(activeResource === resource.id ? null : resource.id)}
-                                  className="w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 font-medium text-sm mb-3"
+                                  className="w-full bg-gradient-to-r from-[#144272] to-[#205295] text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 font-medium text-sm mb-3"
                                 >
                                   {resource.linkText}
                                 </button>
@@ -401,7 +402,7 @@ const Resources = () => {
                                     <button
                                       type="submit"
                                       disabled={isLoading}
-                                      className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2 px-4 rounded-lg hover:shadow-lg disabled:opacity-50 transition-all duration-300 font-medium text-sm"
+                                      className="w-full bg-gradient-to-r from-[#2C7865] to-[#0d9488] text-white py-2 px-4 rounded-lg hover:shadow-lg disabled:opacity-50 transition-all duration-300 font-medium text-sm"
                                     >
                                       {isLoading ? 
                                         t('resources.loggingIn', 'Вход...') : 
@@ -421,7 +422,7 @@ const Resources = () => {
                                     href={link.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="block w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 text-center font-medium text-sm"
+                                    className="block w-full bg-gradient-to-r from-[#205295] to-[#144272] text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 text-center font-medium text-sm"
                                   >
                                     {t('resources.goTo', 'Перейти в')} {link.displayName}
                                   </a>
@@ -430,7 +431,7 @@ const Resources = () => {
                             )}
 
                             {resource.status === 'download' && (
-                              <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 font-medium text-sm">
+                              <button className="w-full bg-gradient-to-r from-[#1B4242] to-[#2C7865] text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 font-medium text-sm">
                                 <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>

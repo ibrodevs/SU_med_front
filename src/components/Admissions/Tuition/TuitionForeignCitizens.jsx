@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Home, DollarSign, ClipboardList, Landmark, GraduationCap, Star } from 'lucide-react';
 
 const TuitionForeignCitizens = () => {
   const { t } = useTranslation();
@@ -85,7 +86,7 @@ const TuitionForeignCitizens = () => {
         { name: t('tuitionForeign.costs.dormitory', 'Общежитие'), cost: '$200-300/мес', description: t('tuitionForeign.costs.dormitoryDesc', 'Двухместная комната') },
         { name: t('tuitionForeign.costs.apartment', 'Аренда квартиры'), cost: '$300-600/мес', description: t('tuitionForeign.costs.apartmentDesc', 'Зависит от района') }
       ],
-      icon: '🏠',
+      icon: <Home className="w-10 h-10" />,
       color: 'blue'
     },
     {
@@ -95,7 +96,7 @@ const TuitionForeignCitizens = () => {
         { name: t('tuitionForeign.costs.transport', 'Транспорт'), cost: '$20-40/мес', description: t('tuitionForeign.costs.transportDesc', 'Общественный транспорт') },
         { name: t('tuitionForeign.costs.personal', 'Личные расходы'), cost: '$100-200/мес', description: t('tuitionForeign.costs.personalDesc', 'Одежда, развлечения') }
       ],
-      icon: '💰',
+      icon: <DollarSign className="w-10 h-10" />,
       color: 'green'
     },
     {
@@ -105,7 +106,7 @@ const TuitionForeignCitizens = () => {
         { name: t('tuitionForeign.costs.medical', 'Медицинская страховка'), cost: '$200-400/год', description: t('tuitionForeign.costs.medicalDesc', 'Полное покрытие') },
         { name: t('tuitionForeign.costs.documents', 'Оформление документов'), cost: '$100-200', description: t('tuitionForeign.costs.documentsDesc', 'Переводы, нострификация') }
       ],
-      icon: '📋',
+      icon: <ClipboardList className="w-10 h-10" />,
       color: 'purple'
     }
   ];
@@ -122,7 +123,7 @@ const TuitionForeignCitizens = () => {
         t('tuitionForeign.scholarships.govReq3', 'Знание русского или английского языка')
       ],
       deadline: t('tuitionForeign.scholarships.govDeadline', '31 марта'),
-      icon: '🏛️'
+      icon: <Landmark className="w-10 h-10" />
     },
     {
       title: t('tuitionForeign.scholarships.university', 'Университетская стипендия'),
@@ -134,7 +135,7 @@ const TuitionForeignCitizens = () => {
         t('tuitionForeign.scholarships.uniReq3', 'Портфолио достижений')
       ],
       deadline: t('tuitionForeign.scholarships.uniDeadline', '15 мая'),
-      icon: '🎓'
+      icon: <GraduationCap className="w-10 h-10" />
     },
     {
       title: t('tuitionForeign.scholarships.merit', 'Стипендия за заслуги'),
@@ -146,7 +147,7 @@ const TuitionForeignCitizens = () => {
         t('tuitionForeign.scholarships.merReq3', 'Лидерские качества')
       ],
       deadline: t('tuitionForeign.scholarships.merDeadline', 'В течение года'),
-      icon: '⭐'
+      icon: <Star className="w-10 h-10" />
     }
   ];
 
@@ -191,7 +192,7 @@ const TuitionForeignCitizens = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 to-green-800 text-white py-16">
+      <div className="bg-gradient-to-r from-teal-700 to-teal-900 text-white py-16">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">
             {t('tuitionForeign.title', 'Стоимость обучения для иностранных граждан')}
@@ -288,7 +289,7 @@ const TuitionForeignCitizens = () => {
             {additionalCosts.map((category, index) => (
               <div key={index} className={`border-2 rounded-lg p-6 ${getColorClasses(category.color)}`}>
                 <div className="text-center mb-4">
-                  <span className="text-4xl mb-2 block">{category.icon}</span>
+                  <span className="flex justify-center text-blue-600 mb-2">{category.icon}</span>
                   <h3 className="text-xl font-semibold text-gray-800">{category.category}</h3>
                 </div>
                 
@@ -307,7 +308,7 @@ const TuitionForeignCitizens = () => {
             ))}
           </div>
 
-          <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <div className="mt-6 bg-amber-50/80 border border-amber-200 rounded-lg p-4">
             <h4 className="font-semibold text-yellow-800 mb-2">
               {t('tuitionForeign.budgetEstimate.title', 'Примерный месячный бюджет:')}
             </h4>
@@ -342,7 +343,7 @@ const TuitionForeignCitizens = () => {
             {scholarships.map((scholarship, index) => (
               <div key={index} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                 <div className="text-center mb-4">
-                  <span className="text-4xl mb-2 block">{scholarship.icon}</span>
+                  <span className="flex justify-center text-green-600 mb-2">{scholarship.icon}</span>
                   <h3 className="text-lg font-semibold text-gray-800 mb-2">{scholarship.title}</h3>
                   <p className="text-gray-600 text-sm mb-3">{scholarship.description}</p>
                   <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">

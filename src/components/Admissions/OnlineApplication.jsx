@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ClipboardList, User, GraduationCap, FileText, CheckCircle2, XCircle, DollarSign, Phone, Mail, Home, Trash2, FolderOpen, Send, Loader2, HelpCircle, Clock, Save, Pencil, Check } from 'lucide-react';
 import { emailConfig, openGmailCompose, createMailtoLink } from '../../config/emailConfig';
 import admissionsAPI from '../../services/admissionsAPI';
 
@@ -90,11 +91,11 @@ const OnlineApplication = () => {
 
 
   const steps = [
-    { id: 1, title: t('application.steps.program'), icon: '📋' },
-    { id: 2, title: t('application.steps.personal'), icon: '👤' },
-    { id: 3, title: t('application.steps.education'), icon: '🎓' },
-    { id: 4, title: t('application.steps.documents'), icon: '📄' },
-    { id: 5, title: t('application.steps.confirmation'), icon: '✅' }
+    { id: 1, title: t('application.steps.program'), icon: <ClipboardList className="w-5 h-5" /> },
+    { id: 2, title: t('application.steps.personal'), icon: <User className="w-5 h-5" /> },
+    { id: 3, title: t('application.steps.education'), icon: <GraduationCap className="w-5 h-5" /> },
+    { id: 4, title: t('application.steps.documents'), icon: <FileText className="w-5 h-5" /> },
+    { id: 5, title: t('application.steps.confirmation'), icon: <CheckCircle2 className="w-5 h-5" /> }
   ];
 
   // Auto-save draft
@@ -307,7 +308,7 @@ ${data.firstName} ${data.lastName}
           submittedAt: new Date().toLocaleString('ru-RU')
         });
 
-        alert('✅ Заявка отправлена на почту приемной комиссии' + (hasAnyFile ? ' вместе с документами.' : '.'));
+        alert('Заявка отправлена на почту приемной комиссии' + (hasAnyFile ? ' вместе с документами.' : '.'));
         // Откроем Gmail как визуальное подтверждение (текст без вложений)
         try { openGmailCompose(emailConfig.mainAdmissions, subject, body); } catch (_) {}
         localStorage.removeItem('applicationDraft');
@@ -321,7 +322,7 @@ ${data.firstName} ${data.lastName}
           const mailtoLink = createMailtoLink(emailConfig.mainAdmissions, subject, body);
           window.location.href = mailtoLink;
         }
-        alert('⚠️ Не удалось отправить через сервер. Открылся ваш почтовый клиент с готовым письмом. Добавьте файлы вручную и отправьте.');
+        alert('Не удалось отправить через сервер. Открылся ваш почтовый клиент с готовым письмом. Добавьте файлы вручную и отправьте.');
       } finally {
         setIsSubmitting(false); // Сбрасываем состояние загрузки в любом случае
       }
@@ -425,8 +426,8 @@ ${data.firstName} ${data.lastName}
               </div>
               <p className="text-gray-600 text-sm mb-3">{program.description}</p>
               <div className="flex flex-wrap gap-4 text-sm text-gray-500">
-                <span>💰 {program.cost}</span>
-                <span>📋 {program.requirements}</span>
+                <span><DollarSign className="w-4 h-4 inline-block" /> {program.cost}</span>
+                <span><ClipboardList className="w-4 h-4 inline-block" /> {program.requirements}</span>
               </div>
             </div>
           )) : (
@@ -725,7 +726,7 @@ ${data.firstName} ${data.lastName}
           />
           {formData.documents.certificate && (
             <div className="text-green-600 text-sm mt-1 flex items-center">
-              ✓ {t('application.documents.fileUploaded')}: {formData.documents.certificate.name}
+              <Check className="w-4 h-4 mr-1 flex-shrink-0" /> {t('application.documents.fileUploaded')}: {formData.documents.certificate.name}
             </div>
           )}
           {errors.certificate && <div className="text-red-600 text-sm mt-1">{errors.certificate}</div>}
@@ -743,7 +744,7 @@ ${data.firstName} ${data.lastName}
           />
           {formData.documents.passport && (
             <div className="text-green-600 text-sm mt-1 flex items-center">
-              ✓ {t('application.documents.fileUploaded')}: {formData.documents.passport.name}
+              <Check className="w-4 h-4 mr-1 flex-shrink-0" /> {t('application.documents.fileUploaded')}: {formData.documents.passport.name}
             </div>
           )}
           {errors.passport && <div className="text-red-600 text-sm mt-1">{errors.passport}</div>}
@@ -761,7 +762,7 @@ ${data.firstName} ${data.lastName}
           />
           {formData.documents.medical && (
             <div className="text-green-600 text-sm mt-1 flex items-center">
-              ✓ {t('application.documents.fileUploaded')}: {formData.documents.medical.name}
+              <Check className="w-4 h-4 mr-1 flex-shrink-0" /> {t('application.documents.fileUploaded')}: {formData.documents.medical.name}
             </div>
           )}
           {errors.medical && <div className="text-red-600 text-sm mt-1">{errors.medical}</div>}
@@ -780,7 +781,7 @@ ${data.firstName} ${data.lastName}
           />
           {formData.documents.photos && formData.documents.photos.length > 0 && (
             <div className="text-green-600 text-sm mt-1 flex items-center">
-              ✓ {t('application.documents.photosUploaded')}: {formData.documents.photos.length} шт.
+              <Check className="w-4 h-4 mr-1 flex-shrink-0" /> {t('application.documents.photosUploaded')}: {formData.documents.photos.length} шт.
             </div>
           )}
         </div>
@@ -797,14 +798,14 @@ ${data.firstName} ${data.lastName}
           />
           {formData.documents.ortCertificate && (
             <div className="text-green-600 text-sm mt-1 flex items-center">
-              ✓ {t('application.documents.fileUploaded')}: {formData.documents.ortCertificate.name}
+              <Check className="w-4 h-4 mr-1 flex-shrink-0" /> {t('application.documents.fileUploaded')}: {formData.documents.ortCertificate.name}
             </div>
           )}
         </div>
       </div>
       
       <div className="bg-blue-50 p-4 rounded-lg">
-        <h4 className="font-semibold text-blue-800 mb-2">📋 {t('application.documents.requirements.title')}</h4>
+        <h4 className="font-semibold text-blue-800 mb-2"><ClipboardList className="w-5 h-5 inline-block mr-1" /> {t('application.documents.requirements.title')}</h4>
         <ul className="text-sm text-blue-700 space-y-1">
           <li>• {t('application.documents.requirements.format')}</li>
           <li>• {t('application.documents.requirements.size')}</li>
@@ -827,7 +828,7 @@ ${data.firstName} ${data.lastName}
         {/* Program Details */}
         <div className="bg-green-50 p-6 rounded-lg border-l-4 border-green-600">
           <div className="flex items-center mb-3">
-            <span className="text-2xl mr-3">📋</span>
+            <span className="mr-3 text-green-600"><ClipboardList className="w-6 h-6" /></span>
             <h4 className="font-semibold text-gray-800 text-lg">{t('application.confirmation.selectedProgram')}</h4>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
@@ -846,7 +847,7 @@ ${data.firstName} ${data.lastName}
         {/* Personal Information */}
         <div className="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-600">
           <div className="flex items-center mb-3">
-            <span className="text-2xl mr-3">👤</span>
+            <span className="mr-3 text-blue-600"><User className="w-6 h-6" /></span>
             <h4 className="font-semibold text-gray-800 text-lg">{t('application.confirmation.personalData')}</h4>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
@@ -858,9 +859,9 @@ ${data.firstName} ${data.lastName}
               {formData.gender && <p className="text-gray-600 text-sm">{t('application.personalInfo.gender')}: {formData.gender === 'male' ? t('application.personalInfo.male') : t('application.personalInfo.female')}</p>}
             </div>
             <div className="text-sm text-gray-600">
-              <p>📞 {formData.phone}</p>
-              <p>✉️ {formData.email}</p>
-              {formData.address && <p>🏠 {formData.address}</p>}
+              <p><Phone className="w-4 h-4 inline-block mr-1" /> {formData.phone}</p>
+              <p><Mail className="w-4 h-4 inline-block mr-1" /> {formData.email}</p>
+              {formData.address && <p><Home className="w-4 h-4 inline-block mr-1" /> {formData.address}</p>}
             </div>
           </div>
         </div>
@@ -868,7 +869,7 @@ ${data.firstName} ${data.lastName}
         {/* Education */}
         <div className="bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-600">
           <div className="flex items-center mb-3">
-            <span className="text-2xl mr-3">🎓</span>
+            <span className="mr-3 text-yellow-600"><GraduationCap className="w-6 h-6" /></span>
             <h4 className="font-semibold text-gray-800 text-lg">{t('application.confirmation.education')}</h4>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
@@ -901,31 +902,31 @@ ${data.firstName} ${data.lastName}
         {/* Documents */}
         <div className="bg-purple-50 p-6 rounded-lg border-l-4 border-purple-600">
           <div className="flex items-center mb-3">
-            <span className="text-2xl mr-3">📄</span>
+            <span className="mr-3 text-purple-600"><FileText className="w-6 h-6" /></span>
             <h4 className="font-semibold text-gray-800 text-lg">{t('application.confirmation.uploadedDocuments')}</h4>
           </div>
           <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
             <div>
               <p className="flex items-center">
-                {formData.documents.certificate ? '✅' : '❌'} 
+                {formData.documents.certificate ? <CheckCircle2 className="w-4 h-4 text-green-600 inline-block" /> : <XCircle className="w-4 h-4 text-red-400 inline-block" />} 
                 <span className="ml-2">{t('application.documents.certificate')}</span>
               </p>
               <p className="flex items-center">
-                {formData.documents.passport ? '✅' : '❌'} 
+                {formData.documents.passport ? <CheckCircle2 className="w-4 h-4 text-green-600 inline-block" /> : <XCircle className="w-4 h-4 text-red-400 inline-block" />} 
                 <span className="ml-2">{t('application.documents.passport')}</span>
               </p>
               <p className="flex items-center">
-                {formData.documents.medical ? '✅' : '❌'} 
+                {formData.documents.medical ? <CheckCircle2 className="w-4 h-4 text-green-600 inline-block" /> : <XCircle className="w-4 h-4 text-red-400 inline-block" />} 
                 <span className="ml-2">{t('application.documents.medical')}</span>
               </p>
             </div>
             <div>
               <p className="flex items-center">
-                {formData.documents.photos?.length > 0 ? '✅' : '⚪'} 
+                {formData.documents.photos?.length > 0 ? <CheckCircle2 className="w-4 h-4 text-green-600 inline-block" /> : <span className="w-4 h-4 rounded-full border-2 border-gray-300 inline-block"></span>} 
                 <span className="ml-2">{t('application.documents.photos')} (необязательно)</span>
               </p>
               <p className="flex items-center">
-                {formData.documents.ortCertificate ? '✅' : '⚪'} 
+                {formData.documents.ortCertificate ? <CheckCircle2 className="w-4 h-4 text-green-600 inline-block" /> : <span className="w-4 h-4 rounded-full border-2 border-gray-300 inline-block"></span>} 
                 <span className="ml-2">{t('application.documents.ortCertificate')} (необязательно)</span>
               </p>
             </div>
@@ -939,27 +940,27 @@ ${data.firstName} ${data.lastName}
         <div className="flex flex-wrap gap-2">
           <button 
             onClick={() => setCurrentStep(1)}
-            className="px-3 py-1 bg-green-100 text-green-700 rounded text-sm hover:bg-green-200"
+            className="px-3 py-1 bg-green-100 text-green-700 rounded text-sm hover:bg-green-200 flex items-center"
           >
-            ✏️ {t('application.confirmation.editProgram')}
+            <Pencil className="w-3.5 h-3.5 mr-1" /> {t('application.confirmation.editProgram')}
           </button>
           <button 
             onClick={() => setCurrentStep(2)}
-            className="px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm hover:bg-blue-200"
+            className="px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm hover:bg-blue-200 flex items-center"
           >
-            ✏️ {t('application.confirmation.editPersonal')}
+            <Pencil className="w-3.5 h-3.5 mr-1" /> {t('application.confirmation.editPersonal')}
           </button>
           <button 
             onClick={() => setCurrentStep(3)}
-            className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded text-sm hover:bg-yellow-200"
+            className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded text-sm hover:bg-yellow-200 flex items-center"
           >
-            ✏️ {t('application.confirmation.editEducation')}
+            <Pencil className="w-3.5 h-3.5 mr-1" /> {t('application.confirmation.editEducation')}
           </button>
           <button 
             onClick={() => setCurrentStep(4)}
-            className="px-3 py-1 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200"
+            className="px-3 py-1 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200 flex items-center"
           >
-            ✏️ {t('application.confirmation.editDocuments')}
+            <Pencil className="w-3.5 h-3.5 mr-1" /> {t('application.confirmation.editDocuments')}
           </button>
         </div>
       </div>
@@ -1022,7 +1023,7 @@ ${data.firstName} ${data.lastName}
               {t('application.subtitle')}
             </p>
             <p className="text-sm opacity-75">
-              💾 {t('application.autosave')}
+              <Save className="w-4 h-4 inline-block mr-1" /> {t('application.autosave')}
             </p>
           </div>
         </div>
@@ -1044,7 +1045,7 @@ ${data.firstName} ${data.lastName}
                     ? 'bg-blue-500 text-white'
                     : 'bg-gray-200 text-gray-600'
                 }`}>
-                  {currentStep > step.id ? '✓' : step.icon}
+                  {currentStep > step.id ? <Check className="w-5 h-5" /> : step.icon}
                 </div>
                 {index < steps.length - 1 && (
                   <div className={`flex-1 h-2 mx-4 rounded-full transition-all ${
@@ -1101,7 +1102,7 @@ ${data.firstName} ${data.lastName}
         hover:bg-red-50 shadow-md border border-red-200 hover:border-red-300 hover:shadow-lg 
         transition-all transform hover:-translate-y-0.5 flex-1 sm:flex-none min-w-[100px] sm:min-w-[120px]"
     >
-      <span className="text-lg mr-2">🗑️</span>
+      <span className="mr-2"><Trash2 className="w-5 h-5" /></span>
       <span className="hidden sm:inline">Очистить</span>
       <span className="sm:hidden">Очистить</span>
     </button>
@@ -1111,14 +1112,14 @@ ${data.firstName} ${data.lastName}
   <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
     {isDraftLoaded && (
       <div className="flex items-center bg-blue-100 text-blue-700 px-3 py-2 rounded-lg text-sm font-medium">
-        <span className="text-lg mr-2">📂</span>
+        <span className="mr-2"><FolderOpen className="w-5 h-5" /></span>
         <span className="hidden sm:inline">{t('application.status.draftLoaded')}</span>
         <span className="sm:hidden">Черновик</span>
       </div>
     )}
     {isDraftSaved && (
       <div className="flex items-center bg-green-100 text-green-700 px-3 py-2 rounded-lg text-sm font-medium">
-        <span className="text-lg mr-2">✓</span>
+        <Check className="w-5 h-5 mr-2" />
         <span className="hidden sm:inline">{t('application.status.draftSaved')}</span>
         <span className="sm:hidden">Сохранено</span>
       </div>
@@ -1151,13 +1152,13 @@ ${data.firstName} ${data.lastName}
       >
         {isSubmitting ? (
           <>
-            <span className="inline-block animate-spin mr-2">⏳</span>
+            <span className="inline-block animate-spin mr-2"><Loader2 className="w-5 h-5" /></span>
             <span className="hidden sm:inline">Отправка...</span>
             <span className="sm:hidden">Отправка...</span>
           </>
         ) : (
           <>
-            <span className="text-lg mr-2">📤</span>
+            <span className="mr-2"><Send className="w-5 h-5" /></span>
             <span className="hidden sm:inline">{t('application.navigation.submit')}</span>
             <span className="sm:hidden">Отправить</span>
           </>
@@ -1170,16 +1171,16 @@ ${data.firstName} ${data.lastName}
         {/* Help Information */}
         <div className="mt-12 bg-blue-50 p-6 rounded-lg">
           <h4 className="font-semibold text-blue-800 mb-3">
-            🆘 {t('application.help.title')}
+            <HelpCircle className="w-5 h-5 inline-block mr-1" /> {t('application.help.title')}
           </h4>
           <div className="grid md:grid-cols-2 gap-4 text-sm text-blue-700">
             <div>
-              <p>📞 {t('application.help.phone')}</p>
-              <p>✉️ {t('application.help.email')}</p>
+              <p><Phone className="w-4 h-4 inline-block mr-1" /> {t('application.help.phone')}</p>
+              <p><Mail className="w-4 h-4 inline-block mr-1" /> {t('application.help.email')}</p>
             </div>
             <div>
-              <p>🕐 {t('application.help.hours')}</p>
-              <p>💾 {t('application.help.autosave')}</p>
+              <p><Clock className="w-4 h-4 inline-block mr-1" /> {t('application.help.hours')}</p>
+              <p><Save className="w-4 h-4 inline-block mr-1" /> {t('application.help.autosave')}</p>
             </div>
           </div>
         </div>

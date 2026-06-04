@@ -148,12 +148,12 @@ const Gallery = () => {
   }, [lightboxOpen, currentPhoto]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-8 px-4">
+    <div className="min-h-screen bg-[#f8fafc] py-8 px-4">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-center text-blue-800 mb-2">
+        <h1 className="text-4xl font-bold text-center text-[#0A2647] mb-2">
           {t('gallery.title')}
         </h1>
-        <p className="text-center text-blue-600 mb-8">
+        <p className="text-center text-[#334155] mb-8">
           {t('gallery.subtitle')}
         </p>
         
@@ -199,9 +199,9 @@ const Gallery = () => {
                         alt={album.title} 
                         className="w-full h-56 object-cover"
                       />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-900 to-transparent p-4">
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A2647] to-transparent p-4">
                         <h3 className="text-white font-bold text-xl">{album.title}</h3>
-                        <p className="text-blue-200">
+                        <p className="text-slate-200">
                           {t('gallery.photoCount', { count: album.photoCount })}
                         </p>
                       </div>
@@ -239,7 +239,7 @@ const Gallery = () => {
                 </svg>
                 {t('gallery.backToAlbums')}
               </button>
-              <h2 className="text-2xl font-bold text-blue-800">{activeAlbum.title}</h2>
+              <h2 className="text-2xl font-bold text-[#0A2647]">{activeAlbum.title}</h2>
               <div className="w-24"></div> {/* Для выравнивания */}
             </div>
             
@@ -274,7 +274,7 @@ const Gallery = () => {
                       className="w-full h-48 object-cover"
                     />
                     <div className="p-3">
-                      <h3 className="font-medium text-blue-900">{photo.title}</h3>
+                      <h3 className="font-medium text-[#0A2647]">{photo.title}</h3>
                       <div className="flex flex-wrap gap-1 mt-2">
                         {(photo.tags || []).map(tag => (
                           <span key={tag} className="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full text-xs">

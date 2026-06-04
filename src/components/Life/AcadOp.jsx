@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { studentLifeAPI } from "../../services/studentLifeService";
+import { Globe, GraduationCap, AlertTriangle, FlaskConical, Stethoscope, BookOpen } from "lucide-react";
 
 const AcadOp = () => {
   const { t, i18n } = useTranslation();
@@ -69,8 +70,8 @@ const AcadOp = () => {
     status: 'available',
     popular: opportunity.id === 1, // Mark first as popular for demo
     students: opportunity.type === 'semester' ? '25+' : '15+',
-    icon: opportunity.type === 'semester' ? '🌍' : '🎓',
-    color: opportunity.type === 'semester' ? 'from-green-500 to-emerald-500' : 'from-blue-500 to-cyan-500',
+    icon: opportunity.type === 'semester' ? 'globe' : 'graduation',
+    color: opportunity.type === 'semester' ? 'bg-[#0A2647]' : 'bg-[#144272]',
     features: opportunity.benefits?.map(benefit => getLocalizedField(benefit, 'text')) || []
   }));
 
@@ -99,7 +100,7 @@ const AcadOp = () => {
     program: getLocalizedField(university, 'name'),
     achievement: t("acadop.successStories.achievement", "Академическая мобильность"),
     quote: t("acadop.successStories.quote", "Программа обмена открыла новые горизонты в моей карьере"),
-    image: ['👩‍🔬', '👨‍⚕️', '👩‍🎓'][index] || '👨‍🎓'
+    image: ['flask', 'stethoscope', 'book'][index] || 'book'
   }));
 
   // Фильтрация данных
@@ -127,22 +128,22 @@ const AcadOp = () => {
     {
       label: t("acadop.statistics.total", "Всего возможностей"),
       value: stats.total,
-      color: "from-purple-500 to-purple-600",
+      color: "bg-[#0A2647]",
     },
     {
       label: t("acadop.statistics.available", "Доступно сейчас"),
       value: stats.available,
-      color: "from-green-500 to-green-600",
+      color: "bg-[#144272]",
     },
     {
       label: t("acadop.statistics.students", "Студентов участвует"),
       value: `${stats.students}+`,
-      color: "from-blue-500 to-blue-600",
+      color: "bg-[#205295]",
     },
     {
       label: t("acadop.statistics.popular", "Популярные"),
       value: stats.popular,
-      color: "from-orange-500 to-orange-600",
+      color: "bg-[#2C7865]",
     },
   ];
 
@@ -172,7 +173,7 @@ const AcadOp = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <div className="text-red-500 mb-4 flex justify-center"><AlertTriangle className="w-16 h-16" /></div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">{t("common.error", "Ошибка")}</h2>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
@@ -188,7 +189,7 @@ const AcadOp = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      className={`min-h-screen bg-[#f8fafc] py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
     >
       <div className="max-w-7xl mx-auto">
@@ -196,7 +197,7 @@ const AcadOp = () => {
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {t("acadop.hero.title", "Академические возможности")}{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-[#0A2647]">
               {t("acadop.hero.highlight", "для студентов")}
             </span>
           </h1>
@@ -210,7 +211,7 @@ const AcadOp = () => {
           {statistics.map((stat, index) => (
             <div
               key={index}
-              className={`bg-gradient-to-br ${stat.color} rounded-2xl p-6 text-white shadow-lg transform transition-all duration-500 text-center`}
+              className={`${stat.color} rounded-lg p-6 text-white shadow-lg transform transition-all duration-500 text-center`}
               style={{
                 animationDelay: `${index * 100}ms`,
               }}
@@ -225,7 +226,7 @@ const AcadOp = () => {
           {/* Боковая навигация */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
+              <div className="bg-[#0A2647] p-4 text-white font-bold text-lg">
                 {t("acadop.categories.title", "Категории")}
               </div>
               <nav className="p-2">
@@ -308,16 +309,16 @@ const AcadOp = () => {
                     {filteredData.map((opportunity, index) => (
                       <div
                         key={opportunity.id}
-                        className="bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-md overflow-hidden border border-blue-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                        className="bg-white rounded-lg shadow-md overflow-hidden border border-slate-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                         style={{ animationDelay: `${index * 100}ms` }}
                       >
                         {/* Заголовок карточки */}
                         <div
-                          className={`bg-gradient-to-r ${opportunity.color} p-6 text-white relative overflow-hidden`}
+                          className={`${opportunity.color} p-6 text-white relative overflow-hidden`}
                         >
                           <div className="flex items-center mb-4">
-                            <div className="text-2xl mr-4 bg-white/20 rounded-xl w-12 h-12 flex items-center justify-center shadow-lg">
-                              {opportunity.icon}
+                            <div className="mr-4 bg-white/20 rounded-lg w-12 h-12 flex items-center justify-center shadow-lg">
+                              {opportunity.icon === 'globe' ? <Globe className="w-6 h-6 text-white" /> : <GraduationCap className="w-6 h-6 text-white" />}
                             </div>
                             <div className="flex-1">
                               <div className="flex items-center justify-between">
@@ -325,7 +326,7 @@ const AcadOp = () => {
                                   {opportunity.title}
                                 </h3>
                                 {opportunity.popular && (
-                                  <span className="bg-yellow-400 text-yellow-900 text-xs px-2 py-1 rounded-full font-bold">
+                                  <span className="bg-amber-500 text-white text-xs px-2 py-1 rounded-full font-bold">
                                     {t("acadop.opportunities.popularBadge", "Популярно")}
                                   </span>
                                 )}
@@ -351,7 +352,7 @@ const AcadOp = () => {
                             <div
                               className={`w-2 h-2 rounded-full mr-2 ${opportunity.status === "available"
                                   ? "bg-green-400"
-                                  : "bg-yellow-400"
+                                  : "bg-amber-500"
                                 }`}
                             ></div>
                             <span className="text-xs text-white/80 font-medium">
@@ -388,7 +389,7 @@ const AcadOp = () => {
 
                           {/* Кнопка доступа */}
                           <button
-                            className={`w-full bg-gradient-to-r ${opportunity.color} text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg flex items-center justify-center group`}
+                            className={`w-full ${opportunity.color} text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:opacity-90 flex items-center justify-center group`}
                           >
                             <span className="flex items-center">
                               {t("acadop.opportunities.detailsButton", "Подробнее")}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { GraduationCap, Briefcase, Monitor, BookOpen, DollarSign, MapPin, Clock, Calendar, Star, Check } from 'lucide-react';
 import careersService from '../../services/careersService';
 
 const VacancyDetail = () => {
@@ -52,21 +53,16 @@ const VacancyDetail = () => {
   };
 
   const getCategoryIcon = (category) => {
-    // Use icon from API if available
-    if (typeof category === 'object' && category.icon) {
-      return category.icon;
-    }
-    
-    // Fallback to hardcoded icons only if no API icon
+    // Fallback to hardcoded icons if no API icon
     if (typeof category === 'object' && category.name) {
       category = category.name;
     }
     switch (category) {
-      case 'academic': return '🏫';
-      case 'administrative': return '💼';
-      case 'technical': return '🖥️';
-      case 'service': return '📚';
-      default: return '💼';
+      case 'academic': return GraduationCap;
+      case 'administrative': return Briefcase;
+      case 'technical': return Monitor;
+      case 'service': return BookOpen;
+      default: return Briefcase;
     }
   };
 
@@ -165,7 +161,9 @@ const VacancyDetail = () => {
           <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
             <div className="flex items-start justify-between mb-6">
               <div className="flex items-center">
-                <span className="text-5xl mr-4">{getCategoryIcon(vacancy.category)}</span>
+                <div className="w-16 h-16 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mr-4 flex-shrink-0">
+                  {React.createElement(getCategoryIcon(vacancy.category), { className: "w-8 h-8" })}
+                </div>
                 <div>
                   <h1 className="text-3xl font-bold text-blue-900 mb-2">
                     {getFieldValue(vacancy.title, t('careers.title_not_available'))}
@@ -187,43 +185,53 @@ const VacancyDetail = () => {
             </div>
 
             {/* Key Info Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
               {vacancy.salary_display && (
-                <div className="text-center">
-                  <div className="text-2xl mb-2">💰</div>
-                  <div className="text-sm text-gray-500">{t('careers.salary')}</div>
-                  <div className="font-semibold">{vacancy.salary_display}</div>
+                <div className="text-center flex flex-col items-center">
+                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 mb-2">
+                    <DollarSign className="w-5 h-5" />
+                  </div>
+                  <div className="text-xs text-gray-500">{t('careers.salary')}</div>
+                  <div className="font-semibold text-sm">{vacancy.salary_display}</div>
                 </div>
               )}
               
               {vacancy.location && (
-                <div className="text-center">
-                  <div className="text-2xl mb-2">📍</div>
-                  <div className="text-sm text-gray-500">{t('careers.location')}</div>
-                  <div className="font-semibold">{vacancy.location}</div>
+                <div className="text-center flex flex-col items-center">
+                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 mb-2">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div className="text-xs text-gray-500">{t('careers.location')}</div>
+                  <div className="font-semibold text-sm">{vacancy.location}</div>
                 </div>
               )}
 
               {vacancy.employment_type && (
-                <div className="text-center">
-                  <div className="text-2xl mb-2">⏰</div>
-                  <div className="text-sm text-gray-500">{t('careers.employment_type')}</div>
-                  <div className="font-semibold">{t(`careers.employment_types.${vacancy.employment_type}`)}</div>
+                <div className="text-center flex flex-col items-center">
+                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 mb-2">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <div className="text-xs text-gray-500">{t('careers.employment_type')}</div>
+                  <div className="font-semibold text-sm">{t(`careers.employment_types.${vacancy.employment_type}`)}</div>
                 </div>
               )}
 
               {vacancy.experience_years && (
-                <div className="text-center">
-                  <div className="text-2xl mb-2">💼</div>
-                  <div className="text-sm text-gray-500">{t('careers.experience')}</div>
-                  <div className="font-semibold">{vacancy.experience_years}</div>
+                <div className="text-center flex flex-col items-center">
+                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 mb-2">
+                    <Briefcase className="w-5 h-5" />
+                  </div>
+                  <div className="text-xs text-gray-500">{t('careers.experience')}</div>
+                  <div className="font-semibold text-sm">{vacancy.experience_years}</div>
                 </div>
               )}
 
-              <div className="text-center">
-                <div className="text-2xl mb-2">⏳</div>
-                <div className="text-sm text-gray-500">{t('careers.deadline')}</div>
-                <div className="font-semibold">{formatDate(vacancy.deadline)}</div>
+              <div className="text-center flex flex-col items-center">
+                <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 mb-2">
+                  <Calendar className="w-5 h-5" />
+                </div>
+                <div className="text-xs text-gray-500">{t('careers.deadline')}</div>
+                <div className="font-semibold text-sm">{formatDate(vacancy.deadline)}</div>
               </div>
             </div>
           </div>
@@ -261,7 +269,7 @@ const VacancyDetail = () => {
                   <div className="space-y-2">
                     {vacancy.requirements_list.map((requirement, index) => (
                       <div key={index} className="flex items-start">
-                        <span className="text-green-600 mr-2 mt-1">✓</span>
+                        <Check className="w-5 h-5 text-green-600 mr-2 mt-1 flex-shrink-0" />
                         <span className="text-gray-700">{requirement}</span>
                       </div>
                     ))}
@@ -276,7 +284,7 @@ const VacancyDetail = () => {
                   <div className="space-y-2">
                     {vacancy.conditions_list.map((condition, index) => (
                       <div key={index} className="flex items-start">
-                        <span className="text-purple-600 mr-2 mt-1">★</span>
+                        <span className="text-blue-600 mr-2 mt-1.5">•</span>
                         <span className="text-gray-700">{condition}</span>
                       </div>
                     ))}

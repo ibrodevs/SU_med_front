@@ -1,7 +1,112 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Crown, GraduationCap, Building } from 'lucide-react';
 import aboutService from '../../services/aboutService';
 import { getManagement } from '../../services/teachers';
+
+const fallbackFaculties = [
+  {
+    name: "Высшая школа медицины",
+    name_ru: "Высшая школа медицины",
+    name_en: "Higher School of Medicine",
+    name_kg: "Жогорку медициналык мектеби",
+    head_ru: "Мамбетов Эрбол Зинкенович (Декан)",
+    head_en: "Erbol Mambetov (Dean)",
+    head_kg: "Мамбетов Эрбол Зинкенович (Декан)",
+    departments: [
+      {
+        name_ru: "Кафедра Естественно-гуманитарных дисциплин (ЕГД)",
+        name_en: "Department of Natural Sciences and Humanities",
+        name_kg: "Табигый-гуманитардык илимдер кафедрасы"
+      },
+      {
+        name_ru: "Кафедра клинико-морфологических дисциплин",
+        name_en: "Department of Clinical and Morphological Disciplines",
+        name_kg: "Клиникалык-морфологиялык илимдер кафедрасы"
+      },
+      {
+        name_ru: "Кафедра клинических дисциплин",
+        name_en: "Department of Clinical Disciplines",
+        name_kg: "Клиникалык илимдер кафедрасы"
+      }
+    ]
+  }
+];
+
+const fallbackAdministrative = [
+  {
+    name_ru: "Учебно-методический отдел",
+    name_en: "Academic and Methodological Department",
+    name_kg: "Окуу-усулдук бөлүмү",
+    head_ru: "Колдошева Г. А.",
+    head_en: "Koldosheva G. A.",
+    head_kg: "Колдошева Г. А.",
+    phone: "+996 (312) 658-538"
+  },
+  {
+    name_ru: "Отдел HR и качества",
+    name_en: "HR and Quality Department",
+    name_kg: "Адам ресурстары жана сапат бөлүмү",
+    head_ru: "Абдыкадырова А. Т.",
+    head_en: "Abdykadyrova A. T.",
+    head_kg: "Абдыкадырова А. Т.",
+    phone: "+996 (312) 658-538"
+  },
+  {
+    name_ru: "Планово-финансовый отдел",
+    name_en: "Planning and Finance Department",
+    name_kg: "Пландоо жана каржы бөлүмү",
+    head_ru: "Токтогулова Н. А.",
+    head_en: "Toktogulova N. A.",
+    head_kg: "Токтогулова Н. А.",
+    phone: "+996 (312) 658-538"
+  },
+  {
+    name_ru: "Отдел науки и повышения квалификации",
+    name_en: "Department of Science and Professional Development",
+    name_kg: "Илим жана квалификацияны жогорулатуу бөлүмү",
+    head_ru: "Мамытов Т. Б.",
+    head_en: "Mamytov T. B.",
+    head_kg: "Мамытов Т. Б.",
+    phone: "+996 (312) 658-538"
+  },
+  {
+    name_ru: "Международный отдел",
+    name_en: "International Department",
+    name_kg: "Эл аралык бөлүмү",
+    head_ru: "Раимкулов А. М.",
+    head_en: "Raimkulov A. M.",
+    head_kg: "Раимкулов А. М.",
+    phone: "+996 (312) 658-538"
+  },
+  {
+    name_ru: "Студенческий отдел кадров",
+    name_en: "Student HR Department",
+    name_kg: "Студенттик кадрлар бөлүмү",
+    head_ru: "Исакова С. К.",
+    head_en: "Isakova S. K.",
+    head_kg: "Isakova S. K.",
+    phone: "+996 (312) 658-538"
+  },
+  {
+    name_ru: "Центр практики и карьеры",
+    name_en: "Practice and Career Development Center",
+    name_kg: "Практика жана карьера борбору",
+    head_ru: "Жусупов Б. Т.",
+    head_en: "Zhusupov B. T.",
+    head_kg: "Жусупов Б. Т.",
+    phone: "+996 (312) 658-538"
+  },
+  {
+    name_ru: "Отдел управления делами и техники безопасности",
+    name_en: "Department of Operations and Safety",
+    name_kg: "Чарбалык камсыздоо жана техникалык коопсуздук бөлүмү",
+    head_ru: "Бакиров К. А.",
+    head_en: "Bakirov H. A.",
+    head_kg: "Бакиров К. А.",
+    phone: "+996 (312) 658-538"
+  }
+];
 
 const StructurePage = () => {
   const { t, i18n } = useTranslation();
@@ -29,10 +134,22 @@ const StructurePage = () => {
           aboutService.getStructure(i18n.language, 'administrative')
         ]);
         setManagementData(mgmt);
-        setFacultiesData(facs);
-        setAdministrativeData(admin);
+        
+        if (facs && facs.length > 0) {
+          setFacultiesData(facs);
+        } else {
+          setFacultiesData(fallbackFaculties);
+        }
+
+        if (admin && admin.length > 0) {
+          setAdministrativeData(admin);
+        } else {
+          setAdministrativeData(fallbackAdministrative);
+        }
       } catch (error) {
         console.error('Ошибка загрузки данных структуры:', error);
+        setFacultiesData(fallbackFaculties);
+        setAdministrativeData(fallbackAdministrative);
       } finally {
         setLoading(false);
       }
@@ -41,14 +158,15 @@ const StructurePage = () => {
   }, [i18n.language]);
 
   const sections = [
-    { id: 'leadership', name: t('structure.leadership.title'), icon: '👑' },
-    { id: 'faculties', name: t('structure.faculties.title'), icon: '🎓' },
-    { id: 'administrative', name: t('structure.administrative.title'), icon: '🏢' }
+    { id: 'leadership', name: t('structure.leadership.title'), icon: Crown },
+    { id: 'faculties', name: t('structure.faculties.title'), icon: GraduationCap },
+    { id: 'administrative', name: t('structure.administrative.title'), icon: Building }
   ];
 
   // Функция для получения локализованного текста
   const getLocalizedText = (obj, field) => {
     if (!obj) return '';
+    if (typeof obj === 'string') return obj;
     const lang = i18n.language === 'kg' ? 'kg' : i18n.language;
     return obj[`${field}_${lang}`] || obj[`${field}_ru`] || obj[`${field}_en`] || '';
   };
@@ -56,7 +174,7 @@ const StructurePage = () => {
   const structureData = {
     leadership: {
       title: t('structure.leadership.title'),
-      icon: "👑",
+      icon: Crown,
       items: [
         {
           name: t('structure.leadership.items.rector.name'),
@@ -78,7 +196,7 @@ const StructurePage = () => {
     },
     faculties: {
       title: t('structure.faculties.title'),
-      icon: "🎓",
+      icon: GraduationCap,
       items: [
         {
           name: t('structure.faculties.items.medical.name'),
@@ -121,7 +239,7 @@ const StructurePage = () => {
     },
     administrative: {
       title: t('structure.administrative.title'),
-      icon: "🏢",
+      icon: Building,
       items: [
         {
           name: t('structure.administrative.items.academicOffice.name'),
@@ -198,7 +316,7 @@ const StructurePage = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">👑</span>
+            <Crown className="w-7 h-7 text-blue-600" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('structure.leadership.title')}
@@ -240,7 +358,7 @@ const StructurePage = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">🎓</span>
+            <GraduationCap className="w-7 h-7 text-blue-600" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('structure.faculties.title')}
@@ -325,7 +443,7 @@ const StructurePage = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">🏢</span>
+            <Building className="w-7 h-7 text-blue-600" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('structure.administrative.title')}
@@ -336,7 +454,7 @@ const StructurePage = () => {
           {administrativeData.length > 0 ? administrativeData.map((item, index) => (
             <div
               key={index}
-              className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 border border-purple-100 hover:shadow-md transition-all duration-300"
+              className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-xl p-6 border border-slate-200 hover:shadow-md transition-all duration-300"
             >
               <div className="flex items-start mb-4">
                 <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center text-white font-bold text-lg mr-4">
@@ -418,7 +536,7 @@ const StructurePage = () => {
                           }`}
                         onClick={() => changeActiveSection(section.id)}
                       >
-                        <span className="text-lg mr-3">{section.icon}</span>
+                        {(() => { const IconComp = section.icon; return <IconComp className="w-5 h-5 mr-3" />; })()}
                         {section.name}
                       </button>
                     </li>

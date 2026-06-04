@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { School, Monitor, Microscope, Stethoscope, Check } from 'lucide-react';
 import { classroomsAPI, infrastructureHelpers } from '../../services/infrastructureService.js';
 
 const Classrooms = () => {
@@ -33,7 +34,7 @@ const Classrooms = () => {
         const allCategory = {
           id: 'all',
           name: t('classrooms.allRooms'),
-          icon: '🏫',
+          icon: 'school',
           count: transformedData.classrooms.length
         }; setClassroomCategories([allCategory, ...transformedData.categories]);
         setClassrooms(transformedData.classrooms);
@@ -129,7 +130,7 @@ const Classrooms = () => {
                     onClick={() => setSelectedRoom(room)}
                   >
                     <div className="bg-blue-100 p-8 text-center">
-                      <div className="text-6xl mb-4">{room.image}</div>
+                      <div className="flex justify-center mb-4 text-blue-600"><School className="w-14 h-14" /></div>
                       <h3 className="text-2xl font-bold text-blue-800">{room.name}</h3>
                       <div className="text-blue-600 font-semibold">{room.category}</div>
                     </div>
@@ -199,7 +200,7 @@ const Classrooms = () => {
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div>
                       <div className="text-center bg-blue-50 rounded-2xl p-8 mb-6">
-                        <div className="text-8xl mb-4">{selectedRoom.image}</div>
+                        <div className="flex justify-center mb-4 text-blue-600"><School className="w-20 h-20" /></div>
                         <div className="text-2xl font-bold text-blue-800">{selectedRoom.name}</div>
                       </div>
 
@@ -217,7 +218,7 @@ const Classrooms = () => {
                             key={index}
                             className="bg-blue-50 text-blue-800 px-3 py-2 rounded-lg flex items-center"
                           >
-                            <span className="text-green-500 mr-2">✓</span>
+                            <Check className="w-4 h-4 text-green-500 mr-2" />
                             {t(feature)}
                           </div>
                         ))}
@@ -280,7 +281,7 @@ const Classrooms = () => {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center p-6">
-                  <div className="text-4xl mb-4">🖥️</div>
+                  <div className="text-blue-600 mb-4"><Monitor className="w-10 h-10 mx-auto" /></div>
                   <h3 className="text-xl font-bold text-blue-800 mb-3">
                     {t('classrooms.digitalClassrooms')}
                   </h3>
@@ -289,7 +290,7 @@ const Classrooms = () => {
                   </p>
                 </div>
                 <div className="text-center p-6">
-                  <div className="text-4xl mb-4">🔬</div>
+                  <div className="text-blue-600 mb-4"><Microscope className="w-10 h-10 mx-auto" /></div>
                   <h3 className="text-xl font-bold text-blue-800 mb-3">
                     {t('classrooms.laboratoryEquipment')}
                   </h3>
@@ -298,7 +299,7 @@ const Classrooms = () => {
                   </p>
                 </div>
                 <div className="text-center p-6">
-                  <div className="text-4xl mb-4">🩺</div>
+                  <div className="text-blue-600 mb-4"><Stethoscope className="w-10 h-10 mx-auto" /></div>
                   <h3 className="text-xl font-bold text-blue-800 mb-3">
                     {t('classrooms.simulationEquipment')}
                   </h3>

@@ -484,9 +484,9 @@
       "deadline": "Final Application Deadline",
       "exams": "Entrance Exams",
       "status": {
-        "open": "⏳ Applications Open",
-        "deadline": "🚨 Last Chance",
-        "exams": "📝 Exam Time"
+        "open": "Applications Open",
+        "deadline": "Last Chance",
+        "exams": "Exam Time"
       }
     },
     "cta": {
@@ -1553,7 +1553,7 @@
       "loading": "Map loading...",
       "ariaLabel": "Salymbekov University map",
       "universityName": "Salymbekov University",
-      "howToGet": "🚌 How to get there?",
+      "howToGet": "How to get there?",
       "transport": {
         "buses": "Buses: 1, 5, 12, 24 to 'Medical University' stop",
         "minibuses": "Marshrutkas: 105, 107, 120, 134",
@@ -1562,7 +1562,7 @@
       }
     },
     "quickActions": {
-      "title": "🚀 Quick actions",
+      "title": "Quick actions",
       "call": "Call",
       "write": "Write",
       "copy": "Copy",
@@ -2671,7 +2671,7 @@
       },
       "features_title": "Available:",
       "tooltip": {
-        "title": "💡 Tip",
+        "title": "Tip",
         "text": "Some resources may require authorization through a university account"
       }
     },
@@ -2861,6 +2861,8 @@
     }
   },
   "careers": {
+    "title_not_available": "Title not available",
+    "no_description": "No description available",
     "conditions": "Working conditions",
     "title": "Career at University",
     "subtitle": "Join the team of professionals at Salymbekov University. Find your place in an educational environment where knowledge, innovation and the desire to develop are valued.",
@@ -3100,7 +3102,7 @@
     },
     "features_title": "Available:",
     "tooltip": {
-      "title": "💡 Tip",
+      "title": "Tip",
       "text": "Some resources may require authentication via your university account"
     },
   "requirementsCitizensKG": {
@@ -5611,37 +5613,37 @@
           "id": "all",
           "name": "All Resources",
           "count": 8,
-          "icon": "🔄"
+          "icon": ""
         },
         {
           "id": "library",
           "name": "Library",
           "count": 1,
-          "icon": "📚"
+          "icon": ""
         },
         {
           "id": "education",
           "name": "Education",
           "count": 1,
-          "icon": "🎓"
+          "icon": ""
         },
         {
           "id": "research",
           "name": "Research",
           "count": 1,
-          "icon": "🔬"
+          "icon": ""
         },
         {
           "id": "labs",
           "name": "Labs",
           "count": 1,
-          "icon": "🧪"
+          "icon": ""
         },
         {
           "id": "mobile",
           "name": "Mobile",
           "count": 1,
-          "icon": "📱"
+          "icon": ""
         }
       ]
     },
@@ -5660,7 +5662,7 @@
           "title": "Electronic Library",
           "description": "Access to more than 50,000 scientific publications, textbooks, and journals",
           "category": "library",
-          "icon": "📚",
+          "icon": "",
           "color": "from-purple-500 to-purple-600",
           "status": "online",
           "users": "2,500+",
@@ -5678,7 +5680,7 @@
           "title": "Distance Learning System",
           "description": "Platform for online courses, webinars, and virtual classrooms",
           "category": "education",
-          "icon": "🎓",
+          "icon": "",
           "color": "from-blue-500 to-blue-600",
           "status": "online",
           "users": "3,200+",
@@ -5696,7 +5698,7 @@
           "title": "Scientific Database",
           "description": "Access to international scientific databases and journals",
           "category": "research",
-          "icon": "🔬",
+          "icon": "",
           "color": "from-green-500 to-green-600",
           "status": "online",
           "users": "1,800+",
@@ -5714,7 +5716,7 @@
           "title": "Virtual Labs",
           "description": "3D simulators of medical procedures and diagnostics",
           "category": "labs",
-          "icon": "🧪",
+          "icon": "",
           "color": "from-orange-500 to-orange-600",
           "status": "online",
           "users": "900+",
@@ -5732,7 +5734,7 @@
           "title": "Testing System",
           "description": "Platform for conducting exams and knowledge testing",
           "category": "testing",
-          "icon": "📝",
+          "icon": "",
           "color": "from-red-500 to-red-600",
           "status": "maintenance",
           "users": "2,100+",
@@ -5750,7 +5752,7 @@
           "title": "Mobile App",
           "description": "Access all university resources from mobile devices",
           "category": "mobile",
-          "icon": "📱",
+          "icon": "",
           "color": "from-indigo-500 to-indigo-600",
           "status": "online",
           "users": "4,500+",
@@ -5768,7 +5770,7 @@
           "title": "Cloud Storage",
           "description": "Secure storage and sharing of learning materials",
           "category": "storage",
-          "icon": "☁️",
+          "icon": "",
           "color": "from-teal-500 to-teal-600",
           "status": "online",
           "users": "3,800+",
@@ -5786,7 +5788,7 @@
           "title": "Video Conferences",
           "description": "Platform for online classes and meetings",
           "category": "conference",
-          "icon": "🎥",
+          "icon": "",
           "color": "from-pink-500 to-pink-600",
           "status": "online",
           "users": "2,700+",
@@ -5881,25 +5883,25 @@
         {
           "id": "all",
           "name": "All opportunities",
-          "icon": "🔄",
+          "icon": "",
           "count": 9
         },
         {
           "id": "events",
           "name": "Events",
-          "icon": "📅",
+          "icon": "",
           "count": 3
         },
         {
           "id": "clubs",
           "name": "Clubs",
-          "icon": "👥",
+          "icon": "",
           "count": 3
         },
         {
           "id": "projects",
           "name": "Projects",
-          "icon": "🚀",
+          "icon": "",
           "count": 3
         }
       ]

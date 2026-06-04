@@ -16,7 +16,7 @@ export const clubsFallbackData = [
     title_en: 'Medical Volunteer Squad',
     description_ru: 'Помощь медицинским учреждениям и проведение health-check мероприятий.',
     category: 'medical',
-    image: '🩺',
+    image: null,
     members: 45
   },
   {
@@ -25,7 +25,7 @@ export const clubsFallbackData = [
     title_en: 'Scientific Student Society',
     description_ru: 'Исследования, конференции и научные публикации для студентов.',
     category: 'academic',
-    image: '🔬',
+    image: null,
     members: 30
   }
 ];

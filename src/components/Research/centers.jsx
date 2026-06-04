@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Building2, User, Settings, BookOpen, Globe, Mail, Phone, AlertTriangle } from 'lucide-react';
 import researchService from '../../services/researchService';
 
 const Centers = () => {
@@ -78,7 +79,7 @@ const Centers = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl text-gray-400 mb-4">⚠️</div>
+          <div className="mb-4"><AlertTriangle className="w-16 h-16 text-gray-400 mx-auto" /></div>
           <p className="text-xl text-red-600 mb-4">{error}</p>
           <button
             onClick={fetchCenters}
@@ -122,7 +123,7 @@ const Centers = () => {
                 {/* Верхняя часть с логотипом и названием */}
                 <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="text-4xl">🏥</div>
+                    <Building2 className="w-10 h-10 text-white" />
                     <div className="text-right">
                       <span className="text-sm bg-white/20 px-3 py-1 rounded-full">
                         {center.staff_count} {t('research.centers.staffCount')}
@@ -137,7 +138,7 @@ const Centers = () => {
                 <div className="p-6">
                   {/* Руководитель */}
                   <div className="flex items-center mb-6 p-4 bg-gray-50 rounded-lg">
-                    <div className="text-3xl mr-4">👨‍⚕️</div>
+                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4"><User className="w-6 h-6 text-blue-600" /></div>
                     <div>
                       <h4 className="font-semibold text-gray-800">{getDirectorName(center)}</h4>
                       <p className="text-sm text-gray-600">{t('research.centers.positions.professor')}</p>
@@ -147,7 +148,7 @@ const Centers = () => {
                   {/* Оборудование */}
                   <div className="mb-6">
                     <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
-                      <span className="mr-2">⚙️</span>
+                      <Settings className="w-5 h-5 mr-2 text-gray-500" />
                       {t('research.centers.equipmentTitle')}
                     </h4>
                     <div className="space-y-2">
@@ -178,7 +179,7 @@ const Centers = () => {
                     onClick={() => setSelectedCenter(center)}
                     className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   >
-                    📚 {t('research.centers.viewDetails')}
+                    <BookOpen className="w-5 h-5 mr-2 inline" /> {t('research.centers.viewDetails')}
                   </button>
                 </div>
               </div>
@@ -213,7 +214,7 @@ const Centers = () => {
                       {t('research.centers.director')}
                     </h3>
                     <div className="flex items-center">
-                      <div className="text-4xl mr-4">👨‍⚕️</div>
+                      <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4"><User className="w-6 h-6 text-blue-600" /></div>
                       <div>
                         <p className="font-semibold">{getDirectorName(selectedCenter)}</p>
                         <p className="text-sm text-gray-600">{t('research.centers.positions.professor')}</p>
@@ -242,7 +243,7 @@ const Centers = () => {
                     <div className="space-y-2">
                       {selectedCenter.website && (
                         <div className="flex items-center">
-                          <span className="text-blue-600 mr-2">🌐</span>
+                          <Globe className="w-5 h-5 text-blue-600 mr-2" />
                           <a href={selectedCenter.website} target="_blank" rel="noopener noreferrer" 
                              className="text-blue-600 hover:text-blue-800 underline">
                             {selectedCenter.website}
@@ -251,7 +252,7 @@ const Centers = () => {
                       )}
                       {selectedCenter.email && (
                         <div className="flex items-center">
-                          <span className="text-blue-600 mr-2">📧</span>
+                          <Mail className="w-5 h-5 text-blue-600 mr-2" />
                           <a href={`mailto:${selectedCenter.email}`} 
                              className="text-blue-600 hover:text-blue-800">
                             {selectedCenter.email}
@@ -260,7 +261,7 @@ const Centers = () => {
                       )}
                       {selectedCenter.phone && (
                         <div className="flex items-center">
-                          <span className="text-blue-600 mr-2">📞</span>
+                          <Phone className="w-5 h-5 text-blue-600 mr-2" />
                           <span className="text-gray-700">{selectedCenter.phone}</span>
                         </div>
                       )}

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Calendar, MapPin, Clock, Users } from 'lucide-react';
 
-const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/proxy-backend';
 
 const NewsEvents = () => {
   const { t, i18n } = useTranslation();
@@ -78,25 +78,25 @@ const NewsEvents = () => {
 
   const getCategoryColor = (category) => {
     switch(category) {
-      case 'conference': return 'bg-blue-100 text-blue-800';
-      case 'open-day': return 'bg-green-100 text-green-800';
-      case 'competition': return 'bg-purple-100 text-purple-800';
-      case 'ceremony': return 'bg-yellow-100 text-yellow-800';
-      case 'workshop': return 'bg-pink-100 text-pink-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'conference': return 'bg-sky-50 text-[#144272]';
+      case 'open-day': return 'bg-teal-50 text-[#1B4242]';
+      case 'competition': return 'bg-slate-100 text-[#205295]';
+      case 'ceremony': return 'bg-amber-50 text-[#0A2647]';
+      case 'workshop': return 'bg-cyan-50 text-[#0891b2]';
+      default: return 'bg-gray-100 text-[#334155]';
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-green-600 to-green-800 text-white py-16">
+      <div className="bg-gradient-to-r from-[#0A2647] to-[#144272] text-white py-16">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               {t('newsanon.title')}
             </h1>
-            <p className="text-xl text-green-100 max-w-2xl mx-auto">
+            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
               {t('newsanon.subtitle')}
             </p>
           </div>
@@ -108,30 +108,30 @@ const NewsEvents = () => {
         <div className="flex flex-wrap justify-center gap-2 mb-8">
           <button
             onClick={() => setFilter('upcoming')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
+            className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
               filter === 'upcoming'
-                ? 'bg-green-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-green-50'
+                ? 'bg-[#0A2647] text-white'
+                : 'bg-white text-[#334155] hover:bg-slate-50 border border-slate-200'
             }`}
           >
             {t('newsanon.filters.upcoming')}
           </button>
           <button
             onClick={() => setFilter('past')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
+            className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
               filter === 'past'
-                ? 'bg-green-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-green-50'
+                ? 'bg-[#0A2647] text-white'
+                : 'bg-white text-[#334155] hover:bg-slate-50 border border-slate-200'
             }`}
           >
             {t('newsanon.filters.past')}
           </button>
           <button
             onClick={() => setFilter('all')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
+            className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
               filter === 'all'
-                ? 'bg-green-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-green-50'
+                ? 'bg-[#0A2647] text-white'
+                : 'bg-white text-[#334155] hover:bg-slate-50 border border-slate-200'
             }`}
           >
             {t('newsanon.filters.all')}
@@ -160,7 +160,7 @@ const NewsEvents = () => {
               {event.image_url ? (
                 <div className="relative">
                   <img 
-                    src={event.image_url?.startsWith('http') ? event.image_url : `https://su-med-backend-35d3d951c74b.herokuapp.com${event.image_url}`} 
+                    src={event.image_url?.startsWith('http') ? event.image_url : `${import.meta.env.VITE_MEDIA_BASE_URL || '/media'}${event.image_url}`} 
                     alt={event.title}
                     className="w-full h-48 object-cover"
                   />
@@ -229,7 +229,7 @@ const NewsEvents = () => {
                 <div className="flex justify-between items-center">
                   <Link 
                     to={`/news/detail/${event.slug}`}
-                    className="text-green-600 hover:text-green-800 font-semibold text-sm transition-colors"
+                    className="text-[#144272] hover:text-[#0A2647] font-semibold text-sm transition-colors"
                   >
                     {t('newsanon.readMore')} →
                   </Link>

@@ -169,10 +169,10 @@ export const managementConfig = {
     duration: 5000,
     showProgress: true,
     types: {
-      success: { color: '#10B981', icon: '✅' },
-      error: { color: '#EF4444', icon: '❌' },
-      warning: { color: '#F59E0B', icon: '⚠️' },
-      info: { color: '#3B82F6', icon: 'ℹ️' }
+      success: { color: '#10B981', icon: '' },
+      error: { color: '#EF4444', icon: '' },
+      warning: { color: '#F59E0B', icon: '' },
+      info: { color: '#3B82F6', icon: 'ℹ' }
     }
   },
 

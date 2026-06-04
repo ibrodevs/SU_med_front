@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
+      "source": "/proxy-backend/research/(.*)",
+      "destination": "https://med-backend-d61c905599c2.herokuapp.com/research/$1"
+    },
+    {
       "source": "/proxy-backend/(.*)",
-      "destination": "https://su-med-backend-35d3d951c74b.herokuapp.com/api/$1"
+      "destination": "https://med-backend-d61c905599c2.herokuapp.com/api/$1"
     },
     {
       "source": "/api/news",

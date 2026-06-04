@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { Stethoscope, Activity, Pill, Eye } from 'lucide-react';
 
 const ProgramCards = () => {
   const { t, i18n } = useTranslation();
@@ -11,7 +12,7 @@ const ProgramCards = () => {
   const programs = [
     {
       id: 1,
-      icon: '💉',
+      icon: <Stethoscope className="w-12 h-12 text-blue-600" />,
       titleKey: 'programs.generalMedicine.title',
       levelKey: 'programs.levels.bachelor',
       durationKey: 'programs.durations.fourYears',
@@ -21,7 +22,7 @@ const ProgramCards = () => {
     },
     {
       id: 2,
-      icon: '🦷',
+      icon: <Activity className="w-12 h-12 text-teal-600" />,
       titleKey: 'programs.dentistry.title',
       levelKey: 'programs.levels.bachelor',
       durationKey: 'programs.durations.fiveYears',
@@ -31,7 +32,7 @@ const ProgramCards = () => {
     },
     {
       id: 3,
-      icon: '💊',
+      icon: <Pill className="w-12 h-12 text-indigo-600" />,
       titleKey: 'programs.pharmacy.title',
       levelKey: 'programs.levels.bachelor',
       durationKey: 'programs.durations.fourYears',
@@ -41,7 +42,7 @@ const ProgramCards = () => {
     },
     {
       id: 4,
-      icon: '👁️',
+      icon: <Eye className="w-12 h-12 text-violet-600" />,
       titleKey: 'programs.medicalOptics.title',
       levelKey: 'programs.levels.master',
       durationKey: 'programs.durations.twoYears',
@@ -112,7 +113,7 @@ const ProgramCards = () => {
                 <div className={`absolute inset-0 opacity-0 transition-opacity duration-500 ${isHovered === program.id ? 'opacity-10' : ''} ${program.bgColor}`}></div>
 
                 {/* Иконка с анимацией */}
-                <div className={`text-5xl mb-6 transform transition-all duration-500 ${isHovered === program.id ? 'scale-110 rotate-6' : ''}`}>
+                <div className={`flex mb-6 transform transition-all duration-500 ${isHovered === program.id ? 'scale-110 rotate-6' : ''}`}>
                   {program.icon}
                 </div>
 
@@ -155,7 +156,7 @@ const ProgramCards = () => {
               {programs.map((program) => (
                 <div key={program.id} className="w-full flex-shrink-0 px-4">
                   <div className={`rounded-2xl overflow-hidden shadow-xl p-6 ${program.bgColor} border border-white`}>
-                    <div className="text-5xl mb-6 text-center transform transition-transform duration-500" style={{ transform: `scale(${activeIndex === program.id - 1 ? 1.1 : 1})` }}>
+                    <div className="flex justify-center mb-6 transform transition-transform duration-500" style={{ transform: `scale(${activeIndex === program.id - 1 ? 1.1 : 1})` }}>
                       {program.icon}
                     </div>
 

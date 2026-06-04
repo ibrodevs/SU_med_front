@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AlertTriangle, ClipboardList, Crown, Check } from 'lucide-react';
 import aboutService from '../../services/aboutService';
 
 const Founders = () => {
@@ -68,7 +69,7 @@ const Founders = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-white to-blue-50 py-8 px-4 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-500 text-2xl mb-4">⚠️</div>
+          <div className="text-red-500 flex justify-center mb-4"><AlertTriangle className="w-12 h-12" /></div>
           <p className="text-gray-600 mb-4">{t('common.error', 'Error loading data')}</p>
           <p className="text-sm text-gray-500">{error}</p>
         </div>
@@ -81,7 +82,7 @@ const Founders = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-white to-blue-50 py-8 px-4 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-gray-400 text-2xl mb-4">📋</div>
+          <div className="text-gray-400 flex justify-center mb-4"><ClipboardList className="w-12 h-12" /></div>
           <p className="text-gray-600">{t('founders.noData', 'No founders data available')}</p>
         </div>
       </div>
@@ -159,8 +160,8 @@ const Founders = () => {
                       alt={currentFounder.name || ''}
                       className="w-32 h-32 rounded-full object-cover border-4 border-blue-100 shadow-lg"
                     />
-                    <div className="absolute -bottom-2 -right-2 bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
-                      <span className="text-sm">👑</span>
+                    <div className="absolute -bottom-2 -right-2 bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+                      <Crown className="w-4 h-4" />
                     </div>
                   </div>
                 </div>
@@ -183,7 +184,7 @@ const Founders = () => {
               {/* Достижения */}
               <div className="space-y-6">
                 <h3 className="text-xl font-bold text-gray-800 flex items-center">
-                  <span className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 text-sm">✓</span>
+                  <span className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2"><Check className="w-4 h-4" /></span>
                   {t('founders.achievementsTitle')}
                 </h3>
 

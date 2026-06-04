@@ -2,14 +2,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { 
-  RocketLaunchIcon, 
-  AcademicCapIcon, 
-  BeakerIcon, 
-  UserGroupIcon, 
-  SparklesIcon,
-  CpuChipIcon,
-  LanguageIcon
-} from '@heroicons/react/24/outline';
+  Rocket, 
+  GraduationCap, 
+  FlaskConical, 
+  Users, 
+  Sparkles,
+  Cpu,
+  Languages
+} from 'lucide-react';
 
 const LearningGoals = () => {
   const { t } = useTranslation();
@@ -34,10 +34,10 @@ const LearningGoals = () => {
   };
 
   const objectives = [
-    { icon: CpuChipIcon, key: 'effective', color: 'bg-blue-500' },
-    { icon: RocketLaunchIcon, key: 'dual', color: 'bg-indigo-500' },
-    { icon: LanguageIcon, key: 'multilingual', color: 'bg-purple-500' },
-    { icon: BeakerIcon, key: 'hybrid', color: 'bg-pink-500' }
+    { icon: Cpu, key: 'effective', color: 'bg-[#0A2647]' },
+    { icon: Rocket, key: 'dual', color: 'bg-[#144272]' },
+    { icon: Languages, key: 'multilingual', color: 'bg-[#205295]' },
+    { icon: FlaskConical, key: 'hybrid', color: 'bg-[#2C7865]' }
   ];
 
   return (
@@ -55,7 +55,7 @@ const LearningGoals = () => {
           <h1 className="text-4xl md:text-6xl font-black text-slate-900 mb-6">
             {t('learningGoals.title')}
           </h1>
-          <div className="w-32 h-2 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto rounded-full"></div>
+          <div className="w-32 h-2 bg-gradient-to-r from-[#0A2647] to-[#144272] mx-auto rounded-full"></div>
         </motion.div>
 
         {/* Mission Statement */}
@@ -66,10 +66,10 @@ const LearningGoals = () => {
           className="max-w-4xl mx-auto bg-white rounded-[2rem] p-10 shadow-2xl shadow-blue-900/5 mb-20 border border-slate-100 relative overflow-hidden"
         >
           <div className="absolute top-0 right-0 p-8 opacity-5">
-            <SparklesIcon className="w-32 h-32 text-blue-600" />
+            <Sparkles className="w-32 h-32 text-blue-600" />
           </div>
           <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-            <AcademicCapIcon className="w-8 h-8 text-blue-600" />
+            <GraduationCap className="w-8 h-8 text-[#0A2647]" />
             {t('learningGoals.mission.title')}
           </h2>
           <p className="text-xl text-slate-600 leading-relaxed italic">
@@ -94,10 +94,10 @@ const LearningGoals = () => {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ y: -10 }}
-                className="bg-white p-8 rounded-3xl shadow-lg border border-slate-50 hover:shadow-2xl transition-all duration-300 group"
+                className="bg-white p-8 rounded-xl shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 group"
               >
-                <div className={`w-14 h-14 ${obj.color} rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:rotate-6 transition-transform`}>
-                  <obj.icon className="w-8 h-8 text-white" />
+                <div className={`w-14 h-14 ${obj.color} rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
+                  <obj.icon className="w-7 h-7 text-white" />
                 </div>
                 <p className="text-slate-700 font-semibold leading-snug">
                   {t(`learningGoals.objectives.${obj.key}`)}
@@ -114,7 +114,7 @@ const LearningGoals = () => {
           className="mt-24 text-center"
         >
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-blue-100 text-blue-800 rounded-full font-bold text-sm">
-            <UserGroupIcon className="w-5 h-5" />
+            <Users className="w-5 h-5" />
             <span>Ориентация на результат и успех студентов</span>
           </div>
         </motion.div>

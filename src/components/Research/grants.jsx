@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Star, Target, CalendarDays, CheckCircle2, ClipboardList, X } from 'lucide-react';
 import researchService from '../../services/researchService';
 
 // Константы для переиспользования
 const SECTION_CONFIG = {
-  all: { icon: '🌟', gradient: 'from-blue-50 to-indigo-50' },
-  active: { icon: '🎯', gradient: 'from-green-50 to-emerald-50' },
-  upcoming: { icon: '📅', gradient: 'from-blue-50 to-indigo-50' },
-  closed: { icon: '✅', gradient: 'from-gray-50 to-slate-50' }
+  all: { icon: Star, gradient: 'from-blue-50 to-indigo-50' },
+  active: { icon: Target, gradient: 'from-slate-50 to-teal-50' },
+  upcoming: { icon: CalendarDays, gradient: 'from-blue-50 to-indigo-50' },
+  closed: { icon: CheckCircle2, gradient: 'from-gray-50 to-slate-50' }
 };
 
 const STATUS_CONFIG = {
@@ -32,10 +33,10 @@ const Grants = () => {
 
   // Мемоизированные секции
   const sections = useMemo(() => [
-    { id: 'all', name: t('research.grants.tabs.all'), icon: '🌟' },
-    { id: 'active', name: t('research.grants.tabs.active'), icon: '🎯' },
-    { id: 'upcoming', name: t('research.grants.tabs.upcoming'), icon: '📅' },
-    { id: 'closed', name: t('research.grants.tabs.closed'), icon: '✅' }
+    { id: 'all', name: t('research.grants.tabs.all'), icon: Star },
+    { id: 'active', name: t('research.grants.tabs.active'), icon: Target },
+    { id: 'upcoming', name: t('research.grants.tabs.upcoming'), icon: CalendarDays },
+    { id: 'closed', name: t('research.grants.tabs.closed'), icon: CheckCircle2 }
   ], [t]);
 
   // Получение данных
@@ -119,7 +120,7 @@ const Grants = () => {
     
     const cardClasses = {
       default: "bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg",
-      active: "bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100 hover:shadow-lg",
+      active: "bg-gradient-to-br from-slate-50 to-teal-50 rounded-xl p-6 border border-slate-200 hover:shadow-lg",
       upcoming: "bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-lg",
       closed: "bg-gradient-to-br from-gray-50 to-slate-50 rounded-xl p-6 border border-gray-100 hover:shadow-lg"
     };
@@ -203,7 +204,7 @@ const Grants = () => {
   const SectionHeader = ({ section }) => (
     <div className="flex items-center mb-6">
       <div className="p-3 bg-blue-100 rounded-xl mr-4">
-        <span className="text-2xl">{SECTION_CONFIG[section].icon}</span>
+        {(() => { const IconComp = SECTION_CONFIG[section].icon; return <IconComp className="w-7 h-7 text-blue-600" />; })()}
       </div>
       <h2 className="text-3xl font-bold text-gray-900">
         {t(`research.grants.tabs.${section}`)}
@@ -232,7 +233,7 @@ const Grants = () => {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">📋</span>
+            <ClipboardList className="w-7 h-7 text-blue-600" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {getFieldByLanguage(grant, 'title')}
@@ -240,9 +241,10 @@ const Grants = () => {
         </div>
         <button
           onClick={() => setSelectedGrant(null)}
-          className="text-gray-500 hover:text-gray-700 text-2xl"
+          className="text-gray-500 hover:text-gray-700"
+          aria-label="Close"
         >
-          ✕
+          <X className="w-6 h-6" />
         </button>
       </div>
 
@@ -380,7 +382,7 @@ const Grants = () => {
                         onClick={() => changeActiveSection(section.id)}
                       >
                         <div className="flex items-center">
-                          <span className="text-lg mr-3">{section.icon}</span>
+                          {(() => { const IconComp = section.icon; return <IconComp className="w-5 h-5 mr-3" />; })()}
                           {section.name}
                         </div>
                         <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
