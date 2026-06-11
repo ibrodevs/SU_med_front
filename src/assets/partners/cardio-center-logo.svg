@@ -1,10 +1,8 @@
-<svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
-  <rect width="120" height="60" fill="#DC2626" rx="8"/>
-  <g fill="white">
-    <path d="M20 30 C20 20, 30 15, 30 25 C30 15, 40 20, 40 30 C40 40, 30 45, 30 35 C30 45, 20 40, 20 30 Z"/>
+<svg width="148" height="56" viewBox="0 0 148 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="8" y="8" width="40" height="40" rx="12" fill="#DC2626"/>
+  <g transform="translate(4,0)">
+    <path d="M24 37 C14 29 16 19 24 24 C32 19 34 29 24 37 Z" fill="#ffffff"/>
+    <path d="M16 27.5 h4 l1.8 -3 l2.6 6 l1.8 -3 h5" fill="none" stroke="#DC2626" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
-  <text x="45" y="20" fill="white" font-family="Arial, sans-serif" font-size="8" font-weight="bold">НЦК</text>
-  <text x="45" y="30" fill="white" font-family="Arial, sans-serif" font-size="5">Национальный</text>
-  <text x="45" y="37" fill="white" font-family="Arial, sans-serif" font-size="5">центр</text>
-  <text x="45" y="44" fill="white" font-family="Arial, sans-serif" font-size="5">кардиологии</text>
+  <text x="60" y="36" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="23" font-weight="700" fill="#B91C1C" letter-spacing="0.5">НЦК</text>
 </svg>

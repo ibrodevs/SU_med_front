@@ -1,17 +1,21 @@
 // API функции для работы с системой менеджмента качества
-const API_BASE_URL = 'http://localhost:8000/api';
+// Запросы идут через тот же origin (Vite-прокси /proxy-backend), чтобы не упираться в CORS.
+import { buildApiUrl } from '../config/api';
+
+const qfetch = async (path, params = {}) => {
+  const response = await fetch(buildApiUrl(path, params));
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return response.json();
+};
 
 /**
  * Получить все данные системы менеджмента качества
  */
 export const getQualityManagementSystem = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/hsm/quality/system/`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
+    return await qfetch('/hsm/quality/system/');
   } catch (error) {
     console.error('Ошибка получения данных системы качества:', error);
     throw error;
@@ -23,12 +27,7 @@ export const getQualityManagementSystem = async () => {
  */
 export const getQualitySettings = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/hsm/quality/settings/`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
+    return await qfetch('/hsm/quality/settings/');
   } catch (error) {
     console.error('Ошибка получения настроек системы качества:', error);
     throw error;
@@ -40,11 +39,7 @@ export const getQualitySettings = async () => {
  */
 export const getQualityPrinciples = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/hsm/quality/principles/`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
+    const data = await qfetch('/hsm/quality/principles/');
     return data.results || data;
   } catch (error) {
     console.error('Ошибка получения принципов качества:', error);
@@ -57,16 +52,7 @@ export const getQualityPrinciples = async () => {
  */
 export const getQualityDocuments = async (category = null) => {
   try {
-    let url = `${API_BASE_URL}/hsm/quality/documents/`;
-    if (category) {
-      url += `?category=${category}`;
-    }
-
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
+    const data = await qfetch('/hsm/quality/documents/', category ? { category } : {});
     return data.results || data;
   } catch (error) {
     console.error('Ошибка получения документов качества:', error);
@@ -79,12 +65,7 @@ export const getQualityDocuments = async (category = null) => {
  */
 export const getQualityDocumentsByCategory = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/hsm/quality/documents/by_category/`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
+    return await qfetch('/hsm/quality/documents/by_category/');
   } catch (error) {
     console.error('Ошибка получения документов по категориям:', error);
     throw error;
@@ -96,11 +77,7 @@ export const getQualityDocumentsByCategory = async () => {
  */
 export const getQualityProcessGroups = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/hsm/quality/process-groups/`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
+    const data = await qfetch('/hsm/quality/process-groups/');
     return data.results || data;
   } catch (error) {
     console.error('Ошибка получения групп процессов качества:', error);
@@ -113,16 +90,7 @@ export const getQualityProcessGroups = async () => {
  */
 export const getQualityProcesses = async (groupId = null) => {
   try {
-    let url = `${API_BASE_URL}/hsm/quality/processes/`;
-    if (groupId) {
-      url += `?group=${groupId}`;
-    }
-
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
+    const data = await qfetch('/hsm/quality/processes/', groupId ? { group: groupId } : {});
     return data.results || data;
   } catch (error) {
     console.error('Ошибка получения процессов качества:', error);
@@ -135,11 +103,7 @@ export const getQualityProcesses = async (groupId = null) => {
  */
 export const getQualityStatistics = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/hsm/quality/statistics/`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
+    const data = await qfetch('/hsm/quality/statistics/');
     return data.results || data;
   } catch (error) {
     console.error('Ошибка получения статистики качества:', error);
@@ -152,11 +116,7 @@ export const getQualityStatistics = async () => {
  */
 export const getQualityAdvantages = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/hsm/quality/advantages/`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
+    const data = await qfetch('/hsm/quality/advantages/');
     return data.results || data;
   } catch (error) {
     console.error('Ошибка получения преимуществ качества:', error);
@@ -169,7 +129,7 @@ export const getQualityAdvantages = async () => {
  */
 export const incrementDocumentDownload = async (documentId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/hsm/quality/documents/${documentId}/download/`, {
+    const response = await fetch(buildApiUrl(`/hsm/quality/documents/${documentId}/download/`), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -180,8 +140,7 @@ export const incrementDocumentDownload = async (documentId) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Ошибка увеличения счетчика скачиваний:', error);
     throw error;

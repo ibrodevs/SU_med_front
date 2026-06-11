@@ -207,17 +207,14 @@ const AcadOp = () => {
         </div>
 
         {/* Статистика */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
           {statistics.map((stat, index) => (
             <div
               key={index}
-              className={`${stat.color} rounded-lg p-6 text-white shadow-lg transform transition-all duration-500 text-center`}
-              style={{
-                animationDelay: `${index * 100}ms`,
-              }}
+              className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 text-center"
             >
-              <div className="text-3xl font-bold mb-2">{stat.value}</div>
-              <div className="text-sm opacity-90">{stat.label}</div>
+              <div className="text-3xl font-bold text-[#0A2647] mb-1">{stat.value}</div>
+              <div className="text-sm text-slate-500">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -305,110 +302,33 @@ const AcadOp = () => {
               {/* Сетка возможностей */}
               <div className="space-y-6">
                 {filteredData.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {filteredData.map((opportunity, index) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    {filteredData.map((opportunity) => (
                       <div
                         key={opportunity.id}
-                        className="bg-white rounded-lg shadow-md overflow-hidden border border-slate-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-                        style={{ animationDelay: `${index * 100}ms` }}
+                        className="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-300 p-6 flex flex-col"
                       >
-                        {/* Заголовок карточки */}
-                        <div
-                          className={`${opportunity.color} p-6 text-white relative overflow-hidden`}
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center text-[#0A2647] flex-shrink-0">
+                            {opportunity.icon === 'globe' ? <Globe className="w-6 h-6" /> : <GraduationCap className="w-6 h-6" />}
+                          </div>
+                          <h3 className="text-lg font-bold text-slate-900 leading-snug">
+                            {opportunity.title}
+                          </h3>
+                        </div>
+
+                        <p className="text-slate-500 text-sm leading-relaxed mb-5">
+                          {opportunity.description}
+                        </p>
+
+                        <button
+                          className="mt-auto w-full bg-[#0A2647] text-white py-2.5 rounded-lg font-medium text-sm transition-colors duration-200 hover:bg-[#144272] flex items-center justify-center"
                         >
-                          <div className="flex items-center mb-4">
-                            <div className="mr-4 bg-white/20 rounded-lg w-12 h-12 flex items-center justify-center shadow-lg">
-                              {opportunity.icon === 'globe' ? <Globe className="w-6 h-6 text-white" /> : <GraduationCap className="w-6 h-6 text-white" />}
-                            </div>
-                            <div className="flex-1">
-                              <div className="flex items-center justify-between">
-                                <h3 className="text-lg font-bold">
-                                  {opportunity.title}
-                                </h3>
-                                {opportunity.popular && (
-                                  <span className="bg-amber-500 text-white text-xs px-2 py-1 rounded-full font-bold">
-                                    {t("acadop.opportunities.popularBadge", "Популярно")}
-                                  </span>
-                                )}
-                              </div>
-                              <div className="flex items-center text-white/80 text-sm mt-1">
-                                <svg
-                                  className="w-4 h-4 mr-1"
-                                  fill="currentColor"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
-                                </svg>
-                                <span>
-                                  {opportunity.students}{" "}
-                                  {t("acadop.opportunities.students", "студентов")}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Статус */}
-                          <div className="flex items-center">
-                            <div
-                              className={`w-2 h-2 rounded-full mr-2 ${opportunity.status === "available"
-                                  ? "bg-green-400"
-                                  : "bg-amber-500"
-                                }`}
-                            ></div>
-                            <span className="text-xs text-white/80 font-medium">
-                              {opportunity.status === "available"
-                                ? t("acadop.opportunities.status.available", "Доступно")
-                                : t("acadop.opportunities.status.comingSoon", "Скоро")}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Содержание */}
-                        <div className="p-6">
-                          <p className="text-gray-700 mb-4 leading-relaxed text-sm">
-                            {opportunity.description}
-                          </p>
-
-                          {/* Особенности */}
-                          <div className="mb-6">
-                            <h4 className="text-sm font-semibold text-gray-800 mb-3">
-                              {t("acadop.opportunities.featuresTitle", "Особенности")}
-                            </h4>
-                            <div className="space-y-2">
-                              {opportunity.features?.map((feature, idx) => (
-                                <div
-                                  key={idx}
-                                  className="flex items-center text-gray-600 text-sm"
-                                >
-                                  <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3"></div>
-                                  {feature}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* Кнопка доступа */}
-                          <button
-                            className={`w-full ${opportunity.color} text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:opacity-90 flex items-center justify-center group`}
-                          >
-                            <span className="flex items-center">
-                              {t("acadop.opportunities.detailsButton", "Подробнее")}
-                              <svg
-                                className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                                />
-                              </svg>
-                            </span>
-                          </button>
-                        </div>
+                          {t("acadop.opportunities.detailsButton", "Подробнее")}
+                          <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </button>
                       </div>
                     ))}
                   </div>

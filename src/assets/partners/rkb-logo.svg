@@ -1,11 +1,11 @@
-<svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
-  <rect width="120" height="60" fill="#E53E3E" rx="8"/>
-  <g fill="white">
-    <circle cx="30" cy="20" r="8"/>
-    <path d="M22 35 h16 v8 h-16 z"/>
-    <path d="M26 28 h8 v15 h-8 z"/>
+<svg width="146" height="56" viewBox="0 0 146 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="8" y="8" width="40" height="40" rx="12" fill="#0891B2"/>
+  <g transform="translate(4,0)">
+    <rect x="13" y="19" width="22" height="19" rx="1.5" fill="#ffffff"/>
+    <path d="M22.5 21.5 h3 v2.5 h2.5 v3 h-2.5 v2.5 h-3 v-2.5 h-2.5 v-3 h2.5 z" fill="#0891B2"/>
+    <rect x="16" y="31" width="3" height="3" fill="#0891B2"/>
+    <rect x="22.5" y="31" width="3" height="3" fill="#0891B2"/>
+    <rect x="29" y="31" width="3" height="3" fill="#0891B2"/>
   </g>
-  <text x="50" y="25" fill="white" font-family="Arial, sans-serif" font-size="10" font-weight="bold">РКБ</text>
-  <text x="50" y="38" fill="white" font-family="Arial, sans-serif" font-size="6">Республиканская</text>
-  <text x="50" y="47" fill="white" font-family="Arial, sans-serif" font-size="6">клиническая больница</text>
+  <text x="60" y="36" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="23" font-weight="700" fill="#0E7490" letter-spacing="0.5">РКБ</text>
 </svg>

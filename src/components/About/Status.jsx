@@ -104,7 +104,7 @@ const Status = () => {
   // Loading state
   if (loading) {
     return (
-      <div className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      <div className={`min-h-screen bg-slate-50 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}>
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
@@ -118,7 +118,7 @@ const Status = () => {
   // Error state
   if (error) {
     return (
-      <div className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      <div className={`min-h-screen bg-slate-50 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}>
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
@@ -156,15 +156,15 @@ const Status = () => {
   }
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+    <div className={`min-h-screen bg-slate-50 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}>
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
             {t("hsm.accreditations_title")}
           </h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+          <p className="text-lg text-slate-500 max-w-3xl mx-auto">
             {t("hsm.accreditations_description")}
           </p>
         </div>
@@ -172,8 +172,8 @@ const Status = () => {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Боковая навигация - фильтры */}
           <div className="lg:w-1/4">
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden sticky top-24">
+              <div className="bg-[#0A2647] px-5 py-4 text-white font-semibold">
                 {t("hsm.filter_by_type")}
               </div>
               <nav className="p-2">
@@ -181,9 +181,9 @@ const Status = () => {
                   {filtersList.map((filter) => (
                     <li key={filter.id}>
                       <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${activeFilter === filter.id
-                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                            : "text-gray-700 hover:bg-gray-100"
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 ${activeFilter === filter.id
+                            ? "bg-slate-100 text-[#0A2647] font-semibold"
+                            : "text-slate-600 hover:bg-slate-50"
                           }`}
                         onClick={() => changeFilter(filter.id)}
                       >
@@ -202,7 +202,7 @@ const Status = () => {
           <div className="lg:w-3/4">
             {/* Сетка аккредитаций */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              {filteredData.map((item, index) => {
+              {filteredData.map((item) => {
                 const styles = getAccreditationStyles(item.accreditation_type);
                 const displayData = getDisplayData(item, i18n.language);
                 const issueYear = new Date(item.issue_date).getFullYear();
@@ -214,26 +214,26 @@ const Status = () => {
                 return (
                   <div
                     key={item.id}
-                    className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                    className="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all duration-300"
                   >
-                    {/* Верхняя часть с градиентом */}
-                    <div className={`bg-gradient-to-r ${styles.color} p-6 text-white`}>
+                    {/* Верхняя часть */}
+                    <div className="p-6 border-b border-slate-100">
                       <div className="flex items-center justify-between mb-4">
-                        <div className={`bg-white/20 rounded-2xl w-16 h-16 flex items-center justify-center backdrop-blur-sm`}>
-                          {(() => { const LogoIcon = styles.logo; return <LogoIcon className="w-8 h-8 text-white" />; })()}
+                        <div className="bg-slate-100 rounded-xl w-14 h-14 flex items-center justify-center">
+                          {(() => { const LogoIcon = styles.logo; return <LogoIcon className="w-7 h-7 text-[#0A2647]" />; })()}
                         </div>
-                        <span className={`px-3 py-1 rounded-full text-sm font-bold backdrop-blur-sm ${item.is_valid
-                            ? "bg-green-500/20 text-green-100 border border-green-400/30"
-                            : "bg-rose-500/20 text-rose-100 border border-rose-400/30"
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${item.is_valid
+                            ? "bg-green-50 text-green-700 border border-green-200"
+                            : "bg-rose-50 text-rose-700 border border-rose-200"
                           }`}>
                           {status}
                         </span>
                       </div>
 
-                      <h3 className="text-xl font-bold leading-tight mb-2">
+                      <h3 className="text-lg font-bold text-slate-900 leading-snug mb-1">
                         {displayData.name}
                       </h3>
-                      <div className="flex items-center text-white/90 text-sm">
+                      <div className="flex items-center text-slate-500 text-sm">
                         <span>{issueYear}</span>
                         <span className="mx-2">•</span>
                         <span>{displayData.typeDisplay}</span>
@@ -259,19 +259,19 @@ const Status = () => {
 
                       {/* Детальная информация */}
                       <div className="grid grid-cols-2 gap-3 mb-4">
-                        <div className="bg-gray-50 rounded-lg p-3">
-                          <div className="text-xs text-gray-500 font-semibold mb-1">
+                        <div className="bg-slate-50 border border-slate-100 rounded-lg p-3">
+                          <div className="text-xs text-slate-500 font-semibold mb-1">
                             {t("hsm.validity_period")}
                           </div>
-                          <div className="text-sm font-semibold text-gray-800">
+                          <div className="text-sm font-semibold text-slate-800">
                             {validityPeriod}
                           </div>
                         </div>
-                        <div className="bg-gray-50 rounded-lg p-3">
-                          <div className="text-xs text-gray-500 font-semibold mb-1">
+                        <div className="bg-slate-50 border border-slate-100 rounded-lg p-3">
+                          <div className="text-xs text-slate-500 font-semibold mb-1">
                             {t("hsm.certificate_number")}
                           </div>
-                          <div className="text-sm font-semibold text-gray-800">
+                          <div className="text-sm font-semibold text-slate-800">
                             {item.certificate_number || t("hsm.not_specified")}
                           </div>
                         </div>
@@ -305,15 +305,15 @@ const Status = () => {
             </div>
 
             {/* Дополнительная информация */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 md:p-8">
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">
                   {t("hsm.quality_first")}
                 </h3>
-                <p className="text-gray-700 mb-6 leading-relaxed">
+                <p className="text-slate-600 mb-6 leading-relaxed max-w-3xl mx-auto">
                   {t("hsm.quality_description")}
                 </p>
-                <div className="flex flex-wrap justify-center gap-6">
+                <div className="flex flex-wrap justify-center gap-3">
                   {[
                     t("hsm.international_standards"),
                     t("hsm.modern_methods"),
@@ -322,10 +322,10 @@ const Status = () => {
                   ].map((item, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center text-gray-700 bg-blue-50 px-4 py-2 rounded-full"
+                      className="flex items-center text-slate-700 bg-slate-50 border border-slate-200 px-4 py-2 rounded-full"
                     >
                       <svg
-                        className="w-5 h-5 text-green-500 mr-2"
+                        className="w-5 h-5 text-[#0A2647] mr-2"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >

@@ -6,7 +6,6 @@ import { fetchOfficialContent } from "../services/officialContentService";
 
 const Footer = () => {
   const { i18n, t } = useTranslation();
-  const [email, setEmail] = useState("");
   const [content, setContent] = useState(() => getOfficialContent(i18n.language).footer);
 
   useEffect(() => {
@@ -17,12 +16,6 @@ const Footer = () => {
       }
     });
   }, [i18n.language]);
-
-  const handleSubscribe = (event) => {
-    event.preventDefault();
-    alert(t("footer.subscriptionAlert", { email }));
-    setEmail("");
-  };
 
   const socials = [
     { icon: <Facebook className="w-4 h-4" />, url: "https://www.facebook.com/salymbekov.kg", name: "Facebook" },
@@ -64,7 +57,7 @@ const Footer = () => {
 
           <div>
             <h3 className="text-xl font-bold mb-4">{t("footer.socialTitle")}</h3>
-            <div className="flex space-x-3 mb-6">
+            <div className="flex space-x-3">
               {socials.map((social) => (
                 <a
                   key={social.name}
@@ -76,24 +69,6 @@ const Footer = () => {
                 </a>
               ))}
             </div>
-
-            <h3 className="text-xl font-bold mb-4">{t("footer.subscriptionTitle")}</h3>
-            <form onSubmit={handleSubscribe} className="flex flex-col space-y-2">
-              <input
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder={t("footer.emailPlaceholder")}
-                required
-                className="bg-[#144272] border border-[#205295] rounded px-3 py-2 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-[#0891b2]"
-              />
-              <button
-                type="submit"
-                className="bg-white text-[#0A2647] font-semibold py-2 px-4 rounded hover:bg-slate-100 transition-colors"
-              >
-                {t("footer.subscribeButton")}
-              </button>
-            </form>
           </div>
         </div>
 

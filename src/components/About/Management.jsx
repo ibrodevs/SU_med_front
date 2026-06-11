@@ -3,6 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { Award, GraduationCap, BarChart3, Building2, Users } from 'lucide-react';
 import { getManagement, getTeachers } from '../../services/teachers';
 
+const AVATAR_BG = '0A2647';
+const AVATAR_COLOR = 'ffffff';
+const buildAvatar = (name) =>
+  `https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'N')}&size=256&background=${AVATAR_BG}&color=${AVATAR_COLOR}&bold=true&format=png`;
+
 const Management = () => {
   const { t, i18n } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
@@ -36,12 +41,11 @@ const Management = () => {
     fetchData();
   }, []);
 
-const sections = [
-  { id: 'management', name: t('management.organizationTitle'), icon: Award },
-  { id: 'teachers', name: t('management.teachersTitle'), icon: GraduationCap },
-  { id: 'statistics', name: t('management.statistics'), icon: BarChart3 }
-];
-
+  const sections = [
+    { id: 'management', name: t('management.organizationTitle'), icon: Award },
+    { id: 'teachers', name: t('management.teachersTitle'), icon: GraduationCap },
+    { id: 'statistics', name: t('management.statistics'), icon: BarChart3 }
+  ];
 
   // Функция для получения локализованного текста
   const getLocalizedText = (obj, field) => {
@@ -55,31 +59,32 @@ const sections = [
   };
 
   const renderManagementContent = () => {
+    if (loading) {
+      return (
+        <div className="text-center py-16">
+          <div className="inline-block w-10 h-10 rounded-full border-2 border-slate-200 border-t-[#0A2647] animate-spin"></div>
+          <p className="mt-6 text-slate-500">{t('management.loadingStructure')}</p>
+        </div>
+      );
+    }
+
     if (!managementData) {
       return (
-        <div className="text-center py-12">
-          <div className="inline-block w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></div>
-          <p className="mt-6 text-gray-600 text-lg">{t('management.loadingStructure')}</p>
-
+        <div className="text-center py-16">
+          <p className="text-slate-500">{t('structure.leadership.notFound', 'Информация о руководстве отсутствует')}</p>
         </div>
       );
     }
 
     const transformApiData = (apiNode) => {
       if (!apiNode) return null;
-      
+      const fullName = getLocalizedText(apiNode, 'full_name');
       return {
         id: apiNode.id.toString(),
-        name: getLocalizedText(apiNode, 'position'),
-        type: 'administration',
-        head: getLocalizedText(apiNode, 'full_name'),
+        head: fullName,
         position: getLocalizedText(apiNode, 'position'),
-        email: `${getLocalizedText(apiNode, 'full_name').toLowerCase().replace(/\s+/g, '.')}@salymbekov.kg`,
-        phone: '+996 312 625-100',
-        experience: '15+ лет',
-        education: 'Высшее образование',
-        bio: getLocalizedText(apiNode, 'bio') || 'Опытный руководитель',
-        avatar: apiNode.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(getLocalizedText(apiNode, 'full_name'))}&size=400&background=3b82f6&color=fff&rounded=true`,
+        bio: getLocalizedText(apiNode, 'bio'),
+        avatar: apiNode.photo || buildAvatar(fullName),
         children: apiNode.children ? apiNode.children.map(transformApiData) : []
       };
     };
@@ -104,34 +109,46 @@ const sections = [
     const levels = buildLevels(organizationData);
 
     return (
-      <div className="space-y-8">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('management.organizationTitle')}</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">{t('management.organizationSubtitle')}</p>
+      <div>
+        <div className="mb-10 pb-6 border-b border-slate-100">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900">{t('management.organizationTitle')}</h2>
+          <p className="text-slate-500 mt-2">{t('management.organizationSubtitle')}</p>
         </div>
 
-        <div className="space-y-10">
+        <div className="space-y-8">
           {levels.map((nodes, levelIndex) => (
-            <div key={levelIndex} className="flex justify-center">
-              <div className="max-w-6xl w-full flex flex-wrap justify-center gap-6">
-                {nodes.map((member) => (
-                  <div 
-                    key={member.id}
-                    className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-all duration-300 w-80"
-                  >
-                    <div className="text-center">
-                      <div className="relative mb-4">
+            <div key={levelIndex}>
+              <div className="flex flex-wrap justify-center gap-5">
+                {nodes.map((member) => {
+                  const isHead = levelIndex === 0;
+                  return (
+                    <div
+                      key={member.id}
+                      className={`w-full sm:w-72 rounded-xl border p-6 transition-all duration-300 ${
+                        isHead
+                          ? 'bg-[#0A2647] border-[#0A2647] text-white shadow-md'
+                          : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-md'
+                      }`}
+                    >
+                      <div className="flex flex-col items-center text-center">
                         <img
                           src={member.avatar}
                           alt={member.head}
-                          className="w-24 h-24 rounded-full mx-auto border-4 border-white/80 shadow-lg object-cover"
+                          className={`w-20 h-20 rounded-full object-cover mb-4 ${
+                            isHead ? 'ring-2 ring-white/40' : 'ring-1 ring-slate-200'
+                          }`}
                         />
+                        <h3 className={`text-base font-bold mb-2 ${isHead ? 'text-white' : 'text-slate-900'}`}>
+                          {member.head}
+                        </h3>
+                        <span className={`block w-8 h-px mb-2 ${isHead ? 'bg-white/40' : 'bg-[#0A2647]/30'}`}></span>
+                        <p className={`text-sm ${isHead ? 'text-blue-100' : 'text-slate-500'}`}>
+                          {member.position}
+                        </p>
                       </div>
-                      <h3 className="text-xl font-bold mb-2">{member.head}</h3>
-                      <p className="text-blue-100 text-sm mb-3">{member.position}</p>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ))}
@@ -142,51 +159,49 @@ const sections = [
 
   const renderTeachersContent = () => {
     const renderTeacherCard = (teacher) => {
+      const name = getLocalizedText(teacher, 'full_name');
       const teacherData = {
-        id: teacher.id.toString(),
-        head: getLocalizedText(teacher, 'full_name'),
+        head: name,
         position: getLocalizedText(teacher, 'position'),
-        avatar: teacher.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(getLocalizedText(teacher, 'full_name'))}&size=400&background=16a085&color=fff&rounded=true`,
-        type: 'teacher'
+        avatar: teacher.photo || buildAvatar(name)
       };
 
       return (
-        <div 
-          key={teacher.id} 
-          className="bg-gradient-to-br from-teal-700 to-teal-800 rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl"
+        <div
+          key={teacher.id}
+          className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 transition-all duration-300 hover:shadow-md hover:border-slate-300"
         >
           <div className="text-center">
-            <div className="relative mb-4">
-              <img
-                src={teacherData.avatar}
-                alt={teacherData.head}
-                className="w-20 h-20 rounded-full mx-auto border-4 border-white/80 shadow-md object-cover"
-              />
-            </div>
-            <h3 className="text-lg font-bold text-white mb-2">{teacherData.head}</h3>
-            <p className="text-green-100 text-sm">{teacherData.position}</p>
+            <img
+              src={teacherData.avatar}
+              alt={teacherData.head}
+              className="w-20 h-20 rounded-full mx-auto ring-1 ring-slate-200 mb-3 object-cover"
+            />
+            <h3 className="text-base font-bold text-slate-900 mb-1">{teacherData.head}</h3>
+            <p className="text-slate-500 text-sm">{teacherData.position}</p>
           </div>
         </div>
       );
     };
 
     return (
-      <div className="space-y-6">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('management.teachersTitle')}</h2>
-          <p className="text-gray-600">{t('management.teachersSubtitle')}</p>
+      <div>
+        <div className="mb-10 pb-6 border-b border-slate-100">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900">{t('management.teachersTitle')}</h2>
+          <p className="text-slate-500 mt-2">{t('management.teachersSubtitle')}</p>
         </div>
-        
+
         {loading ? (
-          <div className="text-center py-12">
-            <div className="inline-block w-8 h-8 rounded-full bg-green-200/60 animate-pulse"></div>
+          <div className="text-center py-16">
+            <div className="inline-block w-10 h-10 rounded-full border-2 border-slate-200 border-t-[#0A2647] animate-spin"></div>
           </div>
         ) : teachersData.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {teachersData.map(teacher => renderTeacherCard(teacher))}
           </div>
         ) : (
-          <div className="text-center py-12">
+          <div className="text-center py-16">
+            <p className="text-slate-500">{t('management.teachersEmpty', 'Список преподавателей пока не заполнен')}</p>
           </div>
         )}
       </div>
@@ -195,48 +210,47 @@ const sections = [
 
   const renderStatisticsContent = () => {
     const statistics = [
-      { number: '150+', label: t('management.teachersCount'), icon: GraduationCap, color: 'from-blue-500 to-blue-600' },
-      { number: '15', label: t('management.departmentsCount'), icon: Building2, color: 'from-indigo-600 to-indigo-700' },
-      { number: '5', label: t('management.facultiesCount'), icon: GraduationCap, color: 'from-teal-600 to-teal-700' },
-      { number: '2000+', label: t('management.studentsCount'), icon: Users, color: 'from-blue-600 to-blue-700' }
+      { number: '150+', label: t('management.teachersCount'), icon: GraduationCap },
+      { number: '15', label: t('management.departmentsCount'), icon: Building2 },
+      { number: '5', label: t('management.facultiesCount'), icon: GraduationCap },
+      { number: '2000+', label: t('management.studentsCount'), icon: Users }
     ];
 
     return (
-      <div className="space-y-6">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('management.statistics')}</h2>
-          <p className="text-gray-600"> {t('management.statisticsSubtitle')} </p>
-
+      <div>
+        <div className="mb-10 pb-6 border-b border-slate-100">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900">{t('management.statistics')}</h2>
+          <p className="text-slate-500 mt-2">{t('management.statisticsSubtitle')}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
           {statistics.map((stat, index) => (
-            <div 
+            <div
               key={index}
-              className={`bg-gradient-to-br ${stat.color} rounded-xl p-6 text-white shadow-lg text-center`}
+              className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 text-center"
             >
-              <div className="mb-3 flex justify-center text-white/95"><stat.icon className="w-8 h-8" /></div>
-              <div className="text-3xl font-bold mb-2">{stat.number}</div>
-              <div className="text-white/90 text-sm">{stat.label}</div>
+              <div className="w-12 h-12 rounded-xl bg-slate-50 text-[#0A2647] flex items-center justify-center mx-auto mb-4">
+                <stat.icon className="w-6 h-6" />
+              </div>
+              <div className="text-3xl font-bold text-[#0A2647] mb-1">{stat.number}</div>
+              <div className="text-slate-500 text-sm">{stat.label}</div>
             </div>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <div className="bg-white rounded-xl p-6 border border-blue-100 shadow-sm">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">{t('management.aboutUniversityTitle')}</h3>
-            <p className="text-gray-600 leading-relaxed">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
+          <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+            <h3 className="text-lg font-semibold text-slate-900 mb-3">{t('management.aboutUniversityTitle')}</h3>
+            <p className="text-slate-600 leading-relaxed">
               {t('management.aboutUniversityText')}
             </p>
-
           </div>
-          
-          <div className="bg-white rounded-xl p-6 border border-blue-100 shadow-sm">
-           <h3 className="text-xl font-semibold text-gray-800 mb-4">{t('management.missionTitle')}</h3>
-            <p className="text-gray-600 leading-relaxed">
+
+          <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+            <h3 className="text-lg font-semibold text-slate-900 mb-3">{t('management.missionTitle')}</h3>
+            <p className="text-slate-600 leading-relaxed">
               {t('management.missionText')}
             </p>
-
           </div>
         </div>
       </div>
@@ -258,17 +272,17 @@ const sections = [
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      className={`min-h-screen bg-slate-50 py-10 px-4 transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
       }`}
     >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        <div className="mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
             {t('management.title')}
           </h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+          <p className="text-lg text-slate-500 max-w-3xl">
             {t('management.description')}
           </p>
         </div>
@@ -276,8 +290,8 @@ const sections = [
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Боковая навигация */}
           <div className="lg:w-1/4">
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden sticky top-24">
+              <div className="bg-[#0A2647] px-5 py-4 text-white font-semibold">
                 {t('management.sections')}
               </div>
               <nav className="p-2">
@@ -285,14 +299,14 @@ const sections = [
                   {sections.map((section) => (
                     <li key={section.id}>
                       <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 flex items-center ${
                           activeSection === section.id
-                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                            : "text-gray-700 hover:bg-gray-100"
+                            ? "bg-slate-100 text-[#0A2647] font-semibold"
+                            : "text-slate-600 hover:bg-slate-50"
                         }`}
                         onClick={() => changeActiveSection(section.id)}
                       >
-                        <section.icon className="w-5 h-5 mr-3 text-current flex-shrink-0" />
+                        <section.icon className="w-5 h-5 mr-3 flex-shrink-0" />
                         {section.name}
                       </button>
                     </li>
@@ -304,7 +318,7 @@ const sections = [
 
           {/* Основной контент */}
           <div className="lg:w-3/4">
-            <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 md:p-8">
               {renderContent()}
             </div>
           </div>

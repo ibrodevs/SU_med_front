@@ -7,6 +7,7 @@ const Partners = () => {
   const { t, i18n } = useTranslation();
   const [partners, setPartners] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [failedLogos, setFailedLogos] = useState({});
   const scrollerRef = useRef(null);
   
   // Fetch partners from backend
@@ -36,8 +37,11 @@ const Partners = () => {
     };
   }, [i18n.language]);
 
+  // Only partners that actually have a logo — we show logos only, no text
+  const logoPartners = partners.filter(p => p.logo);
+
   // Duplicating array for infinite scrolling effect
-  const duplicatedPartners = partners.length > 0 ? [...partners, ...partners] : [];
+  const duplicatedPartners = logoPartners.length > 0 ? [...logoPartners, ...logoPartners] : [];
 
   // Smooth scroll effect using requestAnimationFrame
   useEffect(() => {
@@ -67,8 +71,15 @@ const Partners = () => {
     };
   }, [duplicatedPartners.length]);
 
-  if (loading || partners.length === 0) {
-    return null; // Don't render partners section if loading or empty
+  const handleImageError = (partnerId, index) => {
+    setFailedLogos(prev => ({
+      ...prev,
+      [`${partnerId}-${index}`]: true
+    }));
+  };
+
+  if (loading || logoPartners.length === 0) {
+    return null; // Don't render partners section if loading or no logos to show
   }
 
   return (
@@ -84,33 +95,33 @@ const Partners = () => {
             className="flex whitespace-nowrap items-center"
           >
             {duplicatedPartners.map((partner, index) => {
-              // Use relative path directly — Vite proxies /media/* to backend
+              const partnerKey = `${partner.id}-${index}`;
               const logoUrl = partner.logo 
                 ? (partner.logo.startsWith('http') ? partner.logo : partner.logo)
                 : null;
 
-              // Skip partners without a logo
-              if (!logoUrl) return null;
+              const hasLogoFailed = failedLogos[partnerKey];
+
+              // If the logo failed to load, skip the card entirely — logos only, no text
+              if (hasLogoFailed || !logoUrl) {
+                return null;
+              }
 
               return (
-                <a 
-                  key={`${partner.id}-${index}`} 
+                <a
+                  key={partnerKey}
                   href={partner.website || '#'}
                   target={partner.website ? "_blank" : undefined}
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center mx-6 p-4 rounded-xl bg-white border border-slate-200/60 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-105"
-                  style={{ minWidth: '140px', height: '80px' }}
+                  className="inline-flex items-center justify-center mx-6 p-5 rounded-xl bg-white border border-slate-200/60 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-105"
+                  style={{ minWidth: '180px', height: '110px' }}
                   title={partner.name}
                 >
-                  <img 
-                    src={logoUrl} 
-                    alt={partner.name} 
-                    className="max-h-14 max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      // Hide the entire card if logo fails to load
-                      e.target.closest('a').style.display = 'none';
-                    }}
+                  <img
+                    src={logoUrl}
+                    alt={partner.name}
+                    className="max-h-20 max-w-full object-contain"
+                    onError={() => handleImageError(partner.id, index)}
                   />
                 </a>
               );

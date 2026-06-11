@@ -5,12 +5,6 @@ import { BookOpen, Microscope, BarChart3, Video, Monitor, FileText } from 'lucid
 const Resources = () => {
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
-  const [moodleCredentials, setMoodleCredentials] = useState({
-    username: '',
-    password: ''
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [activeResource, setActiveResource] = useState(null);
   const [activeSection, setActiveSection] = useState('all');
 
   // Animation on mount
@@ -210,48 +204,6 @@ const Resources = () => {
 
   const currentSectionData = getCurrentSectionData();
 
-  const handleMoodleLogin = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      alert(t('resources.loginSuccess', 'Вход выполнен успешно!'));
-      setMoodleCredentials({ username: '', password: '' });
-      setActiveResource(null);
-    } catch (error) {
-      console.error('Login error:', error);
-      alert(t('resources.loginError', 'Ошибка входа. Проверьте данные.'));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setMoodleCredentials(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  // Loading state
-  if (false) {
-    return (
-      <div
-        className={`min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div
       className={`min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 py-8 px-4 transition-all duration-700 ${
@@ -281,10 +233,10 @@ const Resources = () => {
                   {sectionsList.map((section) => (
                     <li key={section.id}>
                       <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex justify-between items-center ${
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-colors duration-200 flex justify-between items-center ${
                           activeSection === section.id
-                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                            : "text-gray-700 hover:bg-gray-100"
+                            ? "bg-slate-100 text-[#0A2647] font-semibold"
+                            : "text-slate-600 hover:bg-slate-50"
                         }`}
                         onClick={() => setActiveSection(section.id)}
                       >
@@ -317,128 +269,54 @@ const Resources = () => {
               <div className="space-y-6">
                 {currentSectionData.resources.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {currentSectionData.resources.map((resource, index) => (
+                    {currentSectionData.resources.map((resource) => (
                       <div
                         key={resource.id}
-                        className="bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-md overflow-hidden border border-blue-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-                        style={{ animationDelay: `${index * 100}ms` }}
+                        className="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-300 p-6 flex flex-col"
                       >
-                        <div className="p-6">
-                          <div className="flex items-center mb-4">
-                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${resource.color} flex items-center justify-center mr-4`}>
-                              {resource.icon && <resource.icon className="w-6 h-6 text-white" />}
-                            </div>
-                            <div>
-                              <h3 className="font-bold text-lg text-gray-900">
-                                {resource.title}
-                              </h3>
-                              <p className="text-blue-600 text-sm">
-                                {resource.description}
-                              </p>
-                            </div>
+                        <div className="flex items-start gap-4 mb-5">
+                          <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${resource.color} flex items-center justify-center flex-shrink-0`}>
+                            {resource.icon && <resource.icon className="w-6 h-6 text-white" />}
                           </div>
-
-                          {/* Особенности */}
-                          <div className="mb-4">
-                            <ul className="space-y-2">
-                              {resource.features && resource.features.map((feature, idx) => (
-                                <li key={idx} className="flex items-center text-sm text-gray-600">
-                                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0"></span>
-                                  <span className="break-words">{feature}</span>
-                                </li>
-                              ))}
-                            </ul>
+                          <div>
+                            <h3 className="font-bold text-lg text-slate-900">
+                              {resource.title}
+                            </h3>
+                            <p className="text-slate-500 text-sm mt-1 leading-relaxed">
+                              {resource.description}
+                            </p>
                           </div>
+                        </div>
 
-                          {/* Действия */}
-                          <div className="mt-4">
-                            {resource.status === 'online' && resource.link && (
-                              <a
-                                href={resource.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center bg-gradient-to-r from-[#0A2647] to-[#144272] text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 w-full font-medium text-sm"
-                              >
-                                <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                </svg>
-                                <span className="truncate">{resource.linkText}</span>
-                              </a>
-                            )}
-
-                            {resource.status === 'login' && (
-                              <div>
-                                <button
-                                  onClick={() => setActiveResource(activeResource === resource.id ? null : resource.id)}
-                                  className="w-full bg-gradient-to-r from-[#144272] to-[#205295] text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 font-medium text-sm mb-3"
+                        {/* Ссылка */}
+                        <div className="mt-auto">
+                          {resource.links ? (
+                            <div className="space-y-2">
+                              {resource.links.map((link, idx) => (
+                                <a
+                                  key={idx}
+                                  href={link.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center justify-center bg-[#0A2647] hover:bg-[#144272] text-white py-2.5 px-4 rounded-lg transition-colors duration-200 font-medium text-sm"
                                 >
-                                  {resource.linkText}
-                                </button>
-                                
-                                {activeResource === resource.id && (
-                                  <form onSubmit={handleMoodleLogin} className="space-y-3">
-                                    <div>
-                                      <input
-                                        type="text"
-                                        name="username"
-                                        value={moodleCredentials.username}
-                                        onChange={handleInputChange}
-                                        required
-                                        className="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        placeholder={t('resources.usernamePlaceholder', 'Имя пользователя')}
-                                      />
-                                    </div>
-                                    <div>
-                                      <input
-                                        type="password"
-                                        name="password"
-                                        value={moodleCredentials.password}
-                                        onChange={handleInputChange}
-                                        required
-                                        className="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        placeholder={t('resources.passwordPlaceholder', 'Пароль')}
-                                      />
-                                    </div>
-                                    <button
-                                      type="submit"
-                                      disabled={isLoading}
-                                      className="w-full bg-gradient-to-r from-[#2C7865] to-[#0d9488] text-white py-2 px-4 rounded-lg hover:shadow-lg disabled:opacity-50 transition-all duration-300 font-medium text-sm"
-                                    >
-                                      {isLoading ? 
-                                        t('resources.loggingIn', 'Вход...') : 
-                                        t('resources.loginBtn', 'Войти')
-                                      }
-                                    </button>
-                                  </form>
-                                )}
-                              </div>
-                            )}
-
-                            {resource.status === 'external' && resource.links && (
-                              <div className="space-y-2">
-                                {resource.links.map((link, idx) => (
-                                  <a
-                                    key={idx}
-                                    href={link.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block w-full bg-gradient-to-r from-[#205295] to-[#144272] text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 text-center font-medium text-sm"
-                                  >
-                                    {t('resources.goTo', 'Перейти в')} {link.displayName}
-                                  </a>
-                                ))}
-                              </div>
-                            )}
-
-                            {resource.status === 'download' && (
-                              <button className="w-full bg-gradient-to-r from-[#1B4242] to-[#2C7865] text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 font-medium text-sm">
-                                <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                </svg>
-                                {resource.linkText}
-                              </button>
-                            )}
-                          </div>
+                                  {t('resources.goTo', 'Перейти в')} {link.displayName}
+                                </a>
+                              ))}
+                            </div>
+                          ) : (
+                            <a
+                              href={resource.link || '#'}
+                              target={resource.link && resource.link.startsWith('http') ? '_blank' : undefined}
+                              rel={resource.link && resource.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                              className="flex items-center justify-center bg-[#0A2647] hover:bg-[#144272] text-white py-2.5 px-4 rounded-lg transition-colors duration-200 font-medium text-sm"
+                            >
+                              {resource.linkText}
+                              <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                              </svg>
+                            </a>
+                          )}
                         </div>
                       </div>
                     ))}

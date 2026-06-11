@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AlertTriangle, ClipboardList, Crown, Check } from 'lucide-react';
+import { AlertTriangle, ClipboardList } from 'lucide-react';
 import aboutService from '../../services/aboutService';
 
 const Founders = () => {
@@ -160,9 +160,6 @@ const Founders = () => {
                       alt={currentFounder.name || ''}
                       className="w-32 h-32 rounded-full object-cover border-4 border-blue-100 shadow-lg"
                     />
-                    <div className="absolute -bottom-2 -right-2 bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
-                      <Crown className="w-4 h-4" />
-                    </div>
                   </div>
                 </div>
                 <div className="flex-1">
@@ -178,28 +175,6 @@ const Founders = () => {
                   <p className="text-gray-700 mt-4 leading-relaxed">
                     {currentFounder.description || ''}
                   </p>
-                </div>
-              </div>
-
-              {/* Достижения */}
-              <div className="space-y-6">
-                <h3 className="text-xl font-bold text-gray-800 flex items-center">
-                  <span className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2"><Check className="w-4 h-4" /></span>
-                  {t('founders.achievementsTitle')}
-                </h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {(currentFounder.achievements || []).map((achievement, index) => (
-                    <div
-                      key={index}
-                      className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-100 hover:shadow-md transition-all duration-300"
-                    >
-                      <div className="flex items-start">
-                        <span className="text-blue-500 mr-3 mt-1">•</span>
-                        <span className="text-gray-700 text-sm">{achievement}</span>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>

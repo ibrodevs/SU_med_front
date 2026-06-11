@@ -1,14 +1,12 @@
-<svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
-  <rect width="120" height="60" fill="#2563EB" rx="8"/>
-  <g fill="white">
-    <circle cx="20" cy="20" r="6"/>
-    <circle cx="35" cy="20" r="6"/>
-    <rect x="15" y="30" width="25" height="3"/>
-    <rect x="15" y="35" width="25" height="3"/>
-    <rect x="15" y="40" width="25" height="3"/>
+<svg width="158" height="56" viewBox="0 0 158 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="8" y="8" width="40" height="40" rx="12" fill="#2563EB"/>
+  <g transform="translate(4,0)">
+    <path d="M24 17 L37 24 H11 Z" fill="#ffffff"/>
+    <rect x="11" y="24.6" width="26" height="2.4" fill="#ffffff"/>
+    <rect x="14" y="28" width="3" height="8" fill="#ffffff"/>
+    <rect x="22.5" y="28" width="3" height="8" fill="#ffffff"/>
+    <rect x="31" y="28" width="3" height="8" fill="#ffffff"/>
+    <rect x="11" y="36.6" width="26" height="2.6" fill="#ffffff"/>
   </g>
-  <text x="45" y="20" fill="white" font-family="Arial, sans-serif" font-size="8" font-weight="bold">ХНМУ</text>
-  <text x="45" y="32" fill="white" font-family="Arial, sans-serif" font-size="5">Харьковский</text>
-  <text x="45" y="39" fill="white" font-family="Arial, sans-serif" font-size="5">национальный</text>
-  <text x="45" y="46" fill="white" font-family="Arial, sans-serif" font-size="5">медицинский ун-т</text>
+  <text x="60" y="36" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="22" font-weight="700" fill="#1D4ED8" letter-spacing="0.5">ХНМУ</text>
 </svg>

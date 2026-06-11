@@ -1,12 +1,8 @@
-<svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
-  <rect width="120" height="60" fill="#059669" rx="8"/>
-  <g fill="white">
-    <polygon points="20,10 30,15 35,10 35,25 30,30 20,25"/>
-    <circle cx="27" cy="18" r="3"/>
-    <rect x="15" y="35" width="25" height="8" rx="2"/>
+<svg width="172" height="56" viewBox="0 0 172 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="8" y="8" width="40" height="40" rx="12" fill="#059669"/>
+  <g transform="translate(4,0)">
+    <path d="M11 37 L20 22 L26 30 L31 19 L38 37 Z" fill="#ffffff"/>
+    <path d="M26 30 L31 19 L33.5 23 L29 30 Z" fill="#34d399"/>
   </g>
-  <text x="45" y="18" fill="white" font-family="Arial, sans-serif" font-size="8" font-weight="bold">Ала-Тоо</text>
-  <text x="45" y="30" fill="white" font-family="Arial, sans-serif" font-size="5">Медицинский</text>
-  <text x="45" y="37" fill="white" font-family="Arial, sans-serif" font-size="5">центр</text>
-  <text x="45" y="46" fill="white" font-family="Arial, sans-serif" font-size="5">"Ала-Тоо"</text>
+  <text x="60" y="36" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="22" font-weight="700" fill="#047857" letter-spacing="-0.5">Ала-Тоо</text>
 </svg>

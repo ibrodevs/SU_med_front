@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Bell, Calendar, Download, ExternalLink, Pin, BookOpen, Coins, CalendarDays, Trophy, Hospital, Settings } from 'lucide-react';
+import { Bell, Calendar, ExternalLink, Pin, Image as ImageIcon } from 'lucide-react';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/proxy-backend';
+const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL || '';
 
 const NewsAnnouncements = () => {
   const { t, i18n } = useTranslation();
@@ -19,453 +20,141 @@ const NewsAnnouncements = () => {
   const fetchAnnouncements = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/announcements/`, {
-        headers: {
-          'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
-          'Content-Type': 'application/json'
-        }
+      setError(null);
+      const response = await fetch(`${API_BASE_URL}/api/announcements/`, {
+        headers: { 'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language },
       });
-      if (!response.ok) {
-        throw new Error(t('news.announcements.loadError'));
-      }
+      if (!response.ok) throw new Error(t('news.announcements.loadError', 'Ошибка загрузки'));
       const data = await response.json();
-      // Маппинг полей API к фронтенду
-      const mappedAnnouncements = (data.results || data).map(announcement => ({
-        ...announcement,
-        // Дата публикации
-        date: announcement.published_at,
-        // Тип объявления
-        type: announcement.announcement_type,
-        // Описание из summary
-        description: announcement.summary,
-        // Приоритет
-        priority: announcement.priority,
-        // Закреплено
-        pinned: announcement.is_pinned,
-        // Имя вложения
-        attachment: announcement.attachment_name,
-        // Приближается дедлайн
-        deadlineApproaching: announcement.is_deadline_approaching,
-        // Изображение из API (теперь всегда есть благодаря стоковым фото)
-        image: announcement.image_url,
+      const mapped = (data.results || data).map(a => ({
+        ...a,
+        date: a.published_at,
+        type: a.announcement_type,
+        description: a.summary,
+        pinned: a.is_pinned,
       }));
-      setAnnouncements(mappedAnnouncements);
+      setAnnouncements(mapped);
     } catch (err) {
       setError(err.message);
       setAnnouncements([]);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  const filteredAnnouncements = filter === 'all' 
-    ? announcements 
-    : announcements.filter(item => item.type === filter);
+  const filters = [
+    { id: 'all', name: t('news.announcements.filters.all', 'Все') },
+    { id: 'academic', name: t('news.announcements.filters.academic', 'Учебные') },
+    { id: 'scholarship', name: t('news.announcements.filters.scholarship', 'Стипендии') },
+    { id: 'competition', name: t('news.announcements.filters.competition', 'Конкурсы') },
+  ];
 
-  const pinnedAnnouncements = announcements.filter(item => item.pinned);
-  const regularAnnouncements = filteredAnnouncements.filter(item => !item.pinned);
+  const filtered = filter === 'all' ? announcements : announcements.filter(i => i.type === filter);
+  const pinned = announcements.filter(i => i.pinned);
+  const regular = filtered.filter(i => !i.pinned);
 
-  const formatDate = (dateString) => {
-    if (!dateString) return t('news.announcements.noDate', 'Дата не указана');
-    
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) {
-      return t('news.announcements.invalidDate', 'Некорректная дата');
-    }
-    
-    return date.toLocaleDateString(i18n.language === 'kg' ? 'ky-KG' : i18n.language, {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    });
+  const getImageUrl = (item) => {
+    const path = item?.image_url || item?.image;
+    if (!path) return null;
+    if (path.startsWith('http')) return path;
+    return `${MEDIA_BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
   };
 
-  const formatTime = (dateString) => {
-    if (!dateString) return '';
-    
-    const date = new Date(dateString);
+  const formatDate = (d) => {
+    if (!d) return t('news.announcements.noDate', 'Дата не указана');
+    const date = new Date(d);
     if (isNaN(date.getTime())) return '';
-    
-    return date.toLocaleTimeString(i18n.language === 'kg' ? 'ky-KG' : i18n.language, {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+    return date.toLocaleDateString(i18n.language === 'kg' ? 'ky-KG' : i18n.language,
+      { day: 'numeric', month: 'long', year: 'numeric' });
   };
 
-  const formatDeadline = (dateString) => {
-    if (!dateString) return '';
-    
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) return '';
-    
-    const dateStr = date.toLocaleDateString(i18n.language === 'kg' ? 'ky-KG' : i18n.language, {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    });
-    
-    const timeStr = date.toLocaleTimeString(i18n.language === 'kg' ? 'ky-KG' : i18n.language, {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-    
-    return `${dateStr}, ${timeStr}`;
-  };
+  const getTypeName = (type) => t(`news.announcements.types.${type}`, { defaultValue: t('news.announcements.types.academic', 'Объявление') });
 
-  const formatDateTime = (dateString) => {
-    if (!dateString) return t('news.announcements.noDate', 'Дата не указана');
-    
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) {
-      return t('news.announcements.invalidDate', 'Некорректная дата');
-    }
-    
-    const dateStr = formatDate(dateString);
-    const timeStr = formatTime(dateString);
-    
-    return `${dateStr}, ${timeStr}`;
-  };
-
-  const getTypeInfo = (type) => {
-    const iconClass = 'w-5 h-5';
-    const types = {
-      academic: { 
-        name: t('news.announcements.types.academic'), 
-        color: 'bg-sky-50 text-[#144272]', 
-        icon: <BookOpen className={iconClass} /> 
-      },
-      scholarship: { 
-        name: t('news.announcements.types.scholarship'), 
-        color: 'bg-teal-50 text-[#1B4242]', 
-        icon: <Coins className={iconClass} /> 
-      },
-      schedule: { 
-        name: t('news.announcements.types.schedule'), 
-        color: 'bg-slate-100 text-[#205295]', 
-        icon: <CalendarDays className={iconClass} /> 
-      },
-      competition: { 
-        name: t('news.announcements.types.competition'), 
-        color: 'bg-amber-50 text-[#0A2647]', 
-        icon: <Trophy className={iconClass} /> 
-      },
-      health: { 
-        name: t('news.announcements.types.health'), 
-        color: 'bg-rose-50 text-rose-800', 
-        icon: <Hospital className={iconClass} /> 
-      },
-      technical: { 
-        name: t('news.announcements.types.technical'), 
-        color: 'bg-gray-100 text-[#334155]', 
-        icon: <Settings className={iconClass} /> 
-      }
-    };
-    return types[type] || types.academic;
-  };
-
-  const getPriorityColor = (priority) => {
-    switch(priority) {
-      case 'high': return 'border-l-red-500';
-      case 'medium': return 'border-l-yellow-500';
-      case 'low': return 'border-l-green-500';
-      default: return 'border-l-gray-300';
-    }
-  };
-
-  const isDeadlineApproaching = (deadline) => {
-    if (!deadline) return false;
-    const deadlineDate = new Date(deadline);
-    const today = new Date();
-    const diffTime = deadlineDate - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays <= 7 && diffDays >= 0;
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-[#0A2647] to-[#144272] text-white py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              {t('news.announcements.title')}
-            </h1>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-              {t('news.announcements.subtitle')}
-            </p>
+  const Card = ({ item, large }) => {
+    const img = getImageUrl(item);
+    return (
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-300 overflow-hidden md:flex">
+        <div className="md:w-1/4 relative">
+          {img ? (
+            <img src={img} alt={item.title} className="w-full h-48 md:h-full object-cover"
+              onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'flex'; }} />
+          ) : null}
+          <div className={`w-full h-48 md:h-full min-h-[160px] bg-slate-100 items-center justify-center text-slate-300 ${img ? 'hidden' : 'flex'}`}>
+            <ImageIcon className="w-10 h-10" />
+          </div>
+        </div>
+        <div className="md:w-3/4 p-6 flex flex-col">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-[#0A2647]">{getTypeName(item.type)}</span>
+            {item.pinned && (
+              <span className="flex items-center text-xs text-slate-500"><Pin className="w-3.5 h-3.5 mr-1" />{t('news.announcements.pinned', 'Закреплено')}</span>
+            )}
+          </div>
+          <h3 className={`font-bold text-slate-900 mb-2 ${large ? 'text-xl' : 'text-lg'}`}>{item.title}</h3>
+          <p className="text-slate-500 text-sm mb-4 line-clamp-2">{item.description}</p>
+          <div className="mt-auto flex items-center justify-between">
+            <span className="flex items-center text-sm text-slate-400"><Calendar className="w-4 h-4 mr-2" />{formatDate(item.date)}</span>
+            <Link to={`/news/detail/${item.id}`} className="flex items-center text-[#0A2647] hover:text-[#144272] text-sm font-medium">
+              <ExternalLink className="w-4 h-4 mr-1" />{t('news.announcements.details', 'Подробнее')}
+            </Link>
           </div>
         </div>
       </div>
+    );
+  };
 
-      <div className="container mx-auto px-4 py-12">
-        {/* Error Message */}
-        {error && (
-          <div className="text-center py-8 mb-8">
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-              {error}
-            </div>
-          </div>
-        )}
-
-        {/* Loading State */}
-        {loading ? (
-          <div className="text-center py-12">
-            <div className="text-gray-500 text-lg">
-              {t('news.announcements.loading', '...')}
-            </div>
-          </div>
-        ) : !error && (
-          <>
-            {/* Pinned Announcements */}
-            {pinnedAnnouncements.length > 0 && (
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-              <Pin className="w-6 h-6 mr-2 text-red-500" />
-              {t('news.announcements.pinned')}
-            </h2>
-            <div className="space-y-4">
-              {pinnedAnnouncements.map((item) => {
-                const typeInfo = getTypeInfo(item.type);
-                return (
-                  <div key={item.id} className={`bg-white rounded-xl shadow-md overflow-hidden border-l-4 ${getPriorityColor(item.priority)}`}>
-                    <div className="md:flex">
-                      {item.image_url ? (
-                        <div className="md:w-1/4">
-                          <img 
-                            src={item.image_url?.startsWith('http') ? item.image_url : `${import.meta.env.VITE_MEDIA_BASE_URL || '/media'}${item.image_url}`} 
-                            alt={item.title}
-                            className="w-full h-48 md:h-full object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <div className="md:w-1/4 bg-gray-200 h-48 md:h-auto flex items-center justify-center">
-                          <div className="text-gray-400 text-center">
-                            <Bell className="w-8 h-8 mx-auto mb-1" />
-                            <p className="text-xs">{t('news.announcements.noImage', 'Изображение не добавлено')}</p>
-                          </div>
-                        </div>
-                      )}
-                      <div className={`${item.image_url ? 'md:w-3/4' : 'w-full'} p-6`}>
-                        <div className="flex flex-wrap items-start justify-between gap-4">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-3 mb-3">
-                              <span className="text-[#144272]">{typeInfo.icon}</span>
-                              <span className={`px-3 py-1 rounded-full text-sm font-semibold ${typeInfo.color}`}>
-                                {typeInfo.name}
-                              </span>
-                              {isDeadlineApproaching(item.deadline) && (
-                                <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold animate-pulse">
-                                  {t('news.announcements.urgent')}
-                                </span>
-                              )}
-                            </div>
-                            
-                            <h3 className="text-xl font-bold text-gray-800 mb-2">
-                              {item.title}
-                            </h3>
-                            
-                            <p className="text-gray-600 mb-4">
-                              {item.content}
-                            </p>
-                            
-                            <div className="flex flex-wrap items-center gap-4 text-sm">
-                              {item.deadline ? (
-                                <div className={`flex items-center ${isDeadlineApproaching(item.deadline) ? 'text-red-600 font-semibold' : 'text-gray-700'}`}>
-                                  <Bell className="w-4 h-4 mr-2" />
-                                  <span className="font-medium">{t('news.announcements.deadline')}:</span>
-                                  <span className="ml-1">{formatDeadline(item.deadline)}</span>
-                                </div>
-                              ) : (
-                                <div className="flex items-center text-gray-500">
-                                  <Calendar className="w-4 h-4 mr-2" />
-                                  <span>{formatDateTime(item.date)}</span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          
-                          <div className="flex flex-col gap-2">
-                            {item.attachment && (
-                              <button className="flex items-center text-blue-600 hover:text-blue-800 text-sm font-semibold transition-colors">
-                                <Download className="w-4 h-4 mr-1" />
-                                {t('news.announcements.download')}
-                              </button>
-                            )}
-                            <Link 
-                              to={`/news/detail/${item.id}`}
-                              className="flex items-center text-gray-600 hover:text-gray-800 text-sm transition-colors"
-                            >
-                              <ExternalLink className="w-4 h-4 mr-1" />
-                              {t('news.announcements.details')}
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
-          <button
-            onClick={() => setFilter('all')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
-              filter === 'all'
-                ? 'bg-[#0A2647] text-white'
-                : 'bg-white text-[#334155] hover:bg-slate-50 border border-slate-200'
-            }`}
-          >
-            {t('news.announcements.filters.all')}
-          </button>
-          <button
-            onClick={() => setFilter('academic')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
-              filter === 'academic'
-                ? 'bg-[#0A2647] text-white'
-                : 'bg-white text-[#334155] hover:bg-slate-50 border border-slate-200'
-            }`}
-          >
-            {t('news.announcements.filters.academic')}
-          </button>
-          <button
-            onClick={() => setFilter('scholarship')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
-              filter === 'scholarship'
-                ? 'bg-[#0A2647] text-white'
-                : 'bg-white text-[#334155] hover:bg-slate-50 border border-slate-200'
-            }`}
-          >
-            {t('news.announcements.filters.scholarship')}
-          </button>
-          <button
-            onClick={() => setFilter('competition')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
-              filter === 'competition'
-                ? 'bg-[#0A2647] text-white'
-                : 'bg-white text-[#334155] hover:bg-slate-50 border border-slate-200'
-            }`}
-          >
-            {t('news.announcements.filters.competition')}
-          </button>
+  return (
+    <div className="min-h-screen bg-slate-50 py-8 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Заголовок */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">{t('news.announcements.title', 'Объявления')}</h1>
+          <p className="text-lg text-slate-500 max-w-3xl mx-auto">{t('news.announcements.subtitle', 'Важные объявления и информация для студентов')}</p>
         </div>
 
-        {/* Regular Announcements */}
-        <div className="space-y-6">
-          {regularAnnouncements.map((item) => {
-            const typeInfo = getTypeInfo(item.type);
-            return (
-              <div key={item.id} className={`bg-white rounded-xl shadow-sm overflow-hidden border-l-4 ${getPriorityColor(item.priority)} hover:shadow-md transition-shadow`}>
-                <div className="md:flex">
-                  {item.image_url ? (
-                    <div className="md:w-1/4">
-                      <img 
-                        src={item.image_url?.startsWith('http') ? item.image_url : `${import.meta.env.VITE_MEDIA_BASE_URL || '/media'}${item.image_url}`} 
-                        alt={item.title}
-                        className="w-full h-48 md:h-full object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <div className="md:w-1/4 bg-gray-200 h-48 md:h-auto flex items-center justify-center">
-                      <div className="text-gray-400 text-center">
-                        <Bell className="w-8 h-8 mx-auto mb-1" />
-                        <p className="text-xs">{t('news.announcements.noImage', 'Изображение не добавлено')}</p>
-                      </div>
-                    </div>
-                  )}
-                  <div className={`${item.image_url ? 'md:w-3/4' : 'w-full'} p-6`}>
-                    <div className="flex flex-wrap items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-3 mb-3">
-                          <span className="text-[#144272]">{typeInfo.icon}</span>
-                          <span className={`px-2 py-1 rounded-full text-xs font-semibold ${typeInfo.color}`}>
-                            {typeInfo.name}
-                          </span>
-                          {isDeadlineApproaching(item.deadline) && (
-                            <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">
-                              {t('news.announcements.urgent')}
-                            </span>
-                          )}
-                        </div>
-                        
-                        <h3 className="text-lg font-bold text-gray-800 mb-2">
-                          {item.title}
-                        </h3>
-                        
-                        <p className="text-gray-600 mb-3 text-sm">
-                          {item.description}
-                        </p>
-                        
-                        <div className="flex flex-wrap items-center gap-4 text-sm">
-                          {item.deadline ? (
-                            <div className={`flex items-center ${isDeadlineApproaching(item.deadline) ? 'text-red-600 font-semibold' : 'text-gray-700'}`}>
-                              <Bell className="w-4 h-4 mr-2" />
-                              <span className="font-medium">{t('news.announcements.deadline')}:</span>
-                              <span className="ml-1">{formatDeadline(item.deadline)}</span>
-                            </div>
-                          ) : (
-                            <div className="flex items-center text-gray-500">
-                              <Calendar className="w-4 h-4 mr-2" />
-                              <span>{formatDateTime(item.date)}</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      
-                      <div className="flex flex-col gap-2">
-                        {item.attachment && (
-                          <button className="flex items-center text-blue-600 hover:text-blue-800 text-sm font-semibold transition-colors">
-                            <Download className="w-4 h-4 mr-1" />
-                            {item.attachment}
-                          </button>
-                        )}
-                        <Link 
-                          to={`/news/detail/${item.id}`}
-                          className="flex items-center text-gray-600 hover:text-gray-800 text-sm transition-colors"
-                        >
-                          <ExternalLink className="w-4 h-4 mr-1" />
-                          {t('news.announcements.details')}
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
+        {loading ? (
+          <div className="text-center py-16">
+            <div className="inline-block animate-spin rounded-full h-10 w-10 border-2 border-slate-200 border-t-[#0A2647]"></div>
+          </div>
+        ) : error ? (
+          <div className="text-center py-12 bg-white rounded-xl border border-slate-200 text-slate-500">{error}</div>
+        ) : (
+          <>
+            {/* Закреплённые */}
+            {pinned.length > 0 && (
+              <div className="mb-10">
+                <h2 className="text-xl font-bold text-slate-900 mb-5 flex items-center">
+                  <Pin className="w-5 h-5 mr-2 text-[#0A2647]" />{t('news.announcements.pinned', 'Закреплённые')}
+                </h2>
+                <div className="space-y-4">
+                  {pinned.map((item) => <Card key={item.id} item={item} large />)}
                 </div>
               </div>
-            );
-          })}
-        </div>
+            )}
 
-        {filteredAnnouncements.length === 0 && (
-          <div className="text-center py-12">
-            <div className="text-gray-500 text-lg">
-              {t('news.announcements.noAnnouncements')}
+            {/* Фильтры */}
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
+              {filters.map((f) => (
+                <button key={f.id} onClick={() => setFilter(f.id)}
+                  className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                    filter === f.id ? 'bg-[#0A2647] text-white' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                  }`}>
+                  {f.name}
+                </button>
+              ))}
             </div>
-          </div>
-        )}
 
-        {/* Newsletter Subscription */}
-        <div className="mt-16 bg-gradient-to-r from-[#1B4242] to-[#2C7865] text-white rounded-lg p-8">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">
-              {t('news.announcements.newsletter.title')}
-            </h2>
-            <p className="mb-6">
-              {t('news.announcements.newsletter.subtitle')}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder={t('news.announcements.newsletter.placeholder')}
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500"
-              />
-              <button className="bg-white text-[#1B4242] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                {t('news.announcements.newsletter.button')}
-              </button>
-            </div>
-          </div>
-        </div>
+            {/* Список */}
+            {regular.length > 0 ? (
+              <div className="space-y-4">
+                {regular.map((item) => <Card key={item.id} item={item} />)}
+              </div>
+            ) : (
+              <div className="text-center py-12 bg-white rounded-xl border border-slate-200">
+                <Bell className="w-14 h-14 text-slate-300 mx-auto mb-4" />
+                <p className="text-slate-500">{t('news.announcements.noAnnouncements', 'Объявлений нет')}</p>
+              </div>
+            )}
           </>
         )}
       </div>

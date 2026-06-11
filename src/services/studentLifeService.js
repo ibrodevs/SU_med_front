@@ -10,8 +10,9 @@ const BASE_PATH = '/api/student-life';
 
 export const getInstructions = async (lang = 'ru') => {
   try {
-    const response = await apiRequest(buildApiUrl(`${BASE_PATH}/instructions/`, { lang }));
-    return response.results || response || instructionsFallbackData;
+    const response = await apiRequest(buildApiUrl(`${BASE_PATH}/api/data/instructions_data/`, { lang }));
+    const list = response.student_guides || response.results || response;
+    return Array.isArray(list) && list.length ? list : instructionsFallbackData;
   } catch (error) {
     console.warn('Instructions fetch failed, using fallback');
     return instructionsFallbackData;
@@ -50,7 +51,7 @@ export const getGallery = async (lang = 'ru') => {
 
 export const getMobility = async (lang = 'ru') => {
   try {
-    const response = await apiRequest(buildApiUrl(`${BASE_PATH}/mobility/`, { lang }));
+    const response = await apiRequest(buildApiUrl(`${BASE_PATH}/api/data/academic_mobility_data/`, { lang }));
     return response.results || response || [];
   } catch (error) {
     console.warn('Mobility fetch failed');

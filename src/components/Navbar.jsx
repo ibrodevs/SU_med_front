@@ -72,14 +72,12 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         { title: t('nav.structure'), link: '/about/structure' },
         { title: t('nav.status'), link: '/about/status' },
         { title: t('nav.regulations'), link: 'https://salymbekov.com/npa/' },
-        { title: t('nav.advices'), link: '/about/advices' },
       ]
     },
     HSM: {
       title: t('nav.HSM'),
       submenu: [
         { title: t('nav.about_HSM'), link: '/hsm/about' },
-        { title: t('nav.management'), link: '/hsm/manage' },
         { title: t('nav.programs'), link: '/hsm/programs' },
         // { title: t('nav.eduprograms'), link: '/hsm/eduprograms' },
         { title: t('nav.academic_stuff'), link: '/hsm/AS' },
@@ -177,11 +175,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
 
     news: {
       title: t('nav.news'),
-      submenu: [
-        { title: t('nav.all_news'), link: '/news' },
-        { title: t('nav.events'), link: '/news/events' },
-        { title: t('nav.announcements'), link: '/news/announcements' },
-      ]
+      link: '/news'
     },
     contacts: {
       title: t('nav.contacts'),
@@ -240,25 +234,40 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                     }, 200);
                   }}
                 >
-                  <button
-                    className={`relative px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 group ${activeMenu === key
-                        ? 'text-white bg-[#205295] shadow-lg'
-                        : isScrolled
-                          ? 'text-[#0A2647] hover:text-[#144272] hover:bg-slate-50'
-                          : 'text-blue-100 hover:text-white hover:bg-white/10'
-                      }`}
-                  >
-                    <span className="relative z-10">{item.title}</span>
-                    <div className={`absolute inset-0 bg-gradient-to-r from-[#205295] to-[#144272] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isScrolled ? '' : 'group-hover:opacity-100'
-                      }`}></div>
+                  {item.link && !item.submenu ? (
+                    <a
+                      href={item.link}
+                      className={`relative inline-block px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 group ${activeMenu === key
+                          ? 'text-white bg-[#205295] shadow-lg'
+                          : isScrolled
+                            ? 'text-[#0A2647] hover:text-[#144272] hover:bg-slate-50'
+                            : 'text-blue-100 hover:text-white hover:bg-white/10'
+                        }`}
+                    >
+                      <span className="relative z-10">{item.title}</span>
+                      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-[#0891b2] transition-all duration-300 group-hover:w-3/4"></div>
+                    </a>
+                  ) : (
+                    <button
+                      className={`relative px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 group ${activeMenu === key
+                          ? 'text-white bg-[#205295] shadow-lg'
+                          : isScrolled
+                            ? 'text-[#0A2647] hover:text-[#144272] hover:bg-slate-50'
+                            : 'text-blue-100 hover:text-white hover:bg-white/10'
+                        }`}
+                    >
+                      <span className="relative z-10">{item.title}</span>
+                      <div className={`absolute inset-0 bg-gradient-to-r from-[#205295] to-[#144272] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isScrolled ? '' : 'group-hover:opacity-100'
+                        }`}></div>
 
-                    {/* Индикатор при наведении */}
-                    <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-[#0891b2] transition-all duration-300 group-hover:w-3/4 ${activeMenu === key ? 'w-3/4' : ''
-                      }`}></div>
-                  </button>
+                      {/* Индикатор при наведении */}
+                      <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-[#0891b2] transition-all duration-300 group-hover:w-3/4 ${activeMenu === key ? 'w-3/4' : ''
+                        }`}></div>
+                    </button>
+                  )}
 
                   {/* Выпадающее меню с анимацией */}
-                  {activeMenu === key && (
+                  {activeMenu === key && item.submenu && (
                     <div
                       className="absolute left-1/2 transform -translate-x-1/2 mt-2 min-w-[16rem] rounded-xl shadow-2xl bg-white/95 backdrop-blur-md ring-1 ring-black/5 overflow-visible z-50 transition-all duration-300"
                       style={{ transformOrigin: 'top center' }}
@@ -379,24 +388,34 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
 
             {Object.entries(menuData).map(([key, item]) => (
               <div key={key} className="relative">
-                <button
-                  onClick={() => setActiveMenu(activeMenu === key ? null : key)}
-                  className={`w-full text-left flex justify-between items-center px-4 py-4 rounded-xl text-base font-semibold transition-colors duration-200 ${activeMenu === key
-                      ? 'bg-[#0A2647] text-white shadow-lg'
-                      : 'text-[#0A2647] hover:bg-slate-50 hover:text-[#144272]'
-                    }`}
-                >
-                  {item.title}
-                  <svg
-                    className={`h-5 w-5 transition-transform duration-300 ${activeMenu === key ? 'rotate-180' : ''}`}
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
+                {item.link && !item.submenu ? (
+                  <a
+                    href={item.link}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="w-full text-left flex justify-between items-center px-4 py-4 rounded-xl text-base font-semibold transition-colors duration-200 text-[#0A2647] hover:bg-slate-50 hover:text-[#144272]"
                   >
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </button>
+                    {item.title}
+                  </a>
+                ) : (
+                  <button
+                    onClick={() => setActiveMenu(activeMenu === key ? null : key)}
+                    className={`w-full text-left flex justify-between items-center px-4 py-4 rounded-xl text-base font-semibold transition-colors duration-200 ${activeMenu === key
+                        ? 'bg-[#0A2647] text-white shadow-lg'
+                        : 'text-[#0A2647] hover:bg-slate-50 hover:text-[#144272]'
+                      }`}
+                  >
+                    {item.title}
+                    <svg
+                      className={`h-5 w-5 transition-transform duration-300 ${activeMenu === key ? 'rotate-180' : ''}`}
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                )}
 
-                {activeMenu === key && (
+                {activeMenu === key && item.submenu && (
                   <div className="pl-6 mt-2 space-y-2 transition-all duration-300">
                     {item.submenu.map((subItem, index) => (
                       <div key={index}>
